@@ -58,24 +58,24 @@ export function HeroSection() {
   }, [nextSlide])
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden w-full">
       {/* Background Pattern */}
       <div className="absolute inset-0 hero-pattern" />
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-secondary/50" />
       
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+      {/* Decorative Elements - hidden on mobile to prevent overflow */}
+      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl hidden md:block" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl hidden md:block" />
 
-      <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4 sm:px-6 py-12 md:py-16 relative z-10 w-full max-w-full overflow-hidden">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
           {/* Left Content - Text and CTAs */}
-          <div className="space-y-6 order-2 lg:order-1">
+          <div className="space-y-4 md:space-y-6 order-2 lg:order-1 w-full min-w-0">
             <Badge variant="secondary" className="bg-accent/10 text-accent border-accent/20 px-4 py-1.5">
               India&apos;s No. 1 Defence Coaching Institute
             </Badge>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-balance">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight text-balance break-words">
               Shape Your Future as a{" "}
               <span className="text-primary">Defence Officer</span>
             </h1>
@@ -101,20 +101,20 @@ export function HeroSection() {
             </ul>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-2">
               <Link href="/courses">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+                <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
                   Explore Courses
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link href="/register">
-                <Button size="lg" variant="outline" className="gap-2 border-accent bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 border-accent bg-accent text-accent-foreground hover:bg-accent/90">
                   Apply Now
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="gap-2 border-primary text-primary hover:bg-primary/5">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto gap-2 border-primary text-primary hover:bg-primary/5">
                 <Play className="h-4 w-4" />
                 Watch Campus Tour
               </Button>
@@ -135,9 +135,9 @@ export function HeroSection() {
           </div>
 
           {/* Right Content - Image Carousel */}
-          <div className="order-1 lg:order-2">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
-              <div className="relative h-[350px] md:h-[450px] lg:h-[500px]">
+          <div className="order-1 lg:order-2 w-full min-w-0">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border w-full">
+              <div className="relative h-[280px] sm:h-[350px] md:h-[450px] lg:h-[500px]">
                 {carouselImages.map((image, index) => (
                   <div
                     key={index}
