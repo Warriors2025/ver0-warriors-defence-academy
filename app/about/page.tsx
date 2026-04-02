@@ -19,9 +19,17 @@ import {
   ArrowRight,
 } from "lucide-react"
 
-export const metadata = {
-  title: "About Us | Warriors Defence Academy",
-  description: "Learn about Warriors Defence Academy - India's premier defence coaching institute with 15+ years of excellence in NDA, CDS, and SSB preparation.",
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About Us - Best Defence Academy in Lucknow",
+  description: "Warriors Defence Academy: 15+ years of excellence, 5000+ selections, India's largest GTO ground. Meet our expert faculty of ex-military officers. Best NDA, CDS & SSB coaching in Lucknow.",
+  keywords: ["about Warriors Defence Academy", "best defence coaching Lucknow", "NDA coaching history", "defence academy faculty"],
+  openGraph: {
+    title: "About Warriors Defence Academy",
+    description: "15+ years of excellence, 5000+ successful selections. India's most trusted defence coaching institute.",
+    images: ["/images/about-og.jpg"],
+  },
 }
 
 const milestones = [

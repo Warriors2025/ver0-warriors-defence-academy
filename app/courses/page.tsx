@@ -118,9 +118,17 @@ const courses = [
   },
 ]
 
-export const metadata = {
-  title: "Our Courses | Warriors Defence Academy",
-  description: "Explore our comprehensive defence courses including NDA, CDS, AFCAT, SSB, and MNS preparation programs.",
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Defence Courses - NDA, CDS, AFCAT, SSB Coaching",
+  description: "Explore Warriors Defence Academy's comprehensive courses: NDA Coaching, CDS Preparation, AFCAT Training, SSB Interview Coaching, MNS Course. Expert faculty, proven results, India's best defence coaching.",
+  keywords: ["NDA course", "CDS coaching", "AFCAT preparation", "SSB training", "defence courses Lucknow", "military coaching"],
+  openGraph: {
+    title: "Defence Courses | Warriors Defence Academy",
+    description: "Choose from NDA, CDS, AFCAT, SSB & more. Expert faculty, 5000+ selections. Join India's top defence coaching institute.",
+    images: ["/images/courses/og-courses.jpg"],
+  },
 }
 
 export default function CoursesPage() {
