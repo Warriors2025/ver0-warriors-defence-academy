@@ -1,106 +1,163 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Clock, Users, Star, BookOpen } from "lucide-react"
+import { ArrowRight, Clock, Users, Star, CheckCircle } from "lucide-react"
 
 export const courses = [
   {
     id: "nda-foundation",
     title: "NDA Foundation Course",
-    description: "Integrated program for students starting NDA preparation after Class 10 with schooling and hostel facilities.",
+    description: "An integrated program designed for students starting their NDA preparation journey after Class 10. This comprehensive course combines regular schooling with intensive NDA coaching, offering hostel facilities and a structured daily routine that includes academics, physical training, and personality development. Students receive focused attention from experienced faculty members who guide them through the complete NDA syllabus while ensuring they excel in their board examinations.",
+    shortDescription: "Integrated schooling + NDA prep program for Class 10 students with hostel facility.",
     duration: "2-3 Years",
     students: "500+",
     rating: 4.9,
-    image: "/courses/nda-foundation.jpg",
+    image: "/images/courses/nda-foundation.jpg",
     badge: "Popular",
-    features: ["Schooling + NDA Prep", "Hostel Facility", "Physical Training", "SSB Preparation"],
+    features: ["Integrated Schooling", "Hostel Facility", "Physical Training", "SSB Grooming", "Personality Development", "Board Exam Support"],
+    highlights: [
+      "Combined Class 11 & 12 with NDA preparation",
+      "Daily physical training and sports activities",
+      "Regular mock tests and assessments",
+      "Dedicated mentors for each student"
+    ],
     href: "/courses/nda-foundation",
   },
   {
     id: "nda",
     title: "NDA Course",
-    description: "Complete preparation for NDA written exam and SSB interview with expert guidance and modern facilities.",
+    description: "Our flagship NDA preparation program offers comprehensive coaching for the National Defence Academy written examination and subsequent SSB interview. The course covers Mathematics, General Ability Test (English, GK, Physics, Chemistry, Geography, History), and includes extensive practice through mock tests. Students benefit from our experienced faculty of ex-defence officers who provide insights into the examination pattern and effective preparation strategies.",
+    shortDescription: "Complete NDA written exam and SSB interview preparation with expert guidance.",
     duration: "6-12 Months",
     students: "2000+",
     rating: 4.8,
-    image: "/courses/nda.jpg",
+    image: "/images/courses/nda.jpg",
     badge: "Best Seller",
-    features: ["Written Exam Prep", "SSB Training", "Mock Tests", "Physical Fitness"],
+    features: ["Written Exam Prep", "SSB Training", "Mock Tests", "Physical Fitness", "GK Updates", "Interview Skills"],
+    highlights: [
+      "Complete syllabus coverage for NDA written exam",
+      "Weekly mock tests with detailed analysis",
+      "Physical fitness training included",
+      "SSB interview preparation module"
+    ],
     href: "/courses/nda",
   },
   {
     id: "cds",
     title: "CDS Course",
-    description: "Structured program to help candidates pass CDS examination with focused subject preparation.",
+    description: "A structured program designed specifically for graduate candidates preparing for the Combined Defence Services Examination. Our CDS course covers English, General Knowledge, and Elementary Mathematics with a focus on exam-oriented preparation. The faculty includes subject matter experts who break down complex topics into easily understandable concepts, ensuring students build a strong foundation for both the written exam and the subsequent SSB interview.",
+    shortDescription: "Structured CDS exam preparation for graduates with focused subject coaching.",
     duration: "6 Months",
     students: "1500+",
     rating: 4.8,
-    image: "/courses/cds.jpg",
+    image: "/images/courses/cds.jpg",
     badge: null,
-    features: ["Complete Syllabus", "Personal Guidance", "Practice Tests", "Interview Prep"],
+    features: ["Complete Syllabus", "Personal Guidance", "Practice Tests", "Current Affairs", "Essay Writing", "Interview Prep"],
+    highlights: [
+      "Comprehensive coverage of all three papers",
+      "Daily current affairs and GK updates",
+      "Previous year paper analysis",
+      "One-on-one doubt clearing sessions"
+    ],
     href: "/courses/cds",
   },
   {
     id: "ssb",
     title: "SSB Interview Training",
-    description: "Comprehensive SSB preparation covering psychological tests, GTO tasks, and personal interviews.",
+    description: "Our comprehensive SSB Interview preparation program is designed to develop the Officer Like Qualities (OLQs) required to clear the Services Selection Board. The 21-day intensive course covers all aspects of the 5-day SSB process including Screening Test, Psychological Tests (TAT, WAT, SRT, SD), Group Testing Officer Tasks (GD, GPE, PGT, HGT, Command Task, FGT), and Personal Interview. Training is conducted by ex-SSB board members and psychologists.",
+    shortDescription: "Intensive 21-day SSB preparation covering psychology, GTO, and interview.",
     duration: "21 Days",
     students: "3000+",
     rating: 4.9,
-    image: "/courses/ssb.jpg",
+    image: "/images/courses/ssb.jpg",
     badge: "Top Rated",
-    features: ["Psychology Tests", "GTO Tasks", "Mock Interviews", "Personality Development"],
+    features: ["Psychology Tests", "GTO Tasks", "Mock Interviews", "Personality Development", "OLQ Building", "Conference Prep"],
+    highlights: [
+      "Training by ex-SSB board members",
+      "Live GTO tasks on actual obstacles",
+      "Multiple mock SSB sessions",
+      "Individual feedback and improvement plan"
+    ],
     href: "/courses/ssb",
   },
   {
     id: "afcat",
     title: "AFCAT Course",
-    description: "Step-by-step preparation for Air Force Common Admission Test with experienced mentors.",
+    description: "Our Air Force Common Admission Test preparation course offers specialized coaching for aspiring Indian Air Force officers. The program covers General Awareness, Verbal Ability, Numerical Ability, Reasoning & Military Aptitude. Students also receive guidance for the AFSB interview process including EKT (Engineering Knowledge Test) preparation for technical candidates. Physical fitness training ensures students meet the rigorous standards of the Indian Air Force.",
+    shortDescription: "Complete AFCAT exam and AFSB interview preparation for IAF aspirants.",
     duration: "4-6 Months",
     students: "800+",
     rating: 4.7,
-    image: "/courses/afcat.jpg",
+    image: "/images/courses/afcat.jpg",
     badge: null,
-    features: ["AFCAT Syllabus", "AFSB Training", "Physical Training", "Mock Tests"],
+    features: ["AFCAT Syllabus", "AFSB Training", "Physical Training", "EKT Preparation", "Aptitude Tests", "Mock Tests"],
+    highlights: [
+      "Complete AFCAT syllabus coverage",
+      "EKT preparation for technical branches",
+      "AFSB interview coaching",
+      "Aviation knowledge sessions"
+    ],
     href: "/courses/afcat",
   },
   {
     id: "navy-agniveer",
     title: "Indian Navy Agniveer",
-    description: "Expert coaching for Navy SSR/AA examination with comprehensive practice and guidance.",
+    description: "Expert coaching program for the Indian Navy Agniveer SSR (Senior Secondary Recruit) and AA (Artificer Apprentice) examinations. Our course provides comprehensive preparation for the written test covering English, Science, Mathematics, and General Knowledge. Students also receive physical fitness training to meet Navy standards, guidance for the medical examination, and document verification support throughout the recruitment process.",
+    shortDescription: "Complete Navy SSR/AA exam preparation with physical training support.",
     duration: "3-4 Months",
     students: "600+",
     rating: 4.7,
-    image: "/courses/navy.jpg",
+    image: "/images/courses/navy.jpg",
     badge: "New",
-    features: ["Written Exam", "Physical Tests", "Medical Preparation", "Documentation"],
-    href: "/courses/navy-agniveer",
+    features: ["Written Exam", "Physical Tests", "Medical Guidance", "Documentation", "Swimming Training", "Mock Tests"],
+    highlights: [
+      "Navy exam pattern focused preparation",
+      "Physical fitness as per Navy standards",
+      "Swimming training available",
+      "Complete recruitment guidance"
+    ],
+    href: "/courses/navy",
   },
   {
     id: "airforce-xy",
     title: "Airforce X/Y Group",
-    description: "Structured coaching for Indian Air Force X and Y Group examinations.",
+    description: "Structured coaching program for the Indian Air Force X (Technical) and Y (Non-Technical) Group examinations. The course covers English, Physics, Mathematics for X Group, and Reasoning & General Awareness for Y Group. Our experienced faculty provides exam-focused preparation with regular practice tests and doubt-clearing sessions. Physical training ensures students meet the strict fitness requirements of the Indian Air Force.",
+    shortDescription: "IAF X/Y Group exam coaching with technical and non-technical preparation.",
     duration: "4-6 Months",
     students: "700+",
     rating: 4.6,
-    image: "/courses/airforce.jpg",
+    image: "/images/courses/airforce.jpg",
     badge: null,
-    features: ["Technical Training", "Non-Tech Prep", "Physical Fitness", "Mock Tests"],
-    href: "/courses/airforce-xy",
+    features: ["Technical Training", "Non-Tech Prep", "Physical Fitness", "Mock Tests", "Reasoning Skills", "GK Updates"],
+    highlights: [
+      "Separate batches for X and Y groups",
+      "Technical subjects by expert faculty",
+      "Regular assessment and feedback",
+      "Physical training included"
+    ],
+    href: "/courses/afcat",
   },
   {
     id: "mns",
     title: "MNS Course",
-    description: "Complete preparation for Military Nursing Service examination and interview.",
+    description: "Complete preparation program for Military Nursing Service examination for female candidates. Our MNS course covers the written examination including General English, Biology, Physics, Chemistry, and General Intelligence. The program also includes personality development, interview preparation, and guidance for the medical examination. Experienced faculty provide focused coaching to help candidates secure positions in the prestigious Indian Army nursing corps.",
+    shortDescription: "Military Nursing Service exam and interview preparation for female candidates.",
     duration: "3-6 Months",
     students: "400+",
     rating: 4.8,
-    image: "/courses/mns.jpg",
+    image: "/images/courses/mns.jpg",
     badge: "For Women",
-    features: ["NEET Preparation", "MNS Written", "Interview Training", "Medical Knowledge"],
+    features: ["Science Subjects", "English Prep", "Interview Training", "Medical Knowledge", "Personality Dev", "Mock Tests"],
+    highlights: [
+      "NEET-based syllabus coverage",
+      "Female faculty available",
+      "Interview and personality grooming",
+      "Complete admission guidance"
+    ],
     href: "/courses/mns",
   },
 ]
@@ -117,7 +174,8 @@ export function CoursesSection() {
             Comprehensive Defence Courses
           </h2>
           <p className="text-muted-foreground text-lg">
-            Choose from our range of expertly designed courses tailored for every defence examination.
+            Choose from our range of expertly designed courses tailored for every defence examination. 
+            Each program is crafted by experienced military officers and educators to maximize your success.
           </p>
         </div>
 
@@ -128,8 +186,14 @@ export function CoursesSection() {
               className="group bg-card border-border hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
             >
               <CardHeader className="p-0 relative">
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <BookOpen className="h-16 w-16 text-primary/40" />
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={course.image}
+                    alt={course.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 </div>
                 {course.badge && (
                   <Badge className="absolute top-4 right-4 bg-accent text-accent-foreground">
@@ -143,7 +207,7 @@ export function CoursesSection() {
                   {course.title}
                 </h3>
                 <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                  {course.description}
+                  {course.shortDescription}
                 </p>
                 
                 <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
@@ -155,6 +219,16 @@ export function CoursesSection() {
                     <Users className="h-4 w-4" />
                     <span>{course.students}</span>
                   </div>
+                </div>
+
+                {/* Course Highlights */}
+                <div className="space-y-2 mb-4">
+                  {course.highlights.slice(0, 2).map((highlight, idx) => (
+                    <div key={idx} className="flex items-start gap-2">
+                      <CheckCircle className="h-3.5 w-3.5 text-accent mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-muted-foreground">{highlight}</span>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="flex items-center gap-1">
