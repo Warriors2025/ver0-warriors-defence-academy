@@ -87,13 +87,14 @@ export function OutdoorActivitiesSection() {
                 key={`${activity.id}-${index}`}
                 className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/4 transition-all duration-500"
               >
-                <div className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer" style={{ position: 'relative' }}>
+                <div className="!relative aspect-square rounded-xl overflow-hidden group cursor-pointer">
                   <Image
                     src={activity.image}
                     alt={activity.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    style={{ position: 'absolute' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
