@@ -1,6 +1,3 @@
-"use client"
-
-import { useState } from "react"
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -47,8 +44,6 @@ const overallStats = [
 ]
 
 export default function ResultsPage() {
-  const [activeYear, setActiveYear] = useState("2025")
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -108,9 +103,9 @@ export default function ResultsPage() {
 
             <Tabs defaultValue="2025" className="max-w-5xl mx-auto">
               <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8">
-                <TabsTrigger value="2025" onClick={() => setActiveYear("2025")}>2025</TabsTrigger>
-                <TabsTrigger value="2024" onClick={() => setActiveYear("2024")}>2024</TabsTrigger>
-                <TabsTrigger value="2023" onClick={() => setActiveYear("2023")}>2023</TabsTrigger>
+                <TabsTrigger value="2025">2025</TabsTrigger>
+                <TabsTrigger value="2024">2024</TabsTrigger>
+                <TabsTrigger value="2023">2023</TabsTrigger>
               </TabsList>
 
               {Object.entries(results).map(([year, students]) => (
