@@ -97,7 +97,7 @@ export default function AdmissionsPage() {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
+        <section className="relative py-20 bg-primary overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-10 right-10 w-72 h-72 border border-accent/30 rounded-full" />
             <div className="absolute bottom-20 left-20 w-48 h-48 border border-accent/20 rounded-full" />
@@ -323,7 +323,7 @@ export default function AdmissionsPage() {
         </section>
 
         {/* Contact CTA */}
-        <section className="py-16 bg-primary text-primary-foreground">
+        <section className="bg-primary text-primary-foreground py-16">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>

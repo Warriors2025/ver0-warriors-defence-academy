@@ -55,7 +55,7 @@ export default function ResultsPage() {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
+        <section className="relative py-20 bg-primary overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-20 left-10 w-64 h-64 border border-accent/30 rounded-full" />
             <div className="absolute bottom-10 right-20 w-96 h-96 border border-accent/20 rounded-full" />
@@ -121,7 +121,7 @@ export default function ResultsPage() {
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
                             <div className="relative">
-                              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground text-xl font-bold">
+                              <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xl font-bold">
                                 {student.name.split(' ').map(n => n[0]).join('')}
                               </div>
                               {index < 3 && (
@@ -198,7 +198,7 @@ export default function ResultsPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 bg-primary text-primary-foreground">
+        <section className="bg-primary text-primary-foreground py-16">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Write Your Success Story?</h2>
             <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">

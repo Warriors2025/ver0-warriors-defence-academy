@@ -3,136 +3,106 @@
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
 const activities = [
-  {
-    id: 1,
-    image: "/images/activities/activity-1.jpg",
-    title: "Morning Physical Training",
-  },
-  {
-    id: 2,
-    image: "/images/activities/activity-2.jpg",
-    title: "GTO Group Tasks",
-  },
-  {
-    id: 3,
-    image: "/images/activities/activity-3.jpg",
-    title: "Team Sports",
-  },
-  {
-    id: 4,
-    image: "/images/activities/activity-4.jpg",
-    title: "Parade Practice",
-  },
-  {
-    id: 5,
-    image: "/images/activities/activity-5.jpg",
-    title: "Adventure Training",
-  },
-  {
-    id: 6,
-    image: "/images/activities/activity-6.jpg",
-    title: "Group Discussions",
-  },
+  { id: 1, image: "/images/activities/activity-1.jpg", title: "Morning Physical Training", tag: "Fitness" },
+  { id: 2, image: "/images/activities/activity-2.jpg", title: "GTO Group Tasks",           tag: "SSB Prep" },
+  { id: 3, image: "/images/activities/activity-3.jpg", title: "Team Sports",               tag: "Teamwork" },
+  { id: 4, image: "/images/activities/activity-4.jpg", title: "Parade Practice",            tag: "Discipline" },
+  { id: 5, image: "/images/activities/activity-5.jpg", title: "Adventure Training",         tag: "Leadership" },
+  { id: 6, image: "/images/activities/activity-6.jpg", title: "Group Discussions",          tag: "Communication" },
 ]
 
 export function OutdoorActivitiesSection() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const itemsPerPage = 4
+  const [idx, setIdx] = useState(0)
+  const perPage = 3
 
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex + itemsPerPage >= activities.length ? 0 : prevIndex + 1
-    )
-  }, [])
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? activities.length - itemsPerPage : prevIndex - 1
-    )
-  }
+  const next = useCallback(() => setIdx((p) => (p + 1) % activities.length), [])
+  const prev = () => setIdx((p) => (p - 1 + activities.length) % activities.length)
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 4000)
-    return () => clearInterval(timer)
-  }, [nextSlide])
+    const t = setInterval(next, 4000)
+    return () => clearInterval(t)
+  }, [next])
 
-  const visibleActivities = activities.slice(currentIndex, currentIndex + itemsPerPage)
-  const wrappedActivities = visibleActivities.length < itemsPerPage 
-    ? [...visibleActivities, ...activities.slice(0, itemsPerPage - visibleActivities.length)]
-    : visibleActivities
+  const visible = Array.from({ length: perPage }, (_, i) => activities[(idx + i) % activities.length])
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-20 bg-secondary">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-accent font-semibold text-sm uppercase tracking-wider">
-            Our Outdoor Activities
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-3 mb-4 text-balance">
-            Building Character Through Action
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            At Warriors Defence Academy, our training is not only in the classroom. We also focus on outdoor activities to build overall personality and fitness. Through physical challenges, group tasks, and leadership drills, students learn teamwork, confidence, and mental strength.
-          </p>
-        </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <div className="flex gap-4 overflow-hidden">
-            {wrappedActivities.map((activity, index) => (
-              <div
-                key={`${activity.id}-${index}`}
-                className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/4 transition-all duration-500"
-              >
-                <div className="!relative aspect-square rounded-xl overflow-hidden group cursor-pointer">
-                  <Image
-                    src={activity.image}
-                    alt={activity.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    style={{ position: 'absolute' }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-white font-semibold text-center">{activity.title}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* Header — left-aligned */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <span className="text-accent font-semibold text-sm uppercase tracking-widest">
+              Life at Warriors
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-3 leading-tight">
+              Building Character Through Action
+            </h2>
+            <p className="text-muted-foreground text-base mt-3 max-w-lg leading-relaxed">
+              Training beyond the classroom — physical challenges, group tasks, and leadership
+              drills that build teamwork, confidence, and mental toughness.
+            </p>
           </div>
 
-          {/* Navigation Buttons */}
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-background shadow-lg z-10 hidden md:flex"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-background shadow-lg z-10 hidden md:flex"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </Button>
+          {/* Arrow controls */}
+          <div className="flex gap-2 shrink-0">
+            <button
+              onClick={prev}
+              aria-label="Previous activity"
+              className="w-10 h-10 rounded-full border border-border bg-background hover:bg-primary hover:text-primary-foreground hover:border-primary flex items-center justify-center transition-colors"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Next activity"
+              className="w-10 h-10 rounded-full border border-border bg-background hover:bg-primary hover:text-primary-foreground hover:border-primary flex items-center justify-center transition-colors"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {activities.map((_, index) => (
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {visible.map((a, i) => (
+            <div
+              key={`${a.id}-${i}`}
+              className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer"
+            >
+              <Image
+                src={a.image}
+                alt={a.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Permanent subtle gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
+
+              {/* Tag chip */}
+              <div className="absolute top-3 left-3 bg-black/40 backdrop-blur-sm border border-white/15 rounded-full px-3 py-1">
+                <span className="text-white text-xs font-medium">{a.tag}</span>
+              </div>
+
+              {/* Title */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="text-white font-semibold text-base leading-snug">{a.title}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-1.5 mt-8">
+          {activities.map((_, i) => (
             <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? "bg-primary w-6" : "bg-muted-foreground/30"
-              }`}
+              key={i}
+              onClick={() => setIdx(i)}
+              aria-label={`Go to activity ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/30"}`}
             />
           ))}
         </div>

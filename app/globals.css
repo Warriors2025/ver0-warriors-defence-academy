@@ -27,6 +27,10 @@
   /* Accent - Gold/Bronze */
   --accent: oklch(0.72 0.14 75);
   --accent-foreground: oklch(0.18 0.02 90);
+
+  /* Brand deep maroon #540413 — additional accent (does not replace primary/accent) */
+  --brand-deep: #540413;
+  --brand-deep-foreground: oklch(0.98 0.005 90);
   
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0.005 90);
@@ -41,6 +45,7 @@
   --chart-3: oklch(0.55 0.06 90);
   --chart-4: oklch(0.45 0.12 150);
   --chart-5: oklch(0.65 0.08 60);
+  --chart-6: #540413;
   
   --radius: 0.5rem;
   
@@ -69,6 +74,8 @@
   --muted-foreground: oklch(0.65 0.02 90);
   --accent: oklch(0.55 0.12 75);
   --accent-foreground: oklch(0.95 0.01 90);
+  --brand-deep: #540413;
+  --brand-deep-foreground: oklch(0.95 0.01 90);
   --destructive: oklch(0.5 0.2 25);
   --destructive-foreground: oklch(0.95 0.01 90);
   --border: oklch(0.3 0.03 130);
@@ -79,6 +86,7 @@
   --chart-3: oklch(0.65 0.06 90);
   --chart-4: oklch(0.6 0.1 150);
   --chart-5: oklch(0.7 0.08 60);
+  --chart-6: #540413;
   --sidebar: oklch(0.18 0.03 130);
   --sidebar-foreground: oklch(0.95 0.01 90);
   --sidebar-primary: oklch(0.72 0.14 75);
@@ -107,6 +115,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-deep-foreground: var(--brand-deep-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -117,6 +127,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -180,28 +191,59 @@
   animation: scaleIn 0.4s ease-out forwards;
 }
 
-/* Gradient backgrounds */
+/* Solid military accent (no gradient) */
 .gradient-military {
-  background: linear-gradient(135deg, oklch(0.30 0.10 145), oklch(0.38 0.12 145), oklch(0.45 0.10 140));
+  background: oklch(0.38 0.12 145);
 }
 
 .gradient-gold {
   background: linear-gradient(135deg, oklch(0.72 0.14 75), oklch(0.78 0.12 70));
 }
 
-/* Text gradient */
+/* Text gradient — gold shimmer for key headline words */
 .text-gradient {
-  background: linear-gradient(135deg, oklch(0.72 0.14 75), oklch(0.65 0.16 80));
+  background: linear-gradient(135deg, oklch(0.72 0.14 75) 0%, oklch(0.60 0.18 78) 50%, oklch(0.72 0.14 75) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Hero pattern */
+/* Hero pattern — subtle radial warmth */
 .hero-pattern {
-  background-image: 
-    radial-gradient(circle at 25% 25%, oklch(0.72 0.14 75 / 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, oklch(0.38 0.12 145 / 0.1) 0%, transparent 50%);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 40%, oklch(0.72 0.14 75 / 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 70%, oklch(0.38 0.12 145 / 0.06) 0%, transparent 60%);
+}
+
+/* Bento card hover ring */
+.bento-card {
+  @apply relative overflow-hidden rounded-2xl transition-all duration-300;
+}
+.bento-card:hover {
+  @apply shadow-xl;
+}
+
+/* Low opacity background helpers */
+.bg-primary\/8 {
+  background-color: oklch(0.38 0.12 145 / 0.08);
+}
+.hover\:bg-primary\/15:hover {
+  background-color: oklch(0.38 0.12 145 / 0.15);
+}
+.bg-accent\/8 {
+  background-color: oklch(0.72 0.14 75 / 0.08);
+}
+.hover\:bg-accent\/8:hover {
+  background-color: oklch(0.72 0.14 75 / 0.08);
+}
+.focus\:bg-accent\/8:focus {
+  background-color: oklch(0.72 0.14 75 / 0.08);
+}
+
+/* Section divider line */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, oklch(0.88 0.02 90), transparent);
 }
 
 /* Smooth scrolling */

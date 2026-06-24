@@ -88,7 +88,7 @@ export default function AboutPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-primary py-20 relative overflow-hidden">
+      <section className="bg-primary text-primary-foreground py-20 relative overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -157,7 +157,7 @@ export default function AboutPage() {
             </div>
             
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center">
+              <div className="aspect-square bg-primary/10 rounded-2xl flex items-center justify-center">
                 <Shield className="h-48 w-48 text-primary/30" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-accent text-accent-foreground p-6 rounded-xl shadow-xl">
@@ -244,7 +244,7 @@ export default function AboutPage() {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-3 gap-8 items-center">
               <div className="text-center">
-                <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-primary/60 mx-auto flex items-center justify-center mb-4">
+                <div className="w-48 h-48 rounded-full bg-primary mx-auto flex items-center justify-center mb-4">
                   <User className="h-24 w-24 text-primary-foreground" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground">Mr. Gulab Singh</h3>
@@ -330,7 +330,7 @@ export default function AboutPage() {
             {leadership.map((leader, index) => (
               <Card key={index} className="text-center bg-card border-border">
                 <CardContent className="p-6">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary/60 mx-auto flex items-center justify-center mb-4">
+                  <div className="w-24 h-24 rounded-full bg-primary mx-auto flex items-center justify-center mb-4">
                     <User className="h-12 w-12 text-primary-foreground" />
                   </div>
                   <h3 className="text-lg font-semibold text-foreground">{leader.name}</h3>
@@ -344,7 +344,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-primary">
+      <section className="bg-primary text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
             Ready to Join Our Family?

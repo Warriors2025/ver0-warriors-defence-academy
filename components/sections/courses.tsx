@@ -139,7 +139,7 @@ export const courses = [
       "Regular assessment and feedback",
       "Physical training included"
     ],
-    href: "/courses/afcat",
+    href: "/courses/airforce-xy",
   },
   {
     id: "mns",
@@ -255,7 +255,7 @@ export function CoursesSection() {
 
         <div className="text-center mt-12">
           <Link href="/courses">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button size="lg">
               View All Courses
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>

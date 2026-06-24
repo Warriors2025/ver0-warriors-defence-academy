@@ -108,7 +108,7 @@ const jsonLd = {
   "name": "Warriors Defence Academy",
   "description": "India's No.1 NDA, CDS, AFCAT & SSB coaching institute in Lucknow with 5000+ selections.",
   "url": "https://warriorsdefenceacademy.com",
-  "logo": "https://warriorsdefenceacademy.com/images/logo.png",
+  "logo": "https://warriorsdefenceacademy.com/images/logo/Warriors%20Defence%20Logo.png",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "123 Defence Colony",

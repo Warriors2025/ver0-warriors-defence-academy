@@ -89,7 +89,7 @@ export default function GalleryPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-primary py-20 relative overflow-hidden">
+      <section className="bg-primary text-primary-foreground py-20 relative overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -137,7 +137,7 @@ export default function GalleryPage() {
             {filteredItems.map((item) => (
               <div
                 key={item.id}
-                className="group relative aspect-square bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+                className="group relative aspect-square bg-primary/10 rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
                 onClick={() => setSelectedImage(item.id)}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -185,7 +185,7 @@ export default function GalleryPage() {
           </Button>
           
           <div className="relative aspect-video flex items-center justify-center">
-            <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-primary/20 to-primary/5">
+            <div className="flex items-center justify-center w-full h-full bg-primary/10">
               {selectedItem?.type === "video" ? (
                 <Video className="h-24 w-24 text-primary/40" />
               ) : (
@@ -242,7 +242,7 @@ export default function GalleryPage() {
                 key={video.id}
                 className="group relative bg-card rounded-lg overflow-hidden border border-border hover:shadow-xl transition-all cursor-pointer"
               >
-                <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center relative">
+                <div className="aspect-video bg-primary/10 flex items-center justify-center relative">
                   <Video className="h-16 w-16 text-primary/40" />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="bg-accent text-accent-foreground p-4 rounded-full">
@@ -264,7 +264,7 @@ export default function GalleryPage() {
           </div>
 
           <div className="text-center mt-8">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button>
               <Play className="h-4 w-4 mr-2" />
               View All Videos on YouTube
             </Button>
@@ -273,7 +273,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Success Wall */}
-      <section className="py-16 bg-primary">
+      <section className="bg-primary text-primary-foreground py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">

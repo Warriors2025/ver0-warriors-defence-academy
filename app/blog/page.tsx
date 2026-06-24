@@ -216,7 +216,7 @@ export default function BlogPage() {
       
       <main>
         {/* Hero Section */}
-        <section className="relative py-8 md:py-16 bg-gradient-to-br from-primary via-primary/90 to-primary/80 overflow-hidden">
+        <section className="relative py-8 md:py-16 bg-primary overflow-hidden">
           <div className="absolute inset-0 hero-pattern opacity-10" />
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center text-primary-foreground">
@@ -507,7 +507,7 @@ export default function BlogPage() {
           </section>
 
           {/* Newsletter CTA */}
-          <section className="py-8 md:py-12 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-2xl">
+          <section className="py-8 md:py-12 bg-primary text-primary-foreground rounded-2xl">
             <div className="max-w-2xl mx-auto text-center px-4">
               <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Stay Updated</h2>
               <p className="text-sm md:text-base opacity-90 mb-6 md:mb-8">

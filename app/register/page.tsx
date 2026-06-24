@@ -148,7 +148,7 @@ export default function RegisterPage() {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/">
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button>
                     Back to Home
                   </Button>
                 </Link>
@@ -172,7 +172,7 @@ export default function RegisterPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-primary py-12 relative overflow-hidden">
+      <section className="bg-primary text-primary-foreground py-12 relative overflow-hidden">
         <div className="absolute inset-0 hero-pattern opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -684,7 +684,7 @@ export default function RegisterPage() {
                     <Button
                       type="button"
                       onClick={nextStep}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+                      className="gap-2"
                     >
                       Next
                       <ArrowRight className="h-4 w-4" />

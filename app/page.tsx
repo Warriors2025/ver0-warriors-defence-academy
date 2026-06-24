@@ -1,5 +1,6 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { HeroMenuBanner } from "@/components/sections/hero-menu-banner"
 import { HeroSection } from "@/components/sections/hero"
 import { FeaturesSection } from "@/components/sections/features"
 import { CoursesSection } from "@/components/sections/courses"
@@ -16,6 +17,7 @@ import { CTASection } from "@/components/sections/cta"
 export default function HomePage() {
   return (
     <main className="min-h-screen">
+      <HeroMenuBanner />
       <Header />
       <HeroSection />
       <FeaturesSection />
