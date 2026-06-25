@@ -31,7 +31,7 @@ const steps = [
   { id: 4, title: "Confirmation", icon: CreditCard },
 ]
 
-const courses = [
+const coursesFallback = [
   { id: "nda", name: "NDA Course", duration: "6-12 Months" },
   { id: "nda-foundation", name: "NDA Foundation", duration: "2-3 Years" },
   { id: "cds", name: "CDS Course", duration: "6 Months" },
@@ -48,9 +48,16 @@ const batchTypes = [
   { id: "hybrid", name: "Hybrid Mode", description: "Combination of online and offline" },
 ]
 
-export function RegisterForm() {
+export function RegisterForm({
+  courses: coursesProp,
+}: {
+  courses?: { id: string; name: string; duration: string }[]
+}) {
+  const courses = coursesProp?.length ? coursesProp : coursesFallback
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitError, setSubmitError] = useState("")
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -80,7 +87,28 @@ export function RegisterForm() {
 
   const nextStep = () => { if (currentStep < 4) setCurrentStep(currentStep + 1) }
   const prevStep = () => { if (currentStep > 1) setCurrentStep(currentStep - 1) }
-  const handleSubmit = () => setIsSubmitted(true)
+
+  const handleSubmit = async () => {
+    setIsLoading(true)
+    setSubmitError("")
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, dateOfBirth: formData.dob }),
+      })
+      const json = await res.json()
+      if (!res.ok || !json.success) {
+        setSubmitError(json.message || "Registration failed. Please try again.")
+        return
+      }
+      setIsSubmitted(true)
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const progressValue = (currentStep / steps.length) * 100
 
@@ -446,24 +474,31 @@ export function RegisterForm() {
           )}
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8 pt-6 border-t border-border">
-            <Button type="button" variant="outline" onClick={prevStep} disabled={currentStep === 1} className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Previous
-            </Button>
-
-            {currentStep < 4 ? (
-              <Button type="button" onClick={nextStep} className="gap-2">
-                Next
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            ) : (
-              <Button type="button" onClick={handleSubmit} disabled={!formData.termsAccepted}
-                className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
-                <CheckCircle className="h-4 w-4" />
-                Submit Registration
-              </Button>
+          <div className="space-y-4 mt-8 pt-6 border-t border-border">
+            {submitError && (
+              <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2">
+                {submitError}
+              </p>
             )}
+            <div className="flex justify-between">
+              <Button type="button" variant="outline" onClick={prevStep} disabled={currentStep === 1} className="gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Previous
+              </Button>
+
+              {currentStep < 4 ? (
+                <Button type="button" onClick={nextStep} className="gap-2">
+                  Next
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button type="button" onClick={handleSubmit} disabled={!formData.termsAccepted || isLoading}
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  {isLoading ? "Submitting..." : "Submit Registration"}
+                </Button>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>

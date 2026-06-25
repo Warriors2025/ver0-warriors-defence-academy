@@ -1,13 +1,9 @@
 import type { Metadata } from "next"
+import { getPageSeo, buildPageMetadata } from "@/lib/seo.server"
 
-export const metadata: Metadata = {
-  title: "Admissions - Fee Structure & Eligibility",
-  description: "Warriors Defence Academy admissions open. Check fee structure, eligibility criteria, scholarship options for NDA, CDS, AFCAT & SSB courses. Apply now for upcoming batches.",
-  keywords: ["NDA coaching fees", "defence academy admission", "CDS course eligibility", "SSB training fees", "defence coaching scholarship"],
-  openGraph: {
-    title: "Admissions | Warriors Defence Academy",
-    description: "Admissions open for NDA, CDS, AFCAT & SSB courses. Check fees, eligibility & scholarships.",
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("admissions")
+  return buildPageMetadata("admissions", seo)
 }
 
 export default function AdmissionsLayout({

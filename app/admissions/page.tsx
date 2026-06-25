@@ -1,3 +1,5 @@
+import { getAdmissionBatches } from "@/lib/admissions-data"
+import { getSiteContent } from "@/lib/site-content.server"
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -20,75 +22,23 @@ import {
   Award
 } from "lucide-react"
 
-const admissionSteps = [
-  {
-    step: 1,
-    title: "Submit Application",
-    description: "Fill out the online registration form with your personal and educational details.",
-    icon: FileText,
-  },
-  {
-    step: 2,
-    title: "Document Verification",
-    description: "Upload required documents including educational certificates and ID proof.",
-    icon: UserCheck,
-  },
-  {
-    step: 3,
-    title: "Counselling Session",
-    description: "Attend a free counselling session with our experts to choose the right course.",
-    icon: Users,
-  },
-  {
-    step: 4,
-    title: "Fee Payment",
-    description: "Complete the admission process by paying the course fee through available modes.",
-    icon: CreditCard,
-  },
-]
+const stepIcons = [FileText, UserCheck, Users, CreditCard]
 
-const documents = [
-  "10th Mark Sheet & Certificate",
-  "12th Mark Sheet & Certificate",
-  "Graduation Degree (if applicable)",
-  "Aadhar Card",
-  "Passport Size Photographs (6)",
-  "Medical Fitness Certificate",
-  "Character Certificate",
-  "Domicile Certificate",
-]
-
-const upcomingBatches = [
-  { course: "NDA Foundation", date: "April 15, 2025", seats: "10 seats left" },
-  { course: "CDS Coaching", date: "May 1, 2025", seats: "15 seats left" },
-  { course: "SSB Intensive", date: "April 20, 2025", seats: "5 seats left" },
-  { course: "AFCAT Program", date: "May 10, 2025", seats: "12 seats left" },
-]
-
-const scholarships = [
-  {
-    title: "Merit Scholarship",
-    discount: "Up to 50%",
-    criteria: "For students scoring above 90% in qualifying exam",
-  },
-  {
-    title: "Defence Ward Scholarship",
-    discount: "25%",
-    criteria: "For children of defence personnel",
-  },
-  {
-    title: "Early Bird Discount",
-    discount: "15%",
-    criteria: "For enrollments 2 months before batch start",
-  },
-  {
-    title: "Group Enrollment",
-    discount: "10%",
-    criteria: "For groups of 3 or more students",
-  },
-]
-
-export default function AdmissionsPage() {
+export default async function AdmissionsPage() {
+  const [upcomingBatches, { pages }] = await Promise.all([
+    getAdmissionBatches(),
+    getSiteContent(),
+  ])
+  const page = pages.admissions
+  const admissionSteps = page.steps.map((step, index) => ({
+    step: index + 1,
+    title: step.title,
+    description: step.description,
+    icon: stepIcons[index % stepIcons.length],
+  }))
+  const documents = page.documents
+  const scholarships = page.scholarships
+  const fees = page.fees
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -103,13 +53,12 @@ export default function AdmissionsPage() {
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-3xl mx-auto text-center text-primary-foreground">
-              <Badge className="mb-4 bg-accent text-accent-foreground">Admissions Open 2025</Badge>
+              <Badge className="mb-4 bg-accent text-accent-foreground">{page.hero.eyebrow ?? "Admissions Open"}</Badge>
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Begin Your Defence Journey
+                {page.hero.title}
               </h1>
               <p className="text-lg opacity-90 mb-8 leading-relaxed">
-                Join Warriors Defence Academy and take the first step towards your dream 
-                of serving the nation. Limited seats available for upcoming batches.
+                {page.hero.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild>
@@ -230,10 +179,10 @@ export default function AdmissionsPage() {
                       <CardContent className="p-4 flex items-center justify-between">
                         <div>
                           <h3 className="font-semibold">{scholarship.title}</h3>
-                          <p className="text-sm text-muted-foreground">{scholarship.criteria}</p>
+                          <p className="text-sm text-muted-foreground">{scholarship.description}</p>
                         </div>
-                        <Badge className="bg-accent text-accent-foreground text-lg px-3 py-1">
-                          {scholarship.discount}
+                        <Badge className="bg-accent text-accent-foreground text-sm px-3 py-1">
+                          Available
                         </Badge>
                       </CardContent>
                     </Card>
@@ -255,63 +204,23 @@ export default function AdmissionsPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <Card className="border-2 hover:border-primary/50 transition-colors">
-                <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-lg">NDA Foundation</CardTitle>
-                  <div className="text-3xl font-bold text-primary">₹85,000</div>
-                  <p className="text-sm text-muted-foreground">12 Months Duration</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Complete Study Material</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> SSB Coaching Included</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Physical Training</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Mock Tests</li>
-                  </ul>
-                  <Button className="w-full mt-6" asChild>
-                    <Link href="/register?course=nda">Enroll Now</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 border-primary relative">
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary">Most Popular</Badge>
-                <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-lg">CDS Coaching</CardTitle>
-                  <div className="text-3xl font-bold text-primary">₹55,000</div>
-                  <p className="text-sm text-muted-foreground">6 Months Duration</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Complete Study Material</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> SSB Coaching Included</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Current Affairs Updates</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> One-on-One Mentoring</li>
-                  </ul>
-                  <Button className="w-full mt-6" asChild>
-                    <Link href="/register?course=cds">Enroll Now</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 hover:border-primary/50 transition-colors">
-                <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-lg">SSB Intensive</CardTitle>
-                  <div className="text-3xl font-bold text-primary">₹35,000</div>
-                  <p className="text-sm text-muted-foreground">3 Weeks Duration</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Mock SSB Sessions</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> GTO Practice</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Interview Training</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-600" /> Personality Development</li>
-                  </ul>
-                  <Button className="w-full mt-6" asChild>
-                    <Link href="/register?course=ssb">Enroll Now</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+              {fees.map((fee, index) => (
+                <Card key={fee.course} className={`border-2 hover:border-primary/50 transition-colors ${index === 1 ? "border-primary relative" : ""}`}>
+                  {index === 1 && (
+                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary">Popular</Badge>
+                  )}
+                  <CardHeader className="text-center pb-4">
+                    <CardTitle className="text-lg">{fee.course}</CardTitle>
+                    <div className="text-3xl font-bold text-primary">{fee.amount}</div>
+                    <p className="text-sm text-muted-foreground">{fee.note}</p>
+                  </CardHeader>
+                  <CardContent>
+                    <Button className="w-full mt-2" asChild>
+                      <Link href="/register">Enroll Now</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
 
             <p className="text-center text-muted-foreground mt-8">

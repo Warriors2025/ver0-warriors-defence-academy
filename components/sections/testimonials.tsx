@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Quote, ChevronLeft, ChevronRight, Star, User } from "lucide-react"
 
-const testimonials = [
+const testimonialsFallback = [
   {
     name: "Rahul Sharma",
     achievement: "AIR 15 - NDA 156",
@@ -51,7 +51,10 @@ const testimonials = [
   },
 ]
 
-export function TestimonialsSection() {
+import type { Testimonial } from "@/lib/testimonials"
+
+export function TestimonialsSection({ testimonials: items }: { testimonials?: Testimonial[] }) {
+  const testimonials = items ?? testimonialsFallback
   const [currentIndex, setCurrentIndex] = useState(0)
   const itemsPerPage = 3
 

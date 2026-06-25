@@ -5,160 +5,28 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Clock, Users, Star, CheckCircle, Shield, Phone } from "lucide-react"
+import { getCourses } from "@/lib/courses"
+import { getSiteContent } from "@/lib/site-content.server"
 import type { Metadata } from "next"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "Defence Courses — NDA, CDS, AFCAT, SSB Coaching | Warriors Defence Academy",
-  description: "Explore Warriors Defence Academy's comprehensive courses: NDA, CDS, AFCAT, SSB, Navy Agniveer, MNS. Expert faculty, 5000+ selections, India's best defence coaching in Lucknow.",
-  keywords: ["NDA course", "CDS coaching", "AFCAT preparation", "SSB training", "defence courses Lucknow", "military coaching"],
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("courses")
+  return buildPageMetadata("courses", seo)
 }
 
-const categories = [
-  { label: "All Courses", value: "all" },
-  { label: "Officer Entry", value: "officer" },
-  { label: "Soldier / Airman Entry", value: "soldier" },
-  { label: "Specialist Entry", value: "specialist" },
-]
-
-const courses = [
-  {
-    id: "nda-foundation",
-    category: "officer",
-    title: "NDA Foundation Course",
-    tagline: "Integrated school + NDA prep for Class 10 passouts",
-    duration: "2–3 Years",
-    students: "500+",
-    rating: 4.9,
-    image: "/images/courses/nda-foundation.jpg",
-    badge: "Popular",
-    badgeColor: "bg-primary text-primary-foreground",
-    features: ["Integrated Schooling", "Hostel Facility", "Daily Physical Training", "Early SSB Grooming"],
-    href: "/courses/nda-foundation",
-  },
-  {
-    id: "nda",
-    category: "officer",
-    title: "NDA Course",
-    tagline: "Complete written exam + SSB preparation",
-    duration: "6–12 Months",
-    students: "2,000+",
-    rating: 4.8,
-    image: "/images/courses/nda.jpg",
-    badge: "Best Seller",
-    badgeColor: "bg-accent text-accent-foreground",
-    features: ["Written Exam Prep", "SSB Interview Training", "Weekly Mock Tests", "Physical Fitness"],
-    href: "/courses/nda",
-  },
-  {
-    id: "cds",
-    category: "officer",
-    title: "CDS Course",
-    tagline: "For graduates aiming for officer commission",
-    duration: "6 Months",
-    students: "1,500+",
-    rating: 4.8,
-    image: "/images/courses/cds.jpg",
-    badge: null,
-    badgeColor: "",
-    features: ["Complete Syllabus", "Daily Current Affairs", "Previous Year Analysis", "SSB Prep Included"],
-    href: "/courses/cds",
-  },
-  {
-    id: "ssb",
-    category: "officer",
-    title: "SSB Interview Training",
-    tagline: "21-day intensive SSB prep on real GTO ground",
-    duration: "21 Days",
-    students: "3,000+",
-    rating: 4.9,
-    image: "/images/courses/ssb.jpg",
-    badge: "Top Rated",
-    badgeColor: "bg-accent text-accent-foreground",
-    features: ["Live GTO Tasks", "Mock SSB Interviews", "Psychology Tests", "OLQ Development"],
-    href: "/courses/ssb",
-  },
-  {
-    id: "afcat",
-    category: "officer",
-    title: "AFCAT Course",
-    tagline: "Air Force Common Admission Test coaching",
-    duration: "4–6 Months",
-    students: "800+",
-    rating: 4.7,
-    image: "/images/courses/afcat.jpg",
-    badge: null,
-    badgeColor: "",
-    features: ["Full AFCAT Syllabus", "AFSB Interview Prep", "EKT for Technical", "Physical Training"],
-    href: "/courses/afcat",
-  },
-  {
-    id: "navy-agniveer",
-    category: "soldier",
-    title: "Indian Navy Agniveer",
-    tagline: "Navy SSR / AA exam coaching with swim training",
-    duration: "3–4 Months",
-    students: "600+",
-    rating: 4.7,
-    image: "/images/courses/navy.jpg",
-    badge: "New",
-    badgeColor: "bg-primary text-primary-foreground",
-    features: ["Written Exam Coaching", "Physical Training", "Swimming Sessions", "Medical Guidance"],
-    href: "/courses/navy-agniveer",
-  },
-  {
-    id: "airforce-xy",
-    category: "soldier",
-    title: "Airforce X / Y Group",
-    tagline: "IAF Airmen selection — technical & non-technical",
-    duration: "4–6 Months",
-    students: "700+",
-    rating: 4.6,
-    image: "/images/courses/airforce.jpg",
-    badge: null,
-    badgeColor: "",
-    features: ["Separate X & Y Batches", "Technical Subjects", "Reasoning & GK", "Physical Fitness"],
-    href: "/courses/airforce-xy",
-  },
-  {
-    id: "mns",
-    category: "specialist",
-    title: "MNS Course",
-    tagline: "Military Nursing Service — for female candidates",
-    duration: "3–6 Months",
-    students: "400+",
-    rating: 4.8,
-    image: "/images/courses/mns.jpg",
-    badge: "For Women",
-    badgeColor: "bg-[#7c3aed] text-white",
-    features: ["Science Subjects", "English Prep", "Interview Training", "Personality Development"],
-    href: "/courses/mns",
-  },
-  {
-    id: "territorial-army",
-    category: "specialist",
-    title: "Territorial Army",
-    tagline: "Serve the nation — flexible batches for professionals",
-    duration: "3 Months",
-    students: "400+",
-    rating: 4.8,
-    image: "/images/courses/cds.jpg",
-    badge: "Working Professionals",
-    badgeColor: "bg-secondary text-secondary-foreground",
-    features: ["Weekend Batches", "Flexible Timing", "SSB Training", "Online Support"],
-    href: "/courses/territorial-army",
-  },
-]
-
-const stats = [
-  { value: "9+", label: "Courses Offered" },
-  { value: "5,000+", label: "Successful Selections" },
-  { value: "15+", label: "Years Experience" },
-  { value: "200+", label: "Expert Mentors" },
-]
-
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  const [courses, { pages, contact }, schema] = await Promise.all([
+    getCourses(),
+    getSiteContent(),
+    getPageSchemaJsonLd("courses"),
+  ])
+  const page = pages.courses
+  const stats = page.stats
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       {/* ── Hero ── */}
@@ -174,14 +42,13 @@ export default function CoursesPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
               <Shield className="h-3.5 w-3.5 text-accent" />
-              <span className="text-accent text-xs font-semibold uppercase tracking-widest">Our Programmes</span>
+              <span className="text-accent text-xs font-semibold uppercase tracking-widest">{page.hero.eyebrow ?? "Our Programmes"}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-5 leading-tight">
-              Defence Preparation Courses
+              {page.hero.title}
             </h1>
             <p className="text-primary-foreground/75 text-lg leading-relaxed max-w-2xl">
-              Expert coaching for NDA, CDS, AFCAT, SSB and more — designed by retired military officers
-              with a proven track record of 5,000+ selections.
+              {page.hero.subtitle}
             </p>
 
             {/* Stats strip */}
@@ -207,16 +74,16 @@ export default function CoursesPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">All Programmes</h2>
               <p className="text-muted-foreground text-sm mt-1">{courses.length} courses available</p>
             </div>
-            <a href="tel:+919452245729" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href={`tel:${contact.phone1.replace(/\s/g, "")}`} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <Phone className="h-4 w-4 text-accent" />
-              <span>Need help choosing? <span className="text-accent font-medium">+91 94522 45729</span></span>
+              <span>Need help choosing? <span className="text-accent font-medium">{contact.phone1}</span></span>
             </a>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course) => (
               <article
-                key={course.id}
+                key={course.slug}
                 className="group flex flex-col bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:border-accent/30 transition-all duration-300"
               >
                 {/* Image */}

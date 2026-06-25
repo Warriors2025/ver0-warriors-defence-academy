@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-const HERO_MENU_BANNER_SRC = "/images/logo/uper-art-png%20(1).webp"
+const HERO_MENU_BANNER_SRC = "/images/logo/uper-art-png.webp"
 
 export function HeroMenuBanner() {
   return (

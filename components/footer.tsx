@@ -1,8 +1,9 @@
 import Link from "next/link"
-import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react"
+import { Facebook, Instagram, Youtube } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { getSiteContent } from "@/lib/site-content"
+import { getSiteContent } from "@/lib/site-content.server"
+import { FooterContactInfo } from "@/components/footer-contact-info"
 
 const quickLinks = [
   { title: "Home", href: "/" },
@@ -24,8 +25,8 @@ const courses = [
   { title: "MNS Course", href: "/courses/mns" },
 ]
 
-export function Footer() {
-  const { contact } = getSiteContent()
+export async function Footer() {
+  const { contact } = await getSiteContent()
 
   return (
     <footer className="bg-brand-deep text-brand-deep-foreground">
@@ -85,32 +86,7 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold text-accent mb-6">Contact Us</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-brand-deep-foreground/80">{contact.address}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-accent flex-shrink-0" />
-                <a href={`tel:${contact.phone1.replace(/\s/g, "")}`} className="text-brand-deep-foreground/80 hover:text-accent transition-colors">
-                  {contact.phone1}
-                </a>
-              </li>
-              {contact.phone2 && (
-                <li className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-accent flex-shrink-0" />
-                  <a href={`tel:${contact.phone2.replace(/\s/g, "")}`} className="text-brand-deep-foreground/80 hover:text-accent transition-colors">
-                    {contact.phone2}
-                  </a>
-                </li>
-              )}
-              <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-accent flex-shrink-0" />
-                <a href={`mailto:${contact.email}`} className="text-brand-deep-foreground/80 hover:text-accent transition-colors">
-                  {contact.email}
-                </a>
-              </li>
-            </ul>
+            <FooterContactInfo contact={contact} />
 
             <div className="mt-6">
               <h4 className="text-sm font-medium text-accent mb-3">Subscribe to Updates</h4>

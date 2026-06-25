@@ -1,75 +1,70 @@
-import Link from "next/link"
-import { BookOpen, ArrowRight, Clock, Users, Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
+"use client"
 
-const courses = [
-  { slug: "nda-foundation", title: "NDA Foundation Course", duration: "2–3 Years", students: "500+", rating: 4.9, badge: "Popular" },
-  { slug: "nda",            title: "NDA Course",            duration: "6–12 Months", students: "2,000+", rating: 4.8, badge: "Best Seller" },
-  { slug: "cds",            title: "CDS Course",            duration: "6 Months",  students: "1,500+", rating: 4.8, badge: null },
-  { slug: "ssb",            title: "SSB Interview Training",duration: "21 Days",   students: "3,000+", rating: 4.9, badge: "Top Rated" },
-  { slug: "afcat",          title: "AFCAT Course",          duration: "4–6 Months",students: "800+",   rating: 4.7, badge: null },
-  { slug: "navy-agniveer",  title: "Navy Agniveer",         duration: "3–4 Months",students: "600+",   rating: 4.7, badge: "New" },
-  { slug: "airforce-xy",    title: "Airforce X / Y Group",  duration: "4–6 Months",students: "700+",   rating: 4.6, badge: null },
-  { slug: "mns",            title: "MNS Course",            duration: "3–6 Months",students: "400+",   rating: 4.8, badge: "For Women" },
-  { slug: "territorial-army",title: "Territorial Army",    duration: "3 Months",  students: "400+",   rating: 4.8, badge: null },
-]
+import Link from "next/link"
+import { EntityManager } from "@/components/admin/entity-manager"
+
+const DETAILS_TEMPLATE = `{
+  "eligibility": ["Age 16.5–19.5 years", "Passed 10+2"],
+  "syllabus": [{ "title": "Mathematics", "topics": ["Algebra", "Trigonometry"] }],
+  "benefits": ["Expert faculty", "Mock tests"],
+  "fee": "₹85,000",
+  "batchStart": "April 2025",
+  "examPattern": [{ "section": "Math", "marks": "300", "time": "2.5 hrs" }]
+}`
 
 export default function AdminCoursesPage() {
   return (
-    <div className="max-w-3xl space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-            <BookOpen className="h-5 w-5 text-purple-600" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-foreground">Courses</h1>
-            <p className="text-muted-foreground text-sm">{courses.length} courses — click a course to view its public page.</p>
-          </div>
-        </div>
-        <Link href="/courses" target="_blank">
-          <Button variant="outline" size="sm" className="gap-1.5">
-            <ArrowRight className="h-3.5 w-3.5" />
-            View on site
-          </Button>
-        </Link>
+    <div className="space-y-6">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-900">
+        <p className="font-semibold mb-1">How to edit course pages</p>
+        <ul className="list-disc list-inside space-y-1 text-blue-800">
+          <li>Click <strong>Edit</strong> on any course below to change title, image, duration, features, and full syllabus.</li>
+          <li>Use the <strong>Full Details (JSON)</strong> field for eligibility, syllabus, fees, and exam pattern.</li>
+          <li>Edit the Courses listing page hero/stats under <Link href="/admin/site-pages" className="underline font-medium">Site Pages → Courses</Link>.</li>
+        </ul>
       </div>
-
-      <div className="bg-card border border-border rounded-xl overflow-hidden divide-y divide-border">
-        {courses.map((c) => (
-          <div key={c.slug} className="flex items-center gap-4 px-5 py-4 hover:bg-muted/30 transition-colors">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <p className="font-medium text-foreground text-sm truncate">{c.title}</p>
-                {c.badge && (
-                  <span className="text-[10px] font-semibold bg-accent/15 text-accent rounded-full px-2 py-0.5 shrink-0">
-                    {c.badge}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{c.duration}</span>
-                <span className="flex items-center gap-1"><Users className="h-3 w-3" />{c.students}</span>
-                <span className="flex items-center gap-1"><Star className="h-3 w-3 fill-accent text-accent" />{c.rating}</span>
-              </div>
-            </div>
-            <Link href={`/courses/${c.slug}`} target="_blank">
-              <Button variant="ghost" size="sm" className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground">
-                View <ArrowRight className="h-3 w-3" />
-              </Button>
-            </Link>
-          </div>
-        ))}
-      </div>
-
-      <div className="bg-muted/50 border border-border rounded-xl p-4 text-sm text-muted-foreground">
-        <p className="font-medium text-foreground mb-1">Want to edit course content?</p>
-        <p>
-          Course details (titles, syllabus, eligibility, etc.) are stored in the code at{" "}
-          <code className="bg-muted px-1.5 py-0.5 rounded text-xs font-mono">app/courses/[slug]/page.tsx</code>.
-          Ask your developer to update specific course info there.
-        </p>
-      </div>
+      <EntityManager
+      title="Courses"
+      description="Manage all defence coaching programmes — titles, images, syllabus, and fees."
+      apiPath="/api/admin/courses"
+      emptyRow={{
+        slug: "",
+        title: "",
+        tagline: "",
+        short_description: "",
+        duration: "",
+        students: "",
+        rating: 4.8,
+        badge: "",
+        badge_color: "",
+        category: "officer",
+        image_url: "",
+        features: "",
+        details: DETAILS_TEMPLATE,
+        highlights: "",
+        is_active: true,
+        sort_order: 0,
+      }}
+      fields={[
+        { key: "title", label: "Title", type: "text", required: true },
+        { key: "slug", label: "URL Slug", type: "text", required: true, placeholder: "nda-foundation" },
+        { key: "tagline", label: "Tagline", type: "text" },
+        { key: "short_description", label: "Description", type: "textarea" },
+        { key: "duration", label: "Duration", type: "text" },
+        { key: "students", label: "Students Count", type: "text", placeholder: "500+" },
+        { key: "rating", label: "Rating", type: "number" },
+        { key: "badge", label: "Badge", type: "text", placeholder: "Popular" },
+        { key: "badge_color", label: "Badge CSS Classes", type: "text", placeholder: "bg-accent text-accent-foreground" },
+        { key: "category", label: "Category", type: "text", placeholder: "officer | soldier | specialist" },
+        { key: "image_url", label: "Course Image", type: "image", imagePreset: "course" },
+        { key: "features", label: "Features (one per line)", type: "lines" },
+        { key: "highlights", label: "Highlights (one per line)", type: "lines" },
+        { key: "details", label: "Full Details (JSON)", type: "json", placeholder: DETAILS_TEMPLATE },
+        { key: "is_active", label: "Active", type: "boolean" },
+        { key: "sort_order", label: "Sort Order", type: "number" },
+      ]}
+      seoEntity={{ type: "course", pathPrefix: "/courses/", descField: "short_description" }}
+    />
     </div>
   )
 }

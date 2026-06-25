@@ -1,7 +1,8 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ContactForm } from "@/components/contact-form"
-import { getSiteContent } from "@/lib/site-content"
+import { getSiteContent } from "@/lib/site-content.server"
+import { getCourseOptions } from "@/lib/courses"
 import {
   MapPin,
   Phone,
@@ -15,15 +16,22 @@ import {
   MessageSquare,
 } from "lucide-react"
 import type { Metadata } from "next"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "Contact Us | Warriors Defence Academy",
-  description:
-    "Get in touch with Warriors Defence Academy, Lucknow. Phone: +91 94522 45729. Visit us at Kapoorthala Chauraha, Lucknow.",
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("contact")
+  return buildPageMetadata("contact", seo)
 }
 
-export default function ContactPage() {
-  const { contact } = getSiteContent()
+export default async function ContactPage() {
+  const [{ contact, pages }, courseOptions, schema] = await Promise.all([
+    getSiteContent(),
+    getCourseOptions(),
+    getPageSchemaJsonLd("contact"),
+  ])
+
+  const page = pages.contact
 
   const contactCards = [
     {
@@ -47,13 +55,14 @@ export default function ContactPage() {
     {
       icon: Clock,
       title: "Office Hours",
-      details: ["Monday – Saturday", "9:00 AM – 6:00 PM", "Sunday: Closed"],
+      details: [page.officeHours, page.sundayHours].filter(Boolean),
       accent: false,
     },
   ]
 
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
@@ -74,19 +83,17 @@ export default function ContactPage() {
             <div className="inline-flex items-center gap-3 bg-accent/15 border border-accent/30 rounded-full px-6 py-2.5">
               <MessageSquare className="h-4 w-4 text-accent flex-shrink-0" />
               <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase">
-                Get In Touch — Warriors Defence Academy
+                {page.hero.eyebrow ?? "Get In Touch"}
               </span>
             </div>
           </div>
 
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">
-              Contact
-              <span className="block text-accent">Our Academy</span>
+              {page.hero.title}
             </h1>
             <p className="text-primary-foreground/80 text-lg">
-              Have questions about our courses or want to visit our campus?
-              Our counsellors are here to guide you through every step of your defence journey.
+              {page.hero.subtitle}
             </p>
           </div>
         </div>
@@ -132,7 +139,7 @@ export default function ContactPage() {
               <p className="text-muted-foreground mb-8 pl-4">
                 Fill out the form below and our team will get back to you within 24 hours.
               </p>
-              <ContactForm />
+              <ContactForm courseOptions={courseOptions} />
             </div>
 
             {/* Right — Map + Quick Contact + Social */}

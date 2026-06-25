@@ -1,10 +1,13 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Shield, Star } from "lucide-react"
 
-const mentors = [
+import type { Mentor } from "@/lib/mentors-data"
+
+const mentorsFallback: Mentor[] = [
   {
     name: "Lt. Gen. Dushyant Singh",
     designation: "Chief Mentor",
@@ -12,6 +15,7 @@ const mentors = [
     experience: "35+ Years",
     branch: "Indian Army",
     initials: "DG",
+    image: "/images/mentors/lt-gen-dushyant.webp",
   },
   {
     name: "Cmdr. Sudarshan Chakrapani",
@@ -20,6 +24,7 @@ const mentors = [
     experience: "28+ Years",
     branch: "Indian Navy",
     initials: "SC",
+    image: "/images/mentors/sudarshan-chakrapani.webp",
   },
   {
     name: "Col. R.K. Tiwari (Retd.)",
@@ -28,30 +33,34 @@ const mentors = [
     experience: "25+ Years",
     branch: "Indian Army",
     initials: "RT",
+    image: "/images/mentors/col-tiwari.webp",
   },
   {
-    name: "Wg. Cdr. Priya Sharma",
-    designation: "AFCAT Specialist",
-    expertise: "Air Force Selection & Interview",
+    name: "Commandant Yogesh Datta",
+    designation: "Training Director",
+    expertise: "Officer Grooming & SSB Assessment",
     experience: "22+ Years",
-    branch: "Indian Air Force",
-    initials: "PS",
-  },
-  {
-    name: "Maj. Gen. A.K. Verma (Retd.)",
-    designation: "Academic Director",
-    expertise: "Defence Studies & Strategy",
-    experience: "30+ Years",
     branch: "Indian Army",
-    initials: "AV",
+    initials: "YD",
+    image: "/images/mentors/yogesh-datta.webp",
   },
   {
-    name: "Dr. Anjali Mishra",
-    designation: "Psychology Expert",
-    expertise: "SSB Psychology & Personality Development",
-    experience: "18+ Years",
-    branch: "Psychology",
-    initials: "AM",
+    name: "Commander TLP Babu",
+    designation: "SSB Mentor",
+    expertise: "Psychology & Interview Training",
+    experience: "20+ Years",
+    branch: "Indian Navy",
+    initials: "TB",
+    image: "/images/mentors/cmdr-babu.webp",
+  },
+  {
+    name: "Colonel Vijay Chauhan",
+    designation: "Academic Mentor",
+    expertise: "Written Exam Strategy & Discipline",
+    experience: "24+ Years",
+    branch: "Indian Army",
+    initials: "VC",
+    image: "/images/mentors/col-vijay-chauhan.webp",
   },
 ]
 
@@ -62,7 +71,8 @@ const branchColors: Record<string, string> = {
   "Psychology": "text-purple-700 border-purple-300 bg-purple-50",
 }
 
-export function MentorsSection() {
+export function MentorsSection({ mentors: items }: { mentors?: Mentor[] }) {
+  const mentors = items ?? mentorsFallback
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -94,10 +104,22 @@ export function MentorsSection() {
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
 
-                  {/* Avatar with initials */}
+                  {/* Avatar */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
-                      <span className="text-primary-foreground font-bold text-lg tracking-wide">{m.initials}</span>
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-primary shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
+                      {m.image ? (
+                        <Image
+                          src={m.image}
+                          alt={m.name}
+                          width={64}
+                          height={64}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-primary-foreground font-bold text-lg tracking-wide">{m.initials}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
                       <Star className="h-2.5 w-2.5 text-accent-foreground fill-accent-foreground" />

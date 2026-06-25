@@ -7,7 +7,9 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Clock, Users, Star, CheckCircle } from "lucide-react"
 
-export const courses = [
+import type { CourseListItem } from "@/lib/courses"
+
+const coursesFallback = [
   {
     id: "nda-foundation",
     title: "NDA Foundation Course",
@@ -16,7 +18,7 @@ export const courses = [
     duration: "2-3 Years",
     students: "500+",
     rating: 4.9,
-    image: "/images/courses/nda-foundation.jpg",
+    image: "/images/courses/nda-foundation.webp",
     badge: "Popular",
     features: ["Integrated Schooling", "Hostel Facility", "Physical Training", "SSB Grooming", "Personality Development", "Board Exam Support"],
     highlights: [
@@ -35,7 +37,7 @@ export const courses = [
     duration: "6-12 Months",
     students: "2000+",
     rating: 4.8,
-    image: "/images/courses/nda.jpg",
+    image: "/images/courses/nda.webp",
     badge: "Best Seller",
     features: ["Written Exam Prep", "SSB Training", "Mock Tests", "Physical Fitness", "GK Updates", "Interview Skills"],
     highlights: [
@@ -54,7 +56,7 @@ export const courses = [
     duration: "6 Months",
     students: "1500+",
     rating: 4.8,
-    image: "/images/courses/cds.jpg",
+    image: "/images/courses/cds.webp",
     badge: null,
     features: ["Complete Syllabus", "Personal Guidance", "Practice Tests", "Current Affairs", "Essay Writing", "Interview Prep"],
     highlights: [
@@ -73,7 +75,7 @@ export const courses = [
     duration: "21 Days",
     students: "3000+",
     rating: 4.9,
-    image: "/images/courses/ssb.jpg",
+    image: "/images/courses/ssb.webp",
     badge: "Top Rated",
     features: ["Psychology Tests", "GTO Tasks", "Mock Interviews", "Personality Development", "OLQ Building", "Conference Prep"],
     highlights: [
@@ -92,7 +94,7 @@ export const courses = [
     duration: "4-6 Months",
     students: "800+",
     rating: 4.7,
-    image: "/images/courses/afcat.jpg",
+    image: "/images/courses/afcat.webp",
     badge: null,
     features: ["AFCAT Syllabus", "AFSB Training", "Physical Training", "EKT Preparation", "Aptitude Tests", "Mock Tests"],
     highlights: [
@@ -111,7 +113,7 @@ export const courses = [
     duration: "3-4 Months",
     students: "600+",
     rating: 4.7,
-    image: "/images/courses/navy.jpg",
+    image: "/images/courses/navy.webp",
     badge: "New",
     features: ["Written Exam", "Physical Tests", "Medical Guidance", "Documentation", "Swimming Training", "Mock Tests"],
     highlights: [
@@ -130,7 +132,7 @@ export const courses = [
     duration: "4-6 Months",
     students: "700+",
     rating: 4.6,
-    image: "/images/courses/airforce.jpg",
+    image: "/images/courses/airforce.webp",
     badge: null,
     features: ["Technical Training", "Non-Tech Prep", "Physical Fitness", "Mock Tests", "Reasoning Skills", "GK Updates"],
     highlights: [
@@ -149,7 +151,7 @@ export const courses = [
     duration: "3-6 Months",
     students: "400+",
     rating: 4.8,
-    image: "/images/courses/mns.jpg",
+    image: "/images/courses/mns.webp",
     badge: "For Women",
     features: ["Science Subjects", "English Prep", "Interview Training", "Medical Knowledge", "Personality Dev", "Mock Tests"],
     highlights: [
@@ -162,7 +164,22 @@ export const courses = [
   },
 ]
 
-export function CoursesSection() {
+export function CoursesSection({ courses: coursesProp }: { courses?: CourseListItem[] }) {
+  const courses = coursesProp
+    ? coursesProp.slice(0, 6).map((c) => ({
+        id: c.slug,
+        title: c.title,
+        shortDescription: c.description,
+        duration: c.duration,
+        students: c.students,
+        rating: c.rating,
+        image: c.image,
+        badge: c.badge,
+        features: c.features,
+        highlights: c.features.slice(0, 4),
+        href: c.href,
+      }))
+    : coursesFallback.slice(0, 6)
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">

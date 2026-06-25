@@ -1,83 +1,34 @@
-import { MetadataRoute } from "next"
+import type { MetadataRoute } from "next"
+import { CMS_PAGES } from "@/lib/cms-pages"
+import { SITE_URL } from "@/lib/seo"
+import { getBlogPosts } from "@/lib/blog"
+import { getCourses } from "@/lib/courses"
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://warriorsdefenceacademy.com"
-  
-  const courses = [
-    "nda",
-    "nda-foundation",
-    "cds",
-    "ssb",
-    "afcat",
-    "navy",
-    "airforce",
-    "mns",
-    "territorial-army",
-  ]
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
 
-  const staticPages = [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/courses`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/gallery`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/results`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/admissions`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/register`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    },
-  ]
-
-  const coursePages = courses.map((course) => ({
-    url: `${baseUrl}/courses/${course}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
+  const staticPages: MetadataRoute.Sitemap = CMS_PAGES.map((page) => ({
+    url: `${SITE_URL}${page.path === "/" ? "" : page.path}`,
+    lastModified: now,
+    changeFrequency: page.slug === "home" ? "daily" : "weekly",
+    priority: page.slug === "home" ? 1 : 0.8,
   }))
 
-  return [...staticPages, ...coursePages]
+  const [posts, courses] = await Promise.all([getBlogPosts(), getCourses()])
+
+  const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }))
+
+  const coursePages: MetadataRoute.Sitemap = courses.map((course) => ({
+    url: `${SITE_URL}/courses/${course.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...coursePages, ...blogPages]
 }

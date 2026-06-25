@@ -1,18 +1,26 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BlogContent } from "@/components/blog-client"
+import { getBlogPosts } from "@/lib/blog"
 import type { Metadata } from "next"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "Blog | Warriors Defence Academy",
-  description: "Expert insights, preparation strategies, and success tips for NDA, CDS, SSB, and AFCAT examinations.",
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("blog")
+  return buildPageMetadata("blog", seo)
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const [posts, schema] = await Promise.all([
+    getBlogPosts(),
+    getPageSchemaJsonLd("blog"),
+  ])
   return (
     <div className="min-h-screen bg-background">
+      <PageJsonLd data={schema} />
       <Header />
-      <BlogContent />
+      <BlogContent posts={posts} />
       <Footer />
     </div>
   )

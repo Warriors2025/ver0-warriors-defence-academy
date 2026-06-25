@@ -18,66 +18,19 @@ import {
   Target,
 } from "lucide-react"
 import type { Metadata } from "next"
+import { getResultsByYear, getFeaturedResults } from "@/lib/results-data"
+import { getSiteContent } from "@/lib/site-content.server"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "Results & Selections | Warriors Defence Academy Lucknow",
-  description:
-    "5,000+ selections from Warriors Defence Academy. Top AIR rankers in NDA, CDS, AFCAT and SSB. Proud of our students serving in Indian Army, Navy, and Air Force.",
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("results")
+  return buildPageMetadata("results", seo)
 }
 
-const results: Record<string, { name: string; exam: string; rank: string; rankNum: number; branch: string }[]> = {
-  "2025": [
-    { name: "Rahul Sharma",  exam: "NDA",   rank: "AIR 12", rankNum: 12, branch: "Indian Army" },
-    { name: "Sneha Patel",   exam: "AFCAT", rank: "AIR 8",  rankNum: 8,  branch: "Indian Air Force" },
-    { name: "Priya Singh",   exam: "CDS",   rank: "AIR 28", rankNum: 28, branch: "Indian Air Force" },
-    { name: "Amit Kumar",    exam: "NDA",   rank: "AIR 45", rankNum: 45, branch: "Indian Navy" },
-    { name: "Anjali Mishra", exam: "CDS",   rank: "AIR 34", rankNum: 34, branch: "Indian Army" },
-    { name: "Vikram Yadav",  exam: "NDA",   rank: "AIR 67", rankNum: 67, branch: "Indian Army" },
-  ],
-  "2024": [
-    { name: "Arjun Reddy",   exam: "NDA",   rank: "AIR 5",  rankNum: 5,  branch: "Indian Air Force" },
-    { name: "Sanjay Gupta",  exam: "AFCAT", rank: "AIR 11", rankNum: 11, branch: "Indian Air Force" },
-    { name: "Kavita Sharma", exam: "CDS",   rank: "AIR 19", rankNum: 19, branch: "Indian Army" },
-    { name: "Ritu Agarwal",  exam: "AFCAT", rank: "AIR 15", rankNum: 15, branch: "Indian Air Force" },
-    { name: "Pooja Kumari",  exam: "CDS",   rank: "AIR 27", rankNum: 27, branch: "Indian Air Force" },
-    { name: "Neha Verma",    exam: "NDA",   rank: "AIR 38", rankNum: 38, branch: "Indian Navy" },
-    { name: "Rohan Joshi",   exam: "NDA",   rank: "AIR 52", rankNum: 52, branch: "Indian Army" },
-    { name: "Deepak Singh",  exam: "NDA",   rank: "AIR 73", rankNum: 73, branch: "Indian Army" },
-  ],
-  "2023": [
-    { name: "Manish Tiwari",  exam: "NDA",   rank: "AIR 3",  rankNum: 3,  branch: "Indian Air Force" },
-    { name: "Priyanka Rao",   exam: "AFCAT", rank: "AIR 7",  rankNum: 7,  branch: "Indian Air Force" },
-    { name: "Swati Pandey",   exam: "CDS",   rank: "AIR 14", rankNum: 14, branch: "Indian Army" },
-    { name: "Karan Malhotra", exam: "NDA",   rank: "AIR 22", rankNum: 22, branch: "Indian Navy" },
-    { name: "Megha Sinha",    exam: "CDS",   rank: "AIR 31", rankNum: 31, branch: "Indian Army" },
-    { name: "Ashish Dubey",   exam: "NDA",   rank: "AIR 41", rankNum: 41, branch: "Indian Army" },
-  ],
-}
 
-const examBreakdown = [
-  { exam: "NDA",   count: "1,200+", icon: Shield,    desc: "National Defence Academy" },
-  { exam: "CDS",   count: "800+",   icon: Target,    desc: "Combined Defence Services" },
-  { exam: "SSB",   count: "500+",   icon: Users,     desc: "Services Selection Board" },
-  { exam: "AFCAT", count: "300+",   icon: TrendingUp, desc: "Air Force Common Admission" },
-]
-
-const awards = [
-  {
-    icon: Trophy,
-    title: "Best Defence Academy",
-    description: "Recognised as the leading defence coaching institute for 5 consecutive years by national education bodies.",
-  },
-  {
-    icon: Award,
-    title: "NDA Excellence Award",
-    description: "Awarded for achieving the highest NDA selection rate among all coaching institutes in North India.",
-  },
-  {
-    icon: Medal,
-    title: "National Recognition",
-    description: "Featured among the Top 10 Defence Academies in India by multiple national publications.",
-  },
-]
+const examIcons = [Shield, Target, Users, TrendingUp]
+const awardIcons = [Trophy, Award, Medal]
 
 function getInitials(name: string) {
   return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase()
@@ -89,15 +42,37 @@ function getBranchColor(branch: string) {
   return "bg-green-100 text-green-800 border-green-200"
 }
 
-export default function ResultsPage() {
-  const topThreeAllTime = [
-    { name: "Manish Tiwari",  rank: "AIR 3",  exam: "NDA",   branch: "Indian Air Force", year: "2023" },
-    { name: "Arjun Reddy",    rank: "AIR 5",  exam: "NDA",   branch: "Indian Air Force", year: "2024" },
-    { name: "Priyanka Rao",   rank: "AIR 7",  exam: "AFCAT", branch: "Indian Air Force", year: "2023" },
-  ]
+export default async function ResultsPage() {
+  const [resultsByYear, featuredResults, { pages }, schema] = await Promise.all([
+    getResultsByYear(),
+    getFeaturedResults(),
+    getSiteContent(),
+    getPageSchemaJsonLd("results"),
+  ])
+  const page = pages.results
+  const examBreakdown = page.examBreakdown.map((item, i) => ({
+    ...item,
+    icon: examIcons[i % examIcons.length],
+    desc: item.exam,
+  }))
+  const awards = page.awards.map((title, i) => ({
+    icon: awardIcons[i % awardIcons.length],
+    title,
+    description: title,
+  }))
+  const years = Object.keys(resultsByYear).sort((a, b) => Number(b) - Number(a))
+  const defaultYear = years[0] ?? "2025"
+  const topThreeAllTime = featuredResults.map((r) => ({
+    name: r.name,
+    rank: r.rank,
+    exam: r.exam,
+    branch: r.branch,
+    year: r.year,
+  }))
 
   return (
     <div className="min-h-screen bg-background">
+      <PageJsonLd data={schema} />
       <Header />
 
       <main>
@@ -123,40 +98,32 @@ export default function ResultsPage() {
               <div className="inline-flex items-center gap-3 bg-accent/15 border border-accent/30 rounded-full px-6 py-2.5">
                 <Trophy className="h-4 w-4 text-accent flex-shrink-0" />
                 <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase">
-                  Hall of Fame — Warriors Defence Academy
-                </span>
+                {page.hero.eyebrow ?? "Hall of Fame — Warriors Defence Academy"}
+              </span>
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto text-center">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              {page.hero.title}
+            </h1>
+            <p className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed">
+              {page.hero.subtitle}
+            </p>
+          </div>
+
+          <div className="mt-16 border-t border-primary-foreground/15 grid grid-cols-2 md:grid-cols-4">
+            {page.stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={`text-center py-8 px-4 ${i > 0 ? "border-l border-primary-foreground/15" : ""}`}
+              >
+                <Users className="h-5 w-5 text-accent mx-auto mb-2 opacity-80" />
+                <div className="text-3xl md:text-4xl font-bold text-accent mb-1">{stat.value}</div>
+                <div className="text-primary-foreground/65 text-sm tracking-wide">{stat.label}</div>
               </div>
-            </div>
-
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                Our Pride &amp;
-                <span className="block text-accent">Legacy of Excellence</span>
-              </h1>
-              <p className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed">
-                We take immense pride in our students who have achieved their dreams of
-                serving the nation. Every rank is a story of discipline, determination, and dedication.
-              </p>
-            </div>
-
-            {/* Stats strip */}
-            <div className="mt-16 border-t border-primary-foreground/15 grid grid-cols-2 md:grid-cols-4">
-              {[
-                { value: "5,000+",  label: "Total Selections",   icon: Users },
-                { value: "450+",    label: "Top 100 Ranks",      icon: Trophy },
-                { value: "68%",     label: "SSB Success Rate",   icon: TrendingUp },
-                { value: "1,200+",  label: "NDA Selections",     icon: Medal },
-              ].map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`text-center py-8 px-4 ${i > 0 ? "border-l border-primary-foreground/15" : ""}`}
-                >
-                  <stat.icon className="h-5 w-5 text-accent mx-auto mb-2 opacity-80" />
-                  <div className="text-3xl md:text-4xl font-bold text-accent mb-1">{stat.value}</div>
-                  <div className="text-primary-foreground/65 text-sm tracking-wide">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+            ))}
+          </div>
           </div>
         </section>
 
@@ -241,11 +208,11 @@ export default function ResultsPage() {
               </p>
             </div>
 
-            <Tabs defaultValue="2025" className="max-w-6xl mx-auto">
+            <Tabs defaultValue={defaultYear} className="max-w-6xl mx-auto">
               {/* Tab bar */}
               <div className="flex justify-center mb-10">
                 <TabsList className="bg-secondary/60 border border-border p-1 rounded-xl h-auto gap-1">
-                  {["2025", "2024", "2023"].map((year) => (
+                  {years.map((year) => (
                     <TabsTrigger
                       key={year}
                       value={year}
@@ -257,7 +224,7 @@ export default function ResultsPage() {
                 </TabsList>
               </div>
 
-              {Object.entries(results).map(([year, students]) => (
+              {Object.entries(resultsByYear).map(([year, students]) => (
                 <TabsContent key={year} value={year}>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                     {students.map((student, index) => {

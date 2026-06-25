@@ -23,17 +23,15 @@ import {
   Phone,
 } from "lucide-react"
 import type { Metadata } from "next"
+import { getSiteContent } from "@/lib/site-content.server"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { mergeSeoStore, resolveHeading } from "@/lib/seo"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "About Us — Warriors Defence Academy | Best NDA Coaching Lucknow",
-  description:
-    "Warriors Defence Academy: 15+ years of excellence, 5000+ selections, India's largest GTO ground. Meet our expert faculty of ex-military officers. Best NDA, CDS & SSB coaching in Lucknow.",
-  keywords: ["about Warriors Defence Academy", "best defence coaching Lucknow", "NDA coaching history", "defence academy faculty"],
-  openGraph: {
-    title: "About Warriors Defence Academy",
-    description: "15+ years of excellence, 5000+ successful selections. India's most trusted defence coaching institute.",
-    images: ["/images/og-image.jpg"],
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("about")
+  return buildPageMetadata("about", seo)
 }
 
 const milestones = [
@@ -104,7 +102,7 @@ const leadership = [
     role: "Founder & Director",
     description:
       "A visionary leader with an unwavering passion for developing future defence officers. His guidance and philosophy have shaped the careers of thousands of successful candidates across India.",
-    image: "/images/director.jpg",
+    image: "/images/director.webp",
   },
   {
     name: "Lt. Gen. Dushyant Singh (Retd.)",
@@ -128,27 +126,35 @@ const differentiators = [
     title: "India's Largest GTO Ground",
     description:
       "Our purpose-built GTO ground is the largest in India — with full obstacle courses, group tasks, command tasks, and individual obstacles that mirror actual SSB testing grounds.",
-    image: "/images/features/gto-ground.jpg",
+    image: "/images/features/gto-ground.webp",
   },
   {
     icon: BookOpen,
     title: "Ex-Military Expert Faculty",
     description:
       "Learn from retired Generals, Colonels, and service officers who have lived the military life and know exactly what it takes to clear SSB and crack defence exams.",
-    image: "/images/features/mentorship.jpg",
+    image: "/images/features/mentorship.webp",
   },
   {
     icon: Building2,
     title: "Residential Campus Life",
     description:
       "Students live on campus under a structured daily routine — morning PT, academics, physical training, and evening review — mirroring military life from day one.",
-    image: "/images/features/library.jpg",
+    image: "/images/features/library.webp",
   },
 ]
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [{ pages, seo: seoRaw }, schema] = await Promise.all([
+    getSiteContent(),
+    getPageSchemaJsonLd("about"),
+  ])
+  const about = pages.about
+  const heroHeading = resolveHeading(mergeSeoStore(seoRaw), "pages.about.hero.title", "h1")
+
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
@@ -175,41 +181,28 @@ export default function AboutPage() {
             <div className="inline-flex items-center gap-3 bg-accent/15 border border-accent/30 rounded-full px-6 py-2.5">
               <Shield className="h-4 w-4 text-accent flex-shrink-0" />
               <span className="text-accent text-xs font-bold tracking-[0.2em] uppercase">
-                Est. 2010 — Lucknow, Uttar Pradesh
+                {about.hero.eyebrow ?? "Est. 2010 — Lucknow, Uttar Pradesh"}
               </span>
             </div>
           </div>
 
-          {/* Headline */}
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Shaping India&apos;s Future
-              <span className="block text-accent">Defence Officers</span>
-            </h1>
+            <HeadingTag level={heroHeading} className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              {about.hero.title}
+            </HeadingTag>
             <p className="text-primary-foreground/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-              India&apos;s most trusted defence coaching institute — where military
-              discipline, academic excellence, and unwavering dedication converge.
+              {about.hero.subtitle}
             </p>
           </div>
 
-          {/* Stats strip */}
           <div className="mt-16 border-t border-primary-foreground/15 grid grid-cols-2 md:grid-cols-4">
-            {[
-              { number: "15+", label: "Years of Excellence" },
-              { number: "5,000+", label: "Successful Selections" },
-              { number: "50,000+", label: "Students Trained" },
-              { number: "200+", label: "Expert Mentors" },
-            ].map((stat, i) => (
+            {about.stats.map((stat, i) => (
               <div
                 key={stat.label}
                 className={`text-center py-8 px-4 ${i > 0 ? "border-l border-primary-foreground/15" : ""}`}
               >
-                <div className="text-3xl md:text-4xl font-bold text-accent mb-1">
-                  {stat.number}
-                </div>
-                <div className="text-primary-foreground/65 text-sm tracking-wide">
-                  {stat.label}
-                </div>
+                <div className="text-3xl md:text-4xl font-bold text-accent mb-1">{stat.value}</div>
+                <div className="text-primary-foreground/65 text-sm tracking-wide">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -271,7 +264,7 @@ export default function AboutPage() {
               {/* Main image */}
               <div className="relative rounded-2xl overflow-hidden aspect-[4/5] bg-primary/10 shadow-2xl">
                 <Image
-                  src="/images/hero/carousel-1.jpg"
+                  src="/images/hero/carousel-1.webp"
                   alt="Warriors Defence Academy campus and training"
                   fill
                   className="object-cover"
@@ -419,7 +412,7 @@ export default function AboutPage() {
               <div className="md:col-span-2 flex flex-col items-center text-center">
                 <div className="relative w-52 h-52 md:w-64 md:h-64 rounded-2xl overflow-hidden border-4 border-accent/50 shadow-2xl mb-5">
                   <Image
-                    src="/images/director.jpg"
+                    src="/images/director.webp"
                     alt="Mr. Gulab Singh — Founder & Director, Warriors Defence Academy"
                     fill
                     className="object-cover object-top"

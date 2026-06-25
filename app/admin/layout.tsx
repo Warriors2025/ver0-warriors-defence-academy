@@ -7,17 +7,36 @@ import { useEffect } from "react"
 import {
   LayoutDashboard, Megaphone, Image as ImageIcon, Phone,
   BarChart3, BookOpen, LogOut, Shield, ChevronRight, ExternalLink,
+  FileText, Eye, Users, MessageSquare, HelpCircle, Star, Newspaper,
+  Images, Inbox, UserCheck, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/pages", label: "Pages", icon: FileText, exact: false },
+  { href: "/admin/seo", label: "SEO", icon: Search, exact: false },
+  { href: "/admin/ai", label: "AI Assistant", icon: Bot, exact: false },
+  { href: "/admin/editor/home", label: "Visual Editor", icon: Eye, exact: false },
+  { href: "/admin/site-pages", label: "Site Pages", icon: FileText, exact: false },
+  { href: "/admin/home-sections", label: "Home Sections", icon: Layers, exact: false },
+  { href: "/admin/media", label: "Media", icon: Images, exact: false },
   { href: "/admin/general", label: "Announcement", icon: Megaphone, exact: false },
   { href: "/admin/hero", label: "Hero Section", icon: ImageIcon, exact: false },
   { href: "/admin/contact", label: "Contact Info", icon: Phone, exact: false },
   { href: "/admin/stats", label: "Stats Numbers", icon: BarChart3, exact: false },
+  { href: "/admin/mentors", label: "Mentors", icon: Users, exact: false },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Star, exact: false },
+  { href: "/admin/faqs", label: "FAQs", icon: HelpCircle, exact: false },
+  { href: "/admin/blog", label: "Blog", icon: Newspaper, exact: false },
+  { href: "/admin/gallery", label: "Gallery", icon: Images, exact: false },
   { href: "/admin/courses", label: "Courses", icon: BookOpen, exact: false },
+  { href: "/admin/results", label: "Results", icon: Trophy, exact: false },
+  { href: "/admin/admissions", label: "Admissions", icon: GraduationCap, exact: false },
+  { href: "/admin/users", label: "Users", icon: UserCog, exact: false },
+  { href: "/admin/submissions", label: "Messages", icon: Inbox, exact: false },
+  { href: "/admin/registrations", label: "Registrations", icon: UserCheck, exact: false },
 ]
 
 function AdminSidebar() {
@@ -100,12 +119,29 @@ function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
   useEffect(() => {
+    if (status === "loading") return
     if (status === "unauthenticated" && pathname !== "/admin/login") {
-      router.replace("/admin/login")
+      const loginUrl = pathname.startsWith("/admin")
+        ? `/admin/login?callbackUrl=${encodeURIComponent(pathname)}`
+        : "/admin/login"
+      router.replace(loginUrl)
     }
   }, [status, router, pathname])
 
   if (pathname === "/admin/login") return <>{children}</>
+
+  // Full-screen visual editor — wait for session before rendering
+  if (pathname.startsWith("/admin/editor")) {
+    if (status === "loading") {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+        </div>
+      )
+    }
+    if (status === "unauthenticated") return null
+    return <>{children}</>
+  }
 
   if (status === "loading") {
     return (

@@ -7,7 +7,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-const faqs = [
+import type { FAQ } from "@/lib/faqs-data"
+
+const faqsFallback = [
   {
     question: "Which is the best NDA coaching in India?",
     answer: "Warriors Defence Academy is widely recognized as one of the best NDA coaching institutes in India. We offer complete NDA preparation with expert teachers, a clear study plan, and modern facilities including India's largest GTO ground for physical and SSB interview preparation.",
@@ -42,7 +44,8 @@ const faqs = [
   },
 ]
 
-export function FAQSection() {
+export function FAQSection({ faqs: items }: { faqs?: FAQ[] }) {
+  const faqs = items ?? faqsFallback
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">

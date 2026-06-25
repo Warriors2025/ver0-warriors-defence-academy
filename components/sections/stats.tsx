@@ -1,13 +1,15 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import type { AnimatedStat } from "@/lib/site-content"
+import { defaultSections } from "@/lib/site-content"
+import { CmsField } from "@/components/cms/cms-field"
 
-const stats = [
-  { value: 50000, suffix: "+", label: "Students Trained", description: "Across all defence programmes" },
-  { value: 5000,  suffix: "+", label: "Successful Selections", description: "Into NDA, CDS, AFCAT & more" },
-  { value: 200,   suffix: "+", label: "Expert Mentors", description: "Retired military officers & educators" },
-  { value: 15,    suffix: "+", label: "Years of Excellence", description: "India's most trusted defence academy" },
-]
+type StatsSectionProps = {
+  eyebrow?: string
+  title?: string
+  stats?: AnimatedStat[]
+}
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
   const [count, setCount] = useState(0)
@@ -36,26 +38,27 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   return <div ref={ref} className="text-5xl md:text-6xl font-bold text-accent tabular-nums">{count.toLocaleString("en-IN")}{suffix}</div>
 }
 
-export function StatsSection() {
+export function StatsSection({
+  eyebrow = defaultSections.statsSection.eyebrow,
+  title = defaultSections.statsSection.title,
+  stats = defaultSections.statsSection.stats,
+}: StatsSectionProps) {
   return (
     <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
-      {/* Decorative diagonal stripes */}
       <div className="absolute inset-0 opacity-[0.04]" style={{
         backgroundImage: "repeating-linear-gradient(135deg, currentColor 0, currentColor 1px, transparent 0, transparent 50%)",
         backgroundSize: "24px 24px",
       }} />
-
-      {/* Gold top border */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14">
-          <span className="text-accent text-sm font-semibold uppercase tracking-widest">
-            Our Track Record
-          </span>
+          <CmsField id="sections.statsSection.eyebrow" label="Stats Eyebrow" section="stats">
+            <span className="text-accent text-sm font-semibold uppercase tracking-widest">{eyebrow}</span>
+          </CmsField>
           <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mt-3">
-            Numbers That Speak for Themselves
+            <CmsField id="sections.statsSection.title" label="Stats Title" section="stats" block>{title}</CmsField>
           </h2>
         </div>
 
@@ -63,8 +66,12 @@ export function StatsSection() {
           {stats.map((s, i) => (
             <div key={i} className="text-center px-6 py-8 lg:py-4">
               <Counter value={s.value} suffix={s.suffix} />
-              <div className="mt-3 text-lg font-semibold text-primary-foreground">{s.label}</div>
-              <div className="mt-1 text-sm text-primary-foreground/60">{s.description}</div>
+              <div className="mt-3 text-lg font-semibold text-primary-foreground">
+                <CmsField id={`sections.statsSection.stats.${i}.label`} label={`Stat ${i + 1} Label`} section="stats">{s.label}</CmsField>
+              </div>
+              <div className="mt-1 text-sm text-primary-foreground/60">
+                <CmsField id={`sections.statsSection.stats.${i}.description`} label={`Stat ${i + 1} Description`} section="stats">{s.description}</CmsField>
+              </div>
             </div>
           ))}
         </div>

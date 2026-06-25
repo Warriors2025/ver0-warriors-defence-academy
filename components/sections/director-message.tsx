@@ -2,75 +2,69 @@
 
 import Image from "next/image"
 import { Quote } from "lucide-react"
+import type { DirectorContent } from "@/lib/site-content"
+import { defaultSections } from "@/lib/site-content"
+import { CmsField } from "@/components/cms/cms-field"
 
-export function DirectorMessageSection() {
+type DirectorMessageSectionProps = {
+  director?: DirectorContent
+}
+
+export function DirectorMessageSection({ director = defaultSections.director }: DirectorMessageSectionProps) {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-accent font-semibold text-sm uppercase tracking-wider">
-            Director&apos;s Message
-          </span>
+          <CmsField id="sections.director.eyebrow" label="Director Eyebrow" section="director">
+            <span className="text-accent font-semibold text-sm uppercase tracking-wider">{director.eyebrow}</span>
+          </CmsField>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-3 mb-4 text-balance">
-            A Message from Our Director
+            <CmsField id="sections.director.title" label="Director Section Title" section="director" block>{director.title}</CmsField>
           </h2>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-          {/* Director Image */}
           <div className="relative">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/director.jpg"
-                alt="Mr. Gulab Singh - Director, Warriors Defence Academy"
-                fill
-                className="object-cover"
-              />
+              <Image src={director.image} alt={`${director.name} - ${director.role}`} fill className="object-cover" />
             </div>
             <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-xl">
-              <p className="text-2xl font-bold">15+</p>
-              <p className="text-sm">Years of Excellence</p>
+              <p className="text-2xl font-bold">{director.badgeValue}</p>
+              <p className="text-sm">{director.badgeLabel}</p>
             </div>
           </div>
 
-          {/* Message Content */}
           <div className="space-y-6">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
                 <Quote className="w-6 h-6 text-accent" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-foreground mb-1">Mr. Gulab Singh</h3>
-                <p className="text-muted-foreground">Director, Warriors Defence Academy</p>
+                <h3 className="text-2xl font-bold text-foreground mb-1">
+                  <CmsField id="sections.director.name" label="Director Name" section="director">{director.name}</CmsField>
+                </h3>
+                <p className="text-muted-foreground">
+                  <CmsField id="sections.director.role" label="Director Role" section="director">{director.role}</CmsField>
+                </p>
               </div>
             </div>
 
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                In my experience, a successful life starts with the right mindset. If you begin each day with a positive attitude, you build confidence in yourself and you also motivate others. At Warriors Defence Academy, we teach students to stay disciplined, focused, and mentally strong - because these are the qualities needed to become an officer.
-              </p>
-              <p>
-                We train our students to study with a clear goal, improve step by step, and develop leadership, courage, and responsibility. This is how we prepare aspirants for NDA written exams and SSB interviews, and why many students choose us for NDA coaching in India.
-              </p>
-              <p>
-                We are proud of the trust students and parents have in us, and we work every day to maintain high standards in NDA, SSB, and CDS coaching. Our mission is simple: to help you become a confident, capable, and responsible future officer who serves the nation with pride.
-              </p>
+              {director.paragraphs.map((p, i) => (
+                <CmsField key={i} id={`sections.director.paragraphs.${i}`} label={`Director Paragraph ${i + 1}`} section="director" block>
+                  <p>{p}</p>
+                </CmsField>
+              ))}
             </div>
 
             <div className="pt-4 border-t border-border">
               <div className="flex items-center gap-8">
-                <div>
-                  <p className="text-3xl font-bold text-primary">5000+</p>
-                  <p className="text-sm text-muted-foreground">Students Trained</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-primary">1200+</p>
-                  <p className="text-sm text-muted-foreground">Selections</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-primary">98%</p>
-                  <p className="text-sm text-muted-foreground">Success Rate</p>
-                </div>
+                {director.stats.map((s, i) => (
+                  <div key={i}>
+                    <p className="text-3xl font-bold text-primary">{s.value}</p>
+                    <p className="text-sm text-muted-foreground">{s.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

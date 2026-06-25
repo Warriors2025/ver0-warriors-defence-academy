@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
@@ -28,23 +29,25 @@ const categories = [
   { id: "success", label: "Success Stories",icon: GraduationCap },
 ]
 
-const galleryItems = [
-  { id: 1,  category: "campus",   type: "image", title: "Main Academic Building",   description: "State-of-the-art classrooms and facilities" },
-  { id: 2,  category: "campus",   type: "image", title: "Library",                  description: "Comprehensive collection of defence study materials" },
-  { id: 3,  category: "campus",   type: "image", title: "Hostel Facility",           description: "Comfortable accommodation for students" },
-  { id: 4,  category: "training", type: "image", title: "Physical Training",         description: "Daily PT sessions with expert trainers" },
-  { id: 5,  category: "training", type: "image", title: "Classroom Session",         description: "Interactive learning environment" },
-  { id: 6,  category: "training", type: "video", title: "SSB Mock Interview",        description: "Real-time interview practice" },
-  { id: 7,  category: "gto",      type: "image", title: "Group Discussion",          description: "GTO task preparation" },
-  { id: 8,  category: "gto",      type: "image", title: "Individual Obstacles",      description: "Physical fitness training on GTO ground" },
-  { id: 9,  category: "gto",      type: "image", title: "Command Task",              description: "Leadership assessment activities" },
-  { id: 10, category: "success",  type: "image", title: "NDA Selection 2024",        description: "Celebrating our top performers" },
-  { id: 11, category: "success",  type: "image", title: "CDS Batch Success",         description: "Another successful batch" },
-  { id: 12, category: "success",  type: "video", title: "Success Story",             description: "Watch our student's journey" },
-  { id: 13, category: "campus",   type: "image", title: "Sports Complex",            description: "Multi-purpose sports facilities" },
-  { id: 14, category: "training", type: "image", title: "Psychology Session",        description: "SSB psychology preparation" },
-  { id: 15, category: "gto",      type: "image", title: "Half Group Task",           description: "Team coordination exercises" },
-  { id: 16, category: "success",  type: "image", title: "IMA Passing Out",           description: "Our students at IMA Dehradun" },
+import type { GalleryItem } from "@/lib/gallery"
+
+const galleryItemsFallback = [
+  { id: 1,  category: "campus",   type: "image", title: "Main Academic Building",   description: "State-of-the-art classrooms and facilities", imageUrl: "/images/gallery/campus-1.jpg" },
+  { id: 2,  category: "campus",   type: "image", title: "Campus Aerial View",       description: "Warriors Defence Academy campus in Lucknow", imageUrl: "/images/gallery/campus-2.jpg" },
+  { id: 3,  category: "campus",   type: "image", title: "Campus Event",             description: "Students at academy events", imageUrl: "/images/gallery/event-1.jpg" },
+  { id: 4,  category: "training", type: "image", title: "Physical Training",         description: "Daily PT sessions with expert trainers", imageUrl: "/images/gallery/training-1.jpg" },
+  { id: 5,  category: "training", type: "image", title: "Training Session",          description: "Interactive classroom and field training", imageUrl: "/images/gallery/event-2.jpg" },
+  { id: 6,  category: "training", type: "video", title: "SSB Mock Interview",        description: "Real-time interview practice", imageUrl: "/images/courses/ssb.webp" },
+  { id: 7,  category: "gto",      type: "image", title: "GTO Ground Training",       description: "Group testing officer task preparation", imageUrl: "/images/gallery/gto-1.jpg" },
+  { id: 8,  category: "gto",      type: "image", title: "Obstacle Course",           description: "Physical fitness training on GTO ground", imageUrl: "/images/features/gto-ground.webp" },
+  { id: 9,  category: "gto",      type: "image", title: "Outdoor Activities",        description: "Leadership assessment activities", imageUrl: "/images/activities/activity-2.webp" },
+  { id: 10, category: "success",  type: "image", title: "NDA Selection 2024",        description: "Celebrating our top performers", imageUrl: "/images/gallery/success-1.webp" },
+  { id: 11, category: "success",  type: "image", title: "CDS Batch Success",         description: "Another successful batch", imageUrl: "/images/selections/selection-4.webp" },
+  { id: 12, category: "success",  type: "video", title: "Success Story",             description: "Watch our student's journey", imageUrl: "/images/selections/selection-1.webp" },
+  { id: 13, category: "campus",   type: "image", title: "Sports Complex",            description: "Multi-purpose sports facilities", imageUrl: "/images/features/sports.webp" },
+  { id: 14, category: "training", type: "image", title: "Mock Test Session",         description: "Exam preparation in progress", imageUrl: "/images/features/mock-test.webp" },
+  { id: 15, category: "gto",      type: "image", title: "Team Coordination",         description: "Group task exercises", imageUrl: "/images/activities/activity-3.webp" },
+  { id: 16, category: "success",  type: "image", title: "Selection Celebration",     description: "Successful defence aspirants", imageUrl: "/images/gallery/event-3.jpg" },
 ]
 
 const videoGallery = [
@@ -75,7 +78,17 @@ function getInitials(name: string) {
   return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase()
 }
 
-export function GalleryContent() {
+export function GalleryContent({ items }: { items?: GalleryItem[] }) {
+  const galleryItems = items
+    ? items.map((item, index) => ({
+        id: index + 1,
+        category: item.category,
+        type: item.type,
+        title: item.title,
+        description: item.description,
+        imageUrl: item.imageUrl,
+      }))
+    : galleryItemsFallback
   const [activeCategory, setActiveCategory] = useState("all")
   const [selectedImage, setSelectedImage]   = useState<number | null>(null)
 
@@ -190,12 +203,22 @@ export function GalleryContent() {
                 className="group relative aspect-square bg-secondary rounded-xl overflow-hidden cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-border"
                 onClick={() => setSelectedImage(item.id)}
               >
-                {/* Placeholder icon */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {item.type === "video"
-                    ? <Video className="h-10 w-10 text-muted-foreground/30" />
-                    : <ImageIcon className="h-10 w-10 text-muted-foreground/30" />}
-                </div>
+                {/* Photo */}
+                {item.imageUrl && item.type === "image" ? (
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {item.type === "video"
+                      ? <Video className="h-10 w-10 text-muted-foreground/30" />
+                      : <ImageIcon className="h-10 w-10 text-muted-foreground/30" />}
+                  </div>
+                )}
 
                 {/* Video badge */}
                 {item.type === "video" && (
@@ -241,11 +264,21 @@ export function GalleryContent() {
           </Button>
 
           <div className="relative aspect-video flex items-center justify-center bg-zinc-900">
-            <div className="flex items-center justify-center w-full h-full">
-              {selectedItem?.type === "video"
-                ? <Video className="h-20 w-20 text-zinc-700" />
-                : <ImageIcon className="h-20 w-20 text-zinc-700" />}
-            </div>
+            {selectedItem?.imageUrl && selectedItem.type === "image" ? (
+              <Image
+                src={selectedItem.imageUrl}
+                alt={selectedItem.title}
+                fill
+                className="object-contain"
+                sizes="100vw"
+              />
+            ) : (
+              <div className="flex items-center justify-center w-full h-full">
+                {selectedItem?.type === "video"
+                  ? <Video className="h-20 w-20 text-zinc-700" />
+                  : <ImageIcon className="h-20 w-20 text-zinc-700" />}
+              </div>
+            )}
 
             <Button
               variant="ghost"

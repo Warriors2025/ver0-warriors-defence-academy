@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { AppProviders } from "@/components/providers"
 import "./globals.css"
 
 const inter = Inter({ 
@@ -71,7 +72,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/images/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Warriors Defence Academy - Best NDA Coaching in India",
@@ -82,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Warriors Defence Academy | Best NDA Coaching in India",
     description: "India's No.1 NDA, CDS, AFCAT & SSB coaching institute. 5000+ selections, expert military faculty. Join us for your defence career.",
-    images: ["/images/og-image.jpg"],
+    images: ["/images/og-image.webp"],
     creator: "@WarriorsDefence",
   },
   robots: {
@@ -173,7 +174,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        {children}
+        <AppProviders>{children}</AppProviders>
         <Analytics />
       </body>
     </html>

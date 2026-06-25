@@ -1,15 +1,17 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Shield, Eye, EyeOff, Lock, Mail, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export default function AdminLoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get("callbackUrl") || "/admin"
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -32,14 +34,13 @@ export default function AdminLoginPage() {
     if (result?.error) {
       setError("Invalid email or password. Please try again.")
     } else {
-      router.push("/admin")
+      router.push(callbackUrl)
       router.refresh()
     }
   }
 
   return (
     <div className="min-h-screen bg-primary flex items-center justify-center p-4">
-      {/* Background texture */}
       <div className="absolute inset-0 opacity-[0.04]" style={{
         backgroundImage: "repeating-linear-gradient(135deg, currentColor 0, currentColor 1px, transparent 0, transparent 50%)",
         backgroundSize: "20px 20px",
@@ -47,9 +48,7 @@ export default function AdminLoginPage() {
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent" />
 
       <div className="relative z-10 w-full max-w-md">
-        {/* Card */}
         <div className="bg-background rounded-2xl shadow-2xl border border-border overflow-hidden">
-          {/* Card header */}
           <div className="bg-primary px-8 py-8 text-center border-b border-primary-foreground/10">
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/15 border border-accent/30 mb-4">
               <Shield className="h-7 w-7 text-accent" />
@@ -58,7 +57,6 @@ export default function AdminLoginPage() {
             <p className="text-primary-foreground/60 text-sm mt-1">Warriors Defence Academy</p>
           </div>
 
-          {/* Form */}
           <div className="px-8 py-8">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
@@ -130,5 +128,17 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-primary">
+        <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   )
 }

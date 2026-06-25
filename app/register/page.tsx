@@ -2,16 +2,27 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
 import { RegisterForm } from "@/components/register-form"
+import { getCourseOptions } from "@/lib/courses"
+import { getSiteContent } from "@/lib/site-content.server"
 import type { Metadata } from "next"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 
-export const metadata: Metadata = {
-  title: "Register | Warriors Defence Academy",
-  description: "Register for NDA, CDS, SSB, AFCAT and other defence courses at Warriors Defence Academy, Lucknow.",
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("register")
+  return buildPageMetadata("register", seo)
 }
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const [courseOptions, { pages }, schema] = await Promise.all([
+    getCourseOptions(),
+    getSiteContent(),
+    getPageSchemaJsonLd("register"),
+  ])
+  const hero = pages.register.hero
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       <section className="bg-primary text-primary-foreground py-12 relative overflow-hidden">
@@ -19,13 +30,13 @@ export default function RegisterPage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <Badge variant="secondary" className="bg-accent/20 text-accent border-0 mb-4">
-              Enroll Now
+              {hero.eyebrow ?? "Enroll Now"}
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-              Start Your Defence Journey
+              {hero.title}
             </h1>
             <p className="text-primary-foreground/80">
-              Fill in your details to register for your preferred course.
+              {hero.subtitle}
             </p>
           </div>
         </div>
@@ -33,7 +44,7 @@ export default function RegisterPage() {
 
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
-          <RegisterForm />
+          <RegisterForm courses={courseOptions} />
         </div>
       </section>
 

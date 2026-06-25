@@ -18,10 +18,11 @@ import {
   Shield,
   Tag,
 } from "lucide-react"
+import type { BlogPost } from "@/lib/blog"
 
 const POSTS_PER_PAGE = 6
 
-const blogPosts = [
+const blogPostsFallback: BlogPost[] = [
   {
     id: 1,
     title: "Complete Guide to NDA 2025 Exam: Syllabus, Pattern & Preparation Strategy",
@@ -32,7 +33,7 @@ const blogPosts = [
     author: "Col. Rajesh Kumar (Retd.)",
     date: "March 15, 2025",
     readTime: "12 min read",
-    image: "/images/blog/nda-guide.jpg",
+    image: "/images/blog/nda-guide.webp",
     featured: true,
   },
   {
@@ -45,7 +46,7 @@ const blogPosts = [
     author: "Maj. Priya Singh (Retd.)",
     date: "March 10, 2025",
     readTime: "15 min read",
-    image: "/images/blog/ssb-interview.jpg",
+    image: "/images/blog/ssb-interview.webp",
     featured: true,
   },
   {
@@ -58,7 +59,7 @@ const blogPosts = [
     author: "Capt. Vikram Yadav",
     date: "March 5, 2025",
     readTime: "8 min read",
-    image: "/images/blog/physical-fitness.jpg",
+    image: "/images/blog/physical-fitness.webp",
     featured: false,
   },
   {
@@ -71,7 +72,7 @@ const blogPosts = [
     author: "Prof. Amit Sharma",
     date: "February 28, 2025",
     readTime: "10 min read",
-    image: "/images/blog/maths-prep.jpg",
+    image: "/images/courses/cds.webp",
     featured: false,
   },
   {
@@ -84,7 +85,7 @@ const blogPosts = [
     author: "Col. Rajesh Kumar (Retd.)",
     date: "February 20, 2025",
     readTime: "14 min read",
-    image: "/images/blog/olq-qualities.jpg",
+    image: "/images/courses/ssb.webp",
     featured: false,
   },
   {
@@ -97,7 +98,7 @@ const blogPosts = [
     author: "Maj. Priya Singh (Retd.)",
     date: "February 15, 2025",
     readTime: "9 min read",
-    image: "/images/blog/cds-vs-nda.jpg",
+    image: "/images/courses/nda.webp",
     featured: false,
   },
   {
@@ -110,7 +111,7 @@ const blogPosts = [
     author: "Wg. Cdr. Arun Mehta (Retd.)",
     date: "February 10, 2025",
     readTime: "11 min read",
-    image: "/images/blog/nda-guide.jpg",
+    image: "/images/blog/nda-guide.webp",
     featured: false,
   },
   {
@@ -123,7 +124,7 @@ const blogPosts = [
     author: "Warriors Team",
     date: "February 5, 2025",
     readTime: "7 min read",
-    image: "/images/blog/ssb-interview.jpg",
+    image: "/images/blog/ssb-interview.webp",
     featured: false,
   },
   {
@@ -136,7 +137,7 @@ const blogPosts = [
     author: "Prof. Neha Verma",
     date: "January 30, 2025",
     readTime: "10 min read",
-    image: "/images/blog/physical-fitness.jpg",
+    image: "/images/blog/physical-fitness.webp",
     featured: false,
   },
 ]
@@ -151,8 +152,6 @@ const CATEGORIES = [
   "Success Stories",
   "AFCAT Preparation",
 ]
-
-const ALL_TAGS = Array.from(new Set(blogPosts.flatMap(p => p.tags)))
 
 function getCategoryColor(category: string) {
   const map: Record<string, string> = {
@@ -172,7 +171,12 @@ interface FilterState {
   tags: string[]
 }
 
-export function BlogContent() {
+export function BlogContent({ posts }: { posts?: BlogPost[] }) {
+  const blogPosts = posts ?? blogPostsFallback
+  const allTags = useMemo(
+    () => Array.from(new Set(blogPosts.flatMap((p) => p.tags))),
+    [blogPosts]
+  )
   const [searchTerm, setSearchTerm]           = useState("")
   const [currentPage, setCurrentPage]         = useState(1)
   const [filters, setFilters]                 = useState<FilterState>({ categories: ["All"], tags: [] })
@@ -331,7 +335,7 @@ export function BlogContent() {
           {/* Tag cloud (expandable) */}
           {showTagCloud && (
             <div className="mt-3 pt-3 border-t border-border flex flex-wrap gap-2">
-              {ALL_TAGS.map(tag => (
+              {allTags.map(tag => (
                 <button
                   key={tag}
                   onClick={() => handleTagToggle(tag)}
@@ -395,7 +399,7 @@ export function BlogContent() {
 
             <div className="grid md:grid-cols-2 gap-6">
               {featuredPosts.map(post => (
-                <Link key={post.id} href={`/blog/${post.id}`} className="group block">
+                <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
                   <div className="relative h-72 md:h-80 rounded-2xl overflow-hidden shadow-lg">
                     <Image
                       src={post.image}
@@ -478,7 +482,7 @@ export function BlogContent() {
               {/* Grid */}
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paginatedPosts.map(post => (
-                  <Link key={post.id} href={`/blog/${post.id}`} className="group block">
+                  <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
                     <article className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:border-accent/30 transition-all duration-300 h-full flex flex-col">
                       {/* Image */}
                       <div className="relative h-44 bg-secondary overflow-hidden flex-shrink-0">
