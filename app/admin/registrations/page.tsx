@@ -2,6 +2,8 @@ import { createServerClient } from "@/lib/supabase"
 import { revalidatePath } from "next/cache"
 import { Users, Mail, Phone, BookOpen, Clock, CheckCircle, UserCheck } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 const STATUS_COLORS: Record<string, string> = {
   pending:   "bg-yellow-100 text-yellow-700 border-yellow-200",
   contacted: "bg-blue-100 text-blue-700 border-blue-200",
