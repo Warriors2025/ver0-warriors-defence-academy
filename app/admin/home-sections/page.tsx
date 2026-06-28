@@ -117,7 +117,7 @@ export default function HomeSectionsEditorPage() {
           <h2 className="font-semibold">Books Section</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             <div className="space-y-1.5"><Label>Eyebrow</Label><Input value={sections.books.eyebrow} onChange={(e) => setSections({ ...sections, books: { ...sections.books, eyebrow: e.target.value } })} /></div>
-            <div className="space-y-1.5"><Label>Promo Code</Label><Input value={sections.books.promoCode} onChange={(e) => setSections({ ...sections, books: { ...sections.books, promoCode: e.target.value } })} /></div>
+            <div className="space-y-1.5"><Label>Footer Note (optional)</Label><Input value={sections.books.promoCode} onChange={(e) => setSections({ ...sections, books: { ...sections.books, promoCode: e.target.value } })} placeholder="Leave blank for default student-provided message" /></div>
           </div>
           <div className="space-y-1.5"><Label>Title</Label><Input value={sections.books.title} onChange={(e) => setSections({ ...sections, books: { ...sections.books, title: e.target.value } })} /></div>
           <div className="space-y-1.5"><Label>Subtitle</Label><Textarea value={sections.books.subtitle} onChange={(e) => setSections({ ...sections, books: { ...sections.books, subtitle: e.target.value } })} rows={2} /></div>
@@ -127,12 +127,10 @@ export default function HomeSectionsEditorPage() {
               <ImagePicker uploadPreset="book" value={book.image} onChange={(v) => updateBook(i, "image", v)} label="Cover" />
               <Input value={book.title} onChange={(e) => updateBook(i, "title", e.target.value)} placeholder="Title" />
               <Input value={book.subtitle} onChange={(e) => updateBook(i, "subtitle", e.target.value)} placeholder="Subtitle" />
-              <div className="grid grid-cols-3 gap-2">
-                <Input value={book.price} onChange={(e) => updateBook(i, "price", e.target.value)} placeholder="Price" />
-                <Input value={book.originalPrice} onChange={(e) => updateBook(i, "originalPrice", e.target.value)} placeholder="Original" />
-                <Input type="number" value={book.rating} onChange={(e) => updateBook(i, "rating", Number(e.target.value))} placeholder="Rating" />
+              <div className="grid grid-cols-2 gap-2">
+                <Input type="number" step="0.1" min="0" max="5" value={book.rating} onChange={(e) => updateBook(i, "rating", Number(e.target.value))} placeholder="Rating" />
+                <Input value={book.badge ?? ""} onChange={(e) => updateBook(i, "badge", e.target.value || null)} placeholder="Badge (optional)" />
               </div>
-              <Input value={book.badge ?? ""} onChange={(e) => updateBook(i, "badge", e.target.value || null)} placeholder="Badge (optional)" />
             </div>
           ))}
         </section>

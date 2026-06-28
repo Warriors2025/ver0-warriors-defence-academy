@@ -96,59 +96,50 @@ export function MentorsSection({ mentors: items }: { mentors?: Mentor[] }) {
           {mentors.map((m, i) => (
             <Card
               key={i}
-              className="group bg-card border-border hover:border-accent/40 hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group bg-card border-border hover:border-accent/40 hover:shadow-xl transition-all duration-300 overflow-hidden pt-0"
             >
-              {/* Top accent bar */}
-              <div className="h-1 bg-gradient-to-r from-primary/60 via-accent to-primary/60" />
-
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-
-                  {/* Avatar */}
-                  <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-primary shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
-                      {m.image ? (
-                        <Image
-                          src={m.image}
-                          alt={m.name}
-                          width={64}
-                          height={64}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <span className="text-primary-foreground font-bold text-lg tracking-wide">{m.initials}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                      <Star className="h-2.5 w-2.5 text-accent-foreground fill-accent-foreground" />
-                    </div>
+              {/* Photo */}
+              <div className="relative aspect-[4/5] sm:aspect-[5/6] overflow-hidden bg-primary/10">
+                {m.image ? (
+                  <Image
+                    src={m.image}
+                    alt={m.name}
+                    fill
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-primary">
+                    <span className="text-primary-foreground font-bold text-4xl tracking-wide">{m.initials}</span>
                   </div>
-
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-foreground leading-snug line-clamp-2">{m.name}</h3>
-                    <Badge
-                      variant="outline"
-                      className={`mt-1.5 text-xs font-medium border ${branchColors[m.branch] ?? ""}`}
-                    >
-                      {m.branch}
-                    </Badge>
-                  </div>
+                )}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <h3 className="font-bold text-white text-lg leading-snug">{m.name}</h3>
+                  <Badge
+                    variant="outline"
+                    className="mt-1.5 text-xs font-medium border bg-white/10 text-white border-white/30 backdrop-blur-sm"
+                  >
+                    {m.branch}
+                  </Badge>
                 </div>
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-accent flex items-center justify-center shadow-lg">
+                  <Star className="h-4 w-4 text-accent-foreground fill-accent-foreground" />
+                </div>
+              </div>
 
-                <div className="mt-4 space-y-2 border-t border-border pt-4">
-                  <div className="flex items-center justify-between">
+              <CardContent className="p-5 space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-3">
                     <span className="text-xs text-muted-foreground uppercase tracking-wide">Role</span>
-                    <span className="text-xs font-semibold text-foreground">{m.designation}</span>
+                    <span className="text-xs font-semibold text-foreground text-right">{m.designation}</span>
                   </div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-3">
                     <span className="text-xs text-muted-foreground uppercase tracking-wide">Experience</span>
                     <span className="text-xs font-semibold text-accent">{m.experience}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground pt-1 leading-relaxed">{m.expertise}</p>
                 </div>
+                <p className="text-sm text-muted-foreground leading-relaxed border-t border-border pt-3">{m.expertise}</p>
               </CardContent>
             </Card>
           ))}

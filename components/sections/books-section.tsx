@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Star, ShoppingCart, BookOpen, Tag } from "lucide-react"
+import { Star, BookOpen, GraduationCap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import type { BookItem } from "@/lib/site-content"
@@ -35,10 +35,10 @@ export function BooksSection({ eyebrow, title, subtitle, promoCode, items }: Boo
               {subtitle}
             </p>
           </div>
-          <Link href="/contact" className="shrink-0">
+          <Link href="/admissions" className="shrink-0">
             <Button variant="outline" className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <BookOpen className="h-4 w-4" />
-              View All Materials
+              <GraduationCap className="h-4 w-4" />
+              View Admissions
             </Button>
           </Link>
         </div>
@@ -69,25 +69,22 @@ export function BooksSection({ eyebrow, title, subtitle, promoCode, items }: Boo
                   <Star className="w-3 h-3 fill-accent text-accent" />
                   <span className="text-xs font-medium text-foreground">{book.rating}</span>
                 </div>
-                <div className="flex items-baseline gap-1.5 mt-auto">
-                  <span className="text-base font-bold text-primary">{book.price}</span>
-                  <span className="text-xs text-muted-foreground line-through">{book.originalPrice}</span>
-                </div>
-                <Button size="sm" className="w-full gap-1.5 h-9 text-xs mt-1">
-                  <ShoppingCart className="w-3.5 h-3.5" />
-                  Buy Now
-                </Button>
+                <p className="mt-auto text-xs font-medium text-primary flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 shrink-0" />
+                  Provided to enrolled students
+                </p>
               </div>
             </div>
           ))}
         </div>
 
-        {promoCode && (
-          <div className="mt-10 flex items-center justify-center gap-3 text-sm text-muted-foreground">
-            <Tag className="h-4 w-4 text-accent" />
-            <span>Use code <strong className="text-foreground">{promoCode}</strong> for 10% off on all study materials</span>
-          </div>
-        )}
+        <p className="mt-10 flex items-center justify-center gap-3 text-sm text-muted-foreground text-center max-w-2xl mx-auto">
+          <BookOpen className="h-4 w-4 text-accent shrink-0" />
+          <span>
+            {promoCode ||
+              "These in-house study materials are included with your coaching programme — we do not sell books separately."}
+          </span>
+        </p>
       </div>
     </section>
   )

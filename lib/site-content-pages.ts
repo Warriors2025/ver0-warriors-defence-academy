@@ -181,16 +181,16 @@ export const defaultActivities: ActivityItem[] = [
 export const defaultBooks: { header: { eyebrow: string; title: string; subtitle: string; promoCode: string }; items: BookItem[] } = {
   header: {
     eyebrow: "Study Materials",
-    title: "Books for Defence Exams",
-    subtitle: "Authored by our expert faculty — meticulously crafted to match the latest NDA, CDS, and SSB exam patterns.",
-    promoCode: "WARRIORS10",
+    title: "In-House Books for Our Students",
+    subtitle: "Expert-authored books and practice manuals are provided to enrolled students — aligned with the latest NDA, CDS, and SSB exam patterns.",
+    promoCode: "",
   },
   items: [
-    { title: "WDA Physics for NDA", subtitle: "Concept & Practice", price: "₹399", originalPrice: "₹549", rating: 4.8, image: "/images/books/physics.jpg", badge: "Best Seller" },
-    { title: "WDA Indian Polity", subtitle: "NDA & CDS Edition", price: "₹350", originalPrice: "₹499", rating: 4.7, image: "/images/books/polity.jpg", badge: null },
-    { title: "WDA Geography", subtitle: "For Defence Exams", price: "₹299", originalPrice: "₹399", rating: 4.9, image: "/images/books/geography.jpg", badge: "New" },
-    { title: "WDA Chemistry", subtitle: "Complete Preparation", price: "₹550", originalPrice: "₹699", rating: 4.8, image: "/images/books/chemistry.jpg", badge: "Top Rated" },
-    { title: "WDA NDA Mathematics", subtitle: "Complete Guide", price: "₹450", originalPrice: "₹599", rating: 4.6, image: "/images/books/physics.jpg", badge: null },
+    { title: "WDA Physics for NDA", subtitle: "Concept & Practice", price: "", originalPrice: "", rating: 4.8, image: "/images/books/physics.jpg", badge: "Popular" },
+    { title: "WDA Indian Polity", subtitle: "NDA & CDS Edition", price: "", originalPrice: "", rating: 4.7, image: "/images/books/polity.jpg", badge: null },
+    { title: "WDA Geography", subtitle: "For Defence Exams", price: "", originalPrice: "", rating: 4.9, image: "/images/books/geography.jpg", badge: "New" },
+    { title: "WDA Chemistry", subtitle: "Complete Preparation", price: "", originalPrice: "", rating: 4.8, image: "/images/books/chemistry.jpg", badge: "Top Rated" },
+    { title: "WDA NDA Mathematics", subtitle: "Complete Guide", price: "", originalPrice: "", rating: 4.6, image: "/images/books/physics.jpg", badge: null },
   ],
 }
 
