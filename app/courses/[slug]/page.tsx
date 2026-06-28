@@ -129,7 +129,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                 </Button>
               </Link>
               <a href="tel:+919452245729">
-                <Button size="lg" variant="outline" className="h-12 px-7 font-semibold gap-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                <Button size="lg" variant="outline" className="h-12 px-7 font-semibold gap-2 border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
                   <Phone className="h-4 w-4" />
                   Call Us
                 </Button>

@@ -6,6 +6,7 @@ import { Building2, BookOpen, MapPin, FileCheck, Trophy, MessageCircle, HelpCirc
 import { Button } from "@/components/ui/button"
 import type { FeatureItem } from "@/lib/site-content"
 import { defaultSections } from "@/lib/site-content"
+import { getFacilityHref } from "@/lib/facilities-data"
 import { CmsField } from "@/components/cms/cms-field"
 
 const ICONS = [Building2, BookOpen, MapPin, FileCheck, Trophy, MessageCircle, HelpCircle, Users]
@@ -40,7 +41,7 @@ export function FeaturesSection({
               <CmsField id="sections.featuresHeader.subtitle" label="Features Subtitle" section="features" block>{subtitle}</CmsField>
             </p>
           </div>
-          <Link href="/gallery" className="shrink-0">
+          <Link href="/facilities" className="shrink-0">
             <Button variant="outline" className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
               <Building2 className="h-4 w-4" />
               Explore Campus
@@ -50,7 +51,7 @@ export function FeaturesSection({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[200px]">
           {hero && (
-            <Link href={hero.href} className="relative rounded-2xl overflow-hidden group sm:col-span-2 lg:col-span-2 lg:row-span-2 block focus-visible:ring-2 focus-visible:ring-accent">
+            <Link href={getFacilityHref(hero)} className="relative rounded-2xl overflow-hidden group sm:col-span-2 lg:col-span-2 lg:row-span-2 block focus-visible:ring-2 focus-visible:ring-accent">
               <Image src={hero.image} alt={hero.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
@@ -74,7 +75,7 @@ export function FeaturesSection({
             const idx = i + 1
             const Icon = ICONS[(i + 1) % ICONS.length]
             return (
-              <Link key={i} href={f.href} className="relative rounded-2xl overflow-hidden group block focus-visible:ring-2 focus-visible:ring-accent">
+              <Link key={i} href={getFacilityHref(f)} className="relative rounded-2xl overflow-hidden group block focus-visible:ring-2 focus-visible:ring-accent">
                 <Image src={f.image} alt={f.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                 <div className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-black/40 backdrop-blur-sm border border-white/15 flex items-center justify-center">
@@ -97,7 +98,7 @@ export function FeaturesSection({
         </div>
 
         <div className="text-center mt-12">
-          <Link href="/gallery">
+          <Link href="/facilities">
             <Button size="lg" className="gap-2">
               View All Facilities
               <ArrowRight className="h-4 w-4" />

@@ -9,6 +9,7 @@ import {
   BarChart3, BookOpen, LogOut, Shield, ChevronRight, ExternalLink,
   FileText, Eye, Users, MessageSquare, HelpCircle, Star, Newspaper,
   Images, Inbox, UserCheck, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
+  Building2,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -31,6 +32,7 @@ const navItems = [
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle, exact: false },
   { href: "/admin/blog", label: "Blog", icon: Newspaper, exact: false },
   { href: "/admin/gallery", label: "Gallery", icon: Images, exact: false },
+  { href: "/admin/facilities", label: "Facility Photos", icon: Building2, exact: false },
   { href: "/admin/courses", label: "Courses", icon: BookOpen, exact: false },
   { href: "/admin/results", label: "Results", icon: Trophy, exact: false },
   { href: "/admin/admissions", label: "Admissions", icon: GraduationCap, exact: false },

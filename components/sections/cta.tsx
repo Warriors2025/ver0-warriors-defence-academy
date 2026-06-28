@@ -58,7 +58,7 @@ export function CTASection({
               </Button>
             </Link>
             <Link href={cta.secondaryHref}>
-              <Button size="lg" variant="outline" className="border-primary-foreground/25 text-primary-foreground hover:bg-primary-foreground/10 h-13 px-8 text-base font-semibold gap-2 min-h-[48px]">
+              <Button size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-13 px-8 text-base font-semibold gap-2 min-h-[48px]">
                 <Calendar className="h-4 w-4" />
                 {cta.secondaryLabel}
               </Button>

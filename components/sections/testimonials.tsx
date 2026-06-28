@@ -91,7 +91,7 @@ export function TestimonialsSection({ testimonials: items }: { testimonials?: Te
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
@@ -99,7 +99,7 @@ export function TestimonialsSection({ testimonials: items }: { testimonials?: Te
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>

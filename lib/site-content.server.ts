@@ -46,6 +46,7 @@ function mergeSections(raw: Partial<SiteSections> | null | undefined): SiteSecti
       ...raw.videos,
       items: raw.videos?.items?.length ? raw.videos.items : base.videos.items,
     },
+    facilityPhotos: raw.facilityPhotos ?? base.facilityPhotos,
   }
 }
 

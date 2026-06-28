@@ -12,6 +12,7 @@ const quickLinks = [
   { title: "Results", href: "/results" },
   { title: "Blog", href: "/blog" },
   { title: "Gallery", href: "/gallery" },
+  { title: "Facilities", href: "/facilities" },
   { title: "Contact", href: "/contact" },
   { title: "Register", href: "/register" },
 ]
@@ -90,13 +91,13 @@ export async function Footer() {
 
             <div className="mt-6">
               <h4 className="text-sm font-medium text-accent mb-3">Subscribe to Updates</h4>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Input
                   type="email"
                   placeholder="Your email"
-                  className="bg-brand-deep-foreground/10 border-brand-deep-foreground/20 text-brand-deep-foreground placeholder:text-brand-deep-foreground/50"
+                  className="flex-1 bg-brand-deep-foreground/10 border-brand-deep-foreground/20 text-brand-deep-foreground placeholder:text-brand-deep-foreground/50"
                 />
-                <Button variant="secondary" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button variant="secondary" className="shrink-0 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
                   Subscribe
                 </Button>
               </div>

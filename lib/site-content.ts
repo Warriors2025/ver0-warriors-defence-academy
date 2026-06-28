@@ -1,5 +1,6 @@
 import type { SitePages, ActivityItem, BookItem, VideoItem } from "@/lib/site-content-pages"
 import { defaultPages, defaultActivities, defaultBooks, defaultVideos } from "@/lib/site-content-pages"
+import type { FacilityPhoto } from "@/lib/facilities-data"
 import type { SeoStore } from "@/lib/seo"
 import { DEFAULT_SEO_STORE } from "@/lib/seo"
 
@@ -57,6 +58,7 @@ export type SiteSections = {
   activities: { eyebrow: string; title: string; subtitle: string; items: ActivityItem[] }
   books: { eyebrow: string; title: string; subtitle: string; promoCode: string; items: BookItem[] }
   videos: { eyebrow: string; title: string; subtitle: string; items: VideoItem[] }
+  facilityPhotos?: Record<string, FacilityPhoto[]>
 }
 
 export type SiteContent = {
@@ -99,14 +101,14 @@ const defaultSections: SiteSections = {
     subtitle: "Infrastructure and training support designed for every stage of your defence career journey.",
   },
   features: [
-    { title: "Largest GTO Ground", description: "India's largest GTO training ground with modern obstacles for comprehensive physical and tactical readiness.", image: "/images/features/gto-ground.webp", href: "/gallery", large: true },
-    { title: "Library Facilities", description: "Extensive collection of NDA, CDS & SSB reference books and practice manuals.", image: "/images/features/library.webp", href: "/about" },
-    { title: "IMA Dehradun Visits", description: "Regular educational trips for real-world exposure and inspiration.", image: "/images/features/ima-visit.webp", href: "/gallery" },
-    { title: "Mock Test Facilities", description: "Regular exams mirroring actual NDA/CDS papers to track progress and build confidence.", image: "/images/features/mock-test.webp", href: "/courses" },
-    { title: "National Sports Facilities", description: "Extensive sports resources to build strength, stamina and meet rigorous physical standards.", image: "/images/features/sports.webp", href: "/gallery" },
-    { title: "Spoken English Classes", description: "Dedicated English communication classes for group discussions and personal interviews.", image: "/images/features/english-class.webp", href: "/courses" },
-    { title: "Doubt Counter Center", description: "One-on-one guidance from subject experts to clear doubts and strengthen comprehension.", image: "/images/features/doubt-clearing.webp", href: "/contact" },
-    { title: "Expert Mentorship", description: "Distinguished military leaders with decades of service guiding every step.", image: "/images/features/mentorship.webp", href: "/about" },
+    { title: "Largest GTO Ground", description: "India's largest GTO training ground with modern obstacles for comprehensive physical and tactical readiness.", image: "/images/features/gto-ground.webp", href: "/facilities/gto-ground", large: true },
+    { title: "Library Facilities", description: "Extensive collection of NDA, CDS & SSB reference books and practice manuals.", image: "/images/features/library.webp", href: "/facilities/library" },
+    { title: "IMA Dehradun Visits", description: "Regular educational trips for real-world exposure and inspiration.", image: "/images/features/ima-visit.webp", href: "/facilities/ima-visit" },
+    { title: "Mock Test Facilities", description: "Regular exams mirroring actual NDA/CDS papers to track progress and build confidence.", image: "/images/features/mock-test.webp", href: "/facilities/mock-test" },
+    { title: "National Sports Facilities", description: "Extensive sports resources to build strength, stamina and meet rigorous physical standards.", image: "/images/features/sports.webp", href: "/facilities/sports" },
+    { title: "Spoken English Classes", description: "Dedicated English communication classes for group discussions and personal interviews.", image: "/images/features/english-class.webp", href: "/facilities/english-class" },
+    { title: "Doubt Counter Center", description: "One-on-one guidance from subject experts to clear doubts and strengthen comprehension.", image: "/images/features/doubt-clearing.webp", href: "/facilities/doubt-clearing" },
+    { title: "Expert Mentorship", description: "Distinguished military leaders with decades of service guiding every step.", image: "/images/features/mentorship.webp", href: "/facilities/mentorship" },
   ],
   statsSection: {
     eyebrow: "Our Track Record",

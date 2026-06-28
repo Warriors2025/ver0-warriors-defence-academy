@@ -66,6 +66,14 @@ export const CMS_PAGES: CmsPage[] = [
     sections: ["images"],
   },
   {
+    slug: "facilities",
+    title: "Facilities",
+    path: "/facilities",
+    description: "Campus facilities including GTO ground, library, sports, and mentorship.",
+    editable: false,
+    sections: ["facilities"],
+  },
+  {
     slug: "results",
     title: "Results",
     path: "/results",

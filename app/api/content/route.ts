@@ -50,6 +50,9 @@ export async function POST(req: NextRequest) {
     revalidatePath("/about")
     revalidatePath("/blog")
     revalidatePath("/gallery")
+    revalidatePath("/facilities")
+    const { FACILITIES } = await import("@/lib/facilities-data")
+    for (const f of FACILITIES) revalidatePath(`/facilities/${f.slug}`)
     if (body.seo?.pages) {
       const { getCmsPage } = await import("@/lib/cms-pages")
       for (const key of Object.keys(body.seo.pages)) {
