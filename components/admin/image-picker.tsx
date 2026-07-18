@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { ImageIcon, Upload, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -89,7 +88,8 @@ export function ImagePicker({
       <div className="flex gap-3 items-start">
         <div className="relative w-24 h-24 rounded-lg border border-border overflow-hidden bg-muted shrink-0">
           {value ? (
-            <Image src={value} alt="" fill className="object-cover" sizes="96px" />
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={value} alt="" className="absolute inset-0 h-full w-full object-cover" />
           ) : (
             <div className="flex items-center justify-center h-full">
               <ImageIcon className="h-8 w-8 text-muted-foreground/40" />
@@ -137,7 +137,8 @@ export function ImagePicker({
                       onClick={() => { onChange(img); setOpen(false) }}
                       className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-colors ${value === img ? "border-primary" : "border-transparent hover:border-primary/50"}`}
                     >
-                      <Image src={img} alt="" fill className="object-cover" sizes="120px" />
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
                     </button>
                   ))}
                 </div>

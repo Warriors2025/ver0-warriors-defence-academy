@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { Upload, ImageIcon, Copy, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { IMAGE_PRESETS } from "@/lib/image-presets"
@@ -105,7 +104,8 @@ export default function AdminMediaPage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {images.map((img) => (
             <div key={img} className="group relative aspect-square rounded-xl overflow-hidden border border-border bg-muted">
-              <Image src={img} alt="" fill className="object-cover" sizes="160px" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
                 <p className="text-white text-[10px] text-center truncate w-full">{img}</p>
                 <Button size="sm" variant="secondary" className="h-7 text-xs gap-1" onClick={() => copyUrl(img)}>
