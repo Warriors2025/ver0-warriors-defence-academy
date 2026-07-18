@@ -21,13 +21,16 @@ import {
   Users,
   Award
 } from "lucide-react"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
+import { getPageSchemaJsonLd } from "@/lib/seo.server"
 
 const stepIcons = [FileText, UserCheck, Users, CreditCard]
 
 export default async function AdmissionsPage() {
-  const [upcomingBatches, { pages }] = await Promise.all([
+  const [upcomingBatches, { pages }, schema] = await Promise.all([
     getAdmissionBatches(),
     getSiteContent(),
+    getPageSchemaJsonLd("admissions"),
   ])
   const page = pages.admissions
   const admissionSteps = page.steps.map((step, index) => ({
@@ -41,6 +44,7 @@ export default async function AdmissionsPage() {
   const fees = page.fees
   return (
     <div className="min-h-screen bg-background">
+      <PageJsonLd data={schema} />
       <Header />
       
       <main>

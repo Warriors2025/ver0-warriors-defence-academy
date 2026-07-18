@@ -2,15 +2,18 @@ import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AppProviders } from "@/components/providers"
+import { FloatingCta } from "@/components/floating-cta"
+import { TrackingScripts } from "@/components/tracking-scripts"
+import { getTrackingTags } from "@/lib/tracking"
 import "./globals.css"
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 })
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
@@ -27,7 +30,7 @@ export const viewport: Viewport = {
   ],
 }
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   metadataBase: new URL("https://warriorsdefenceacademy.com"),
   title: {
     default: "Warriors Defence Academy | Best NDA Coaching in Lucknow, India",
@@ -97,10 +100,17 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
   category: "Education",
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const tags = await getTrackingTags()
+  return {
+    ...baseMetadata,
+    ...(tags.searchConsoleVerification
+      ? { verification: { google: tags.searchConsoleVerification } }
+      : {}),
+  }
 }
 
 const jsonLd = {
@@ -157,11 +167,13 @@ const jsonLd = {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const trackingTags = await getTrackingTags()
+
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
@@ -175,6 +187,8 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <AppProviders>{children}</AppProviders>
+        <FloatingCta />
+        <TrackingScripts tags={trackingTags} />
         <Analytics />
       </body>
     </html>

@@ -4,7 +4,7 @@ import { createServerClient } from "@/lib/supabase"
 import {
   Megaphone, Image as ImageIcon, Phone, BarChart3,
   BookOpen, ArrowRight, CheckCircle, Clock, MessageSquare, Users,
-  Eye, FileText, Images, AlertTriangle, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
+  Eye, FileText, Images, AlertTriangle, Trophy, GraduationCap, Layers, UserCog, Search, Bot, Code2, Tags,
 } from "lucide-react"
 
 const serviceRoleConfigured =
@@ -43,6 +43,22 @@ const sections = [
     desc: "Meta titles, descriptions, schema markup, image alt text, and heading tags.",
     color: "bg-teal-500/10 border-teal-500/20",
     iconColor: "text-teal-600",
+  },
+  {
+    href: "/admin/schema",
+    icon: Code2,
+    label: "Schema Markup",
+    desc: "Edit and add JSON-LD schema for any page — presets or custom markup.",
+    color: "bg-cyan-500/10 border-cyan-500/20",
+    iconColor: "text-cyan-600",
+  },
+  {
+    href: "/admin/tags",
+    icon: Tags,
+    label: "Tracking Tags",
+    desc: "GA4, Search Console, Google Ads, Meta Pixel, and custom head/body scripts.",
+    color: "bg-amber-500/10 border-amber-500/20",
+    iconColor: "text-amber-600",
   },
   {
     href: "/admin/media",

@@ -9,7 +9,7 @@ import {
   BarChart3, BookOpen, LogOut, Shield, ChevronRight, ExternalLink,
   FileText, Eye, Users, MessageSquare, HelpCircle, Star, Newspaper,
   Images, Inbox, UserCheck, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
-  Building2, Menu,
+  Building2, Menu, Code2, Tags,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -18,6 +18,8 @@ const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/pages", label: "Pages", icon: FileText, exact: false },
   { href: "/admin/seo", label: "SEO", icon: Search, exact: false },
+  { href: "/admin/schema", label: "Schema", icon: Code2, exact: false },
+  { href: "/admin/tags", label: "Tags", icon: Tags, exact: false },
   { href: "/admin/ai", label: "AI Assistant", icon: Bot, exact: false },
   { href: "/admin/editor/home", label: "Visual Editor", icon: Eye, exact: false },
   { href: "/admin/site-pages", label: "Site Pages", icon: FileText, exact: false },

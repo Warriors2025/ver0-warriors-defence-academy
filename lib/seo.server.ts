@@ -11,7 +11,10 @@ import {
   entityHeadingKey,
   defaultEntitySeo,
   buildPresetSchema,
+  buildHomeSchemaGraph,
+  buildPageSchemaGraph,
   resolveHeading,
+  DEFAULT_PAGE_SEO,
   type PageSeo,
   type SeoStore,
   type HeadingLevel,
@@ -137,5 +140,55 @@ export async function getPageSchemaJsonLd(slug: string): Promise<object | null> 
       return null
     }
   }
-  return buildPresetSchema(seo.schemaType, seo, path)
+  // Home page gets the full @graph schema (EducationalOrg + LocalBusiness + WebSite + WebPage + FAQPage)
+  // Admin can override by setting schemaType = "custom" with their own JSON in the CMS
+  if (slug === "home") {
+    return buildHomeSchemaGraph()
+  }
+  // All other pages get an @graph combining WebPage + the page-specific type
+  return buildPageSchemaGraph(slug, seo, path)
+}
+
+/** Resolve JSON-LD for any seo.pages key: CMS slug, blog:, course:, facility:, custom: */
+export async function getSchemaJsonLdByKey(
+  key: string,
+  opts?: { path?: string; title?: string; description?: string; image?: string }
+): Promise<object | null> {
+  if (key.startsWith("blog:") || key.startsWith("course:")) {
+    const type = key.startsWith("blog:") ? "blog" : "course"
+    const slug = key.slice(type === "blog" ? 5 : 7)
+    return getEntitySchemaJsonLd(type, slug, {
+      title: opts?.title ?? slug,
+      description: opts?.description ?? "",
+      path: opts?.path ?? (type === "blog" ? `/blog/${slug}` : `/courses/${slug}`),
+      image: opts?.image,
+    })
+  }
+
+  const store = await getSeoStore()
+  const raw = store.pages[key]
+  const path = opts?.path ?? (key.startsWith("custom:") ? key.slice(7) : key.startsWith("facility:") ? `/facilities/${key.slice(9)}` : `/${key}`)
+
+  const seo = key.startsWith("facility:") || key.startsWith("custom:")
+    ? {
+        ...DEFAULT_PAGE_SEO,
+        metaTitle: opts?.title ?? "",
+        metaDescription: opts?.description ?? "",
+        canonicalUrl: `${SITE_URL}${path}`,
+        schemaType: "WebPage" as const,
+        ...raw,
+      }
+    : await getPageSeo(key)
+
+  if (seo.schemaType === "none") return null
+  if (seo.schemaType === "custom") {
+    if (!seo.schemaCustomJson.trim()) return null
+    try {
+      return JSON.parse(seo.schemaCustomJson) as object
+    } catch {
+      return null
+    }
+  }
+  if (key === "home") return buildHomeSchemaGraph()
+  return buildPresetSchema(seo.schemaType, seo, path, { image: opts?.image })
 }

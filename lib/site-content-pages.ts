@@ -59,9 +59,9 @@ export type VideoItem = { title: string; thumbnail: string; videoId: string }
 export const defaultPages: SitePages = {
   contact: {
     hero: {
-      eyebrow: "Get in Touch",
+      eyebrow: "Get in Touch — Lucknow",
       title: "Contact Warriors Defence Academy",
-      subtitle: "Have questions about admissions, courses, or campus visits? Our team is here to help you start your defence career journey.",
+      subtitle: "Reach India's best NDA coaching institute in Lucknow. Call +91 94522 45729 or visit us at Kapoorthala Chauraha, Lucknow — Mon to Sat, 9 AM to 6 PM.",
     },
     officeHours: "Mon – Sat, 9:00 AM – 6:00 PM",
     sundayHours: "Sunday: Closed",
@@ -69,9 +69,9 @@ export const defaultPages: SitePages = {
   },
   courses: {
     hero: {
-      eyebrow: "Our Programmes",
-      title: "Defence Coaching Courses",
-      subtitle: "Expertly designed programmes for NDA, CDS, AFCAT, SSB, and more — led by retired military officers.",
+      eyebrow: "NDA, CDS & SSB Coaching",
+      title: "Best NDA & Defence Coaching Courses in Lucknow",
+      subtitle: "Expert-designed NDA, CDS, AFCAT & SSB coaching programmes in Lucknow led by retired military officers — 5,000+ selections, 15+ years of proven results.",
     },
     stats: [
       { value: "9+", label: "Programmes" },
@@ -82,9 +82,9 @@ export const defaultPages: SitePages = {
   },
   results: {
     hero: {
-      eyebrow: "Our Pride",
-      title: "Student Selections & Achievements",
-      subtitle: "Celebrating the success of our warriors who secured commissions in the Indian Armed Forces.",
+      eyebrow: "Our Proud Selections",
+      title: "NDA & SSB Selections — Warriors Defence Academy",
+      subtitle: "5,000+ students from Warriors Defence Academy Lucknow have secured commissions in the Indian Army, Navy and Air Force. AIR #1 multiple years.",
     },
     stats: [
       { value: "5,000+", label: "Total Selections" },
@@ -99,28 +99,28 @@ export const defaultPages: SitePages = {
       { exam: "SSB", count: "500+" },
     ],
     awards: [
-      "Best Defence Coaching Institute — Lucknow 2024",
+      "Best NDA Coaching Institute — Lucknow 2024",
       "Highest NDA Selection Rate — North India",
       "Excellence in SSB Training Award",
     ],
   },
   register: {
     hero: {
-      eyebrow: "Join Warriors",
-      title: "Student Registration",
-      subtitle: "Take the first step towards your defence career. Fill out the form below and our counselors will contact you within 24 hours.",
+      eyebrow: "Apply for NDA Coaching",
+      title: "Register for NDA Coaching at Warriors Defence Academy",
+      subtitle: "Take the first step towards your defence career. Fill the form below and our counselors will contact you within 24 hours. Free counseling session for all applicants.",
     },
   },
   admissions: {
     hero: {
-      eyebrow: "Admissions 2026–27",
-      title: "Start Your Defence Journey",
-      subtitle: "Admissions are open for all programmes. Limited seats available — apply early to secure your batch.",
+      eyebrow: "NDA Coaching Admissions 2026–27",
+      title: "Join India's Best NDA Coaching — Admissions Open",
+      subtitle: "Warriors Defence Academy Lucknow admissions are open for NDA, CDS & SSB coaching. Limited seats — apply early to secure your 2026-27 batch.",
     },
     steps: [
-      { title: "Submit Enquiry", description: "Fill the online registration form or visit our campus." },
-      { title: "Counseling Session", description: "Meet our counselors to choose the right programme." },
-      { title: "Entrance Assessment", description: "Basic aptitude test to assess your readiness." },
+      { title: "Submit Enquiry", description: "Fill the online registration form or visit our campus at Kapoorthala Chauraha, Lucknow." },
+      { title: "Counseling Session", description: "Meet our expert counselors to choose the right NDA/CDS/SSB programme." },
+      { title: "Entrance Assessment", description: "Basic aptitude test to assess your readiness for defence coaching." },
       { title: "Confirm Admission", description: "Complete documentation and fee payment to secure your seat." },
     ],
     documents: [
@@ -133,23 +133,23 @@ export const defaultPages: SitePages = {
     scholarships: [
       { title: "Merit Scholarship", description: "Up to 25% fee waiver for students scoring 90%+ in board exams." },
       { title: "Defence Family Discount", description: "10% concession for children of serving/retired defence personnel." },
-      { title: "Sibling Discount", description: "5% off when two siblings enroll together." },
+      { title: "Sibling Discount", description: "5% off when two siblings enroll together at Warriors Defence Academy." },
     ],
     fees: [
-      { course: "NDA Course", amount: "₹85,000", note: "6-month programme" },
-      { course: "CDS Course", amount: "₹55,000", note: "6-month programme" },
-      { course: "SSB Training", amount: "₹35,000", note: "21-day intensive" },
+      { course: "NDA Coaching", amount: "₹85,000", note: "6-month programme" },
+      { course: "CDS Coaching", amount: "₹55,000", note: "6-month programme" },
+      { course: "SSB Interview Training", amount: "₹35,000", note: "21-day intensive" },
     ],
   },
   about: {
     hero: {
-      eyebrow: "Our Story",
-      title: "About Warriors Defence Academy",
-      subtitle: "15+ years of excellence in defence coaching — shaping India's future officers with discipline, dedication, and expert mentorship.",
+      eyebrow: "Est. 2010 — Lucknow, Uttar Pradesh",
+      title: "About Warriors Defence Academy — India's Best NDA Coaching",
+      subtitle: "15+ years of excellence in NDA, CDS & SSB coaching in Lucknow. Shaping India's future officers through discipline, expert military faculty, and India's largest GTO ground.",
       image: "/images/hero/carousel-3.webp",
     },
-    mission: "To provide world-class defence coaching that transforms aspirants into confident, capable officers ready to serve the nation.",
-    vision: "To be India's most trusted defence academy, known for integrity, results, and holistic officer grooming.",
+    mission: "To provide world-class NDA and defence coaching that transforms aspirants in Lucknow and across India into confident, capable officers ready to serve the nation.",
+    vision: "To be India's most trusted NDA coaching institute, known for integrity, results, and holistic officer grooming across every armed force.",
     milestones: [
       { year: "2010", title: "Foundation Year", description: "Warriors Defence Academy was established in Lucknow with a bold vision to build a centre of excellence." },
       { year: "2016", title: "New Campus & GTO Ground", description: "Moved to current campus with India's largest GTO ground." },

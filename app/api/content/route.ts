@@ -31,6 +31,8 @@ async function revalidateSite(body?: Partial<SiteContent>) {
     for (const key of Object.keys(body.seo.pages)) {
       if (key.startsWith("blog:")) revalidatePath(`/blog/${key.slice(5)}`)
       else if (key.startsWith("course:")) revalidatePath(`/courses/${key.slice(7)}`)
+      else if (key.startsWith("facility:")) revalidatePath(`/facilities/${key.slice(9)}`)
+      else if (key.startsWith("custom:")) revalidatePath(key.slice(7) || "/")
       else {
         const page = getCmsPage(key)
         if (page?.path) revalidatePath(page.path)

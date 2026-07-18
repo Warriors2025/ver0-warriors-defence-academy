@@ -108,10 +108,10 @@ export type SiteContent = {
 
 const defaultSections: SiteSections = {
   heroSlides: [
-    { src: "/images/hero/carousel-1.webp", alt: "GTO Training Ground", caption: "India's Largest GTO Ground" },
-    { src: "/images/hero/carousel-2.webp", alt: "Expert Faculty", caption: "Learn from Retired Military Officers" },
-    { src: "/images/hero/carousel-3.webp", alt: "Academy Campus", caption: "World-Class Campus Infrastructure" },
-    { src: "/images/hero/carousel-4.webp", alt: "SSB Preparation", caption: "Complete SSB Interview Readiness" },
+    { src: "/images/hero/carousel-1.webp", alt: "NDA coaching GTO training ground at Warriors Defence Academy Lucknow — India's largest", caption: "India's Largest GTO Ground" },
+    { src: "/images/hero/carousel-2.webp", alt: "Expert NDA coaching faculty — retired military officers at Warriors Defence Academy", caption: "Learn from Retired Military Officers" },
+    { src: "/images/hero/carousel-3.webp", alt: "Warriors Defence Academy campus Lucknow — best NDA coaching institute in India", caption: "World-Class Campus Infrastructure" },
+    { src: "/images/hero/carousel-4.webp", alt: "SSB interview preparation coaching at Warriors Defence Academy Lucknow", caption: "Complete SSB Interview Readiness" },
   ],
   heroAchievement: { value: "AIR #1", label: "Multiple Years" },
   featuresHeader: {
@@ -197,13 +197,13 @@ const defaultContent: SiteContent = {
     phone: "+91 94522 45729",
   },
   hero: {
-    badge: "India's No. 1 Defence Coaching Institute",
-    headline: "Shape Your Future as a",
-    highlightText: "Defence Officer",
-    tagline: "Join Warriors Defence Academy — expert coaching for NDA, CDS, AFCAT & SSB with India's finest faculty and largest GTO ground.",
+    badge: "India's No. 1 NDA Coaching Institute",
+    headline: "Best NDA Coaching in",
+    highlightText: "Lucknow & India",
+    tagline: "Warriors Defence Academy — India's top-ranked NDA, CDS & SSB coaching institute in Lucknow. Train under retired military officers with 50,000+ alumni network & India's largest GTO ground.",
     features: [
       "India's Largest GTO Ground",
-      "Ex-Military Faculty",
+      "Retired Military Faculty",
       "SSB Interview Prep",
       "15+ Years Track Record",
     ],

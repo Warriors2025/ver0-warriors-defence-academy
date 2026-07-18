@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import { FACILITIES, getFacilityBySlug, getFacilityPhotos, getFacilities } from "@/lib/facilities-data"
 import { getSiteContent } from "@/lib/site-content.server"
 import { FacilityPhotosGallery } from "@/components/facility-photos-gallery"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
+import { getSchemaJsonLdByKey } from "@/lib/seo.server"
 import {
   ArrowRight,
   CheckCircle,
@@ -56,8 +58,16 @@ export default async function FacilityDetailPage({
 
   const others = getFacilities(content.sections.facilityItems).filter((f) => f.slug !== slug).slice(0, 3)
 
+  const schema = await getSchemaJsonLdByKey(`facility:${slug}`, {
+    path: `/facilities/${slug}`,
+    title: facility.title,
+    description: facility.description,
+    image: facility.image,
+  })
+
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       <section className="relative bg-primary text-primary-foreground overflow-hidden">
