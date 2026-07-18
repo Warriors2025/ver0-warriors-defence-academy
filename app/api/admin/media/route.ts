@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { readdir, writeFile, mkdir } from "fs/promises"
+import { readdir } from "fs/promises"
 import path from "path"
 import { requireAdminSession, unauthorizedResponse } from "@/lib/admin-auth"
 import {
@@ -8,6 +8,7 @@ import {
   processUploadedImage,
   type ImagePreset,
 } from "@/lib/image-processing"
+import { listMediaUploads, uploadMediaFile } from "@/lib/media-storage"
 
 const IMAGE_EXT = new Set([".webp", ".jpg", ".jpeg", ".png", ".gif", ".svg"])
 
@@ -18,7 +19,7 @@ async function scanDir(dir: string, base: string): Promise<string[]> {
     for (const entry of entries) {
       const full = path.join(dir, entry.name)
       if (entry.isDirectory()) {
-        results.push(...await scanDir(full, base))
+        results.push(...(await scanDir(full, base)))
       } else if (IMAGE_EXT.has(path.extname(entry.name).toLowerCase())) {
         results.push("/" + path.relative(base, full).replace(/\\/g, "/"))
       }
@@ -33,12 +34,26 @@ export async function GET() {
   if (!(await requireAdminSession())) return unauthorizedResponse()
 
   const publicDir = path.join(process.cwd(), "public")
-  const [images, uploads] = await Promise.all([
-    scanDir(path.join(publicDir, "images"), publicDir),
-    scanDir(path.join(publicDir, "uploads"), publicDir),
-  ])
+  let bundled: string[] = []
+  try {
+    bundled = await scanDir(path.join(publicDir, "images"), publicDir)
+  } catch {
+    bundled = []
+  }
 
-  return NextResponse.json({ images: [...uploads, ...images].sort() })
+  let uploaded: string[] = []
+  try {
+    uploaded = await listMediaUploads()
+  } catch (err) {
+    // Still return bundled images if storage listing fails
+    console.error("[media] list uploads failed:", err)
+  }
+
+  // Prefer newest uploads first, then bundled assets
+  return NextResponse.json({
+    images: [...uploaded, ...bundled],
+    source: "supabase",
+  })
 }
 
 export async function POST(req: NextRequest) {
@@ -62,13 +77,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 400 })
   }
 
-  const uploadsDir = path.join(process.cwd(), "public", "uploads")
-  await mkdir(uploadsDir, { recursive: true })
-
   const ext = processed.format === "svg" ? ".svg" : ".webp"
   const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`
-  const filepath = path.join(uploadsDir, filename)
-  await writeFile(filepath, processed.buffer)
+  const contentType = processed.format === "svg" ? "image/svg+xml" : "image/webp"
+
+  let uploaded
+  try {
+    uploaded = await uploadMediaFile({
+      buffer: processed.buffer,
+      filename,
+      contentType,
+      preset,
+    })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Upload to Supabase Storage failed"
+    console.error("[media] upload failed:", err)
+    return NextResponse.json(
+      {
+        error: `${message}. Ensure WDA_SUPABASE_SERVICE_ROLE_KEY is set and the "media" storage bucket exists.`,
+      },
+      { status: 500 }
+    )
+  }
 
   const savedPercent =
     processed.originalSize > 0
@@ -76,7 +106,8 @@ export async function POST(req: NextRequest) {
       : 0
 
   return NextResponse.json({
-    url: `/uploads/${filename}`,
+    url: uploaded.url,
+    path: uploaded.path,
     meta: {
       preset: processed.preset as ImagePreset,
       format: processed.format,
@@ -89,6 +120,7 @@ export async function POST(req: NextRequest) {
       originalWidth: processed.originalWidth,
       originalHeight: processed.originalHeight,
       savedPercent,
+      storage: "supabase",
     },
   })
 }

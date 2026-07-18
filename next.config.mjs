@@ -10,6 +10,13 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "geaihjehvsbiiqkmjsld.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
   },
   turbopack: {
     root: __dirname,

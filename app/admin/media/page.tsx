@@ -74,7 +74,7 @@ export default function AdminMediaPage() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Media Library</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Uploads are automatically compressed and converted to WebP ({IMAGE_PRESETS.general.label}).
+            Uploads go to Supabase Storage, compressed as WebP ({IMAGE_PRESETS.general.label}).
           </p>
         </div>
         <label className="cursor-pointer">

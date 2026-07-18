@@ -38,13 +38,18 @@ export function ImagePicker({
   const [images, setImages] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState("")
 
   async function loadMedia() {
     setLoading(true)
+    setError("")
     try {
       const res = await fetch("/api/admin/media")
       const json = await res.json()
+      if (!res.ok) throw new Error(json.error || "Failed to load media")
       setImages(json.images ?? [])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load media")
     } finally {
       setLoading(false)
     }
@@ -54,6 +59,7 @@ export function ImagePicker({
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
+    setError("")
     try {
       const form = new FormData()
       form.append("file", file)
@@ -66,10 +72,14 @@ export function ImagePicker({
         if (json.meta && onUploadComplete) {
           onUploadComplete(json.meta)
         }
+        setImages((prev) => [json.url, ...prev.filter((img) => img !== json.url)])
         setOpen(false)
       }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed")
     } finally {
       setUploading(false)
+      e.target.value = ""
     }
   }
 
@@ -104,13 +114,18 @@ export function ImagePicker({
               </DialogHeader>
               <div className="flex items-center gap-2 mb-4">
                 <label className="cursor-pointer">
-                  <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
+                  <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90">
                     <Upload className="h-3.5 w-3.5" />
                     {uploading ? "Uploading..." : "Upload New"}
                   </span>
                 </label>
               </div>
+              {error && (
+                <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2 mb-4">
+                  {error}
+                </p>
+              )}
               {loading ? (
                 <p className="text-sm text-muted-foreground text-center py-8">Loading images...</p>
               ) : (
