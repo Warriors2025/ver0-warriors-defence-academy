@@ -255,12 +255,19 @@ const bySlug = new Map(FACILITIES.map((f) => [f.slug, f]))
 const byImage = new Map(FACILITIES.map((f) => [f.image, f]))
 const byTitle = new Map(FACILITIES.map((f) => [f.title, f]))
 
-export function getFacilities(): Facility[] {
+/** Prefer CMS facilityItems when present; fall back to hardcoded FACILITIES. */
+export function resolveFacilities(cmsItems?: Facility[] | null): Facility[] {
+  if (cmsItems?.length) return cmsItems
   return FACILITIES
 }
 
-export function getFacilityBySlug(slug: string): Facility | null {
-  return bySlug.get(slug) ?? null
+export function getFacilities(cmsItems?: Facility[] | null): Facility[] {
+  return resolveFacilities(cmsItems)
+}
+
+export function getFacilityBySlug(slug: string, cmsItems?: Facility[] | null): Facility | null {
+  const list = resolveFacilities(cmsItems)
+  return list.find((f) => f.slug === slug) ?? bySlug.get(slug) ?? null
 }
 
 /** Resolve homepage feature card link to its dedicated facility page when possible. */

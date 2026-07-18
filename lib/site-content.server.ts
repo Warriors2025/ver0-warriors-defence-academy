@@ -1,15 +1,37 @@
 import { readFile, writeFile, mkdir } from "fs/promises"
 import path from "path"
+import { cookies } from "next/headers"
 import { createServerClient } from "@/lib/supabase"
 import {
   defaultContent,
   type SiteContent,
   type SiteSections,
   type SitePages,
+  type SiteContentDraft,
 } from "@/lib/site-content"
 import { mergeSeoStore } from "@/lib/seo"
+import { mergeNavigation, type NavigationContent } from "@/lib/navigation"
+import { FACILITIES } from "@/lib/facilities-data"
 
 const CMS_FILE = path.join(process.cwd(), "data", "cms", "site-content.json")
+export const CMS_PREVIEW_COOKIE = "wda_cms_preview"
+
+type CmsSettingsBag = {
+  navigation?: NavigationContent
+  draft?: SiteContentDraft | null
+  [key: string]: unknown
+}
+
+async function readSettingsBag(): Promise<CmsSettingsBag> {
+  try {
+    const db = createServerClient()
+    const { data } = await db.from("site_content").select("*").eq("id", 1).maybeSingle()
+    const row = data as Record<string, unknown> | null
+    return ((row?.settings as CmsSettingsBag) ?? {}) as CmsSettingsBag
+  } catch {
+    return {}
+  }
+}
 
 function mergeSections(raw: Partial<SiteSections> | null | undefined): SiteSections {
   if (!raw) return defaultContent.sections
@@ -34,19 +56,20 @@ function mergeSections(raw: Partial<SiteSections> | null | undefined): SiteSecti
     activities: {
       ...base.activities,
       ...raw.activities,
-      items: raw.activities?.items?.length ? raw.activities.items : base.activities.items,
+      items: raw.activities?.items !== undefined ? raw.activities.items : base.activities.items,
     },
     books: {
       ...base.books,
       ...raw.books,
-      items: raw.books?.items?.length ? raw.books.items : base.books.items,
+      items: raw.books?.items !== undefined ? raw.books.items : base.books.items,
     },
     videos: {
       ...base.videos,
       ...raw.videos,
-      items: raw.videos?.items?.length ? raw.videos.items : base.videos.items,
+      items: raw.videos?.items !== undefined ? raw.videos.items : base.videos.items,
     },
     facilityPhotos: raw.facilityPhotos ?? base.facilityPhotos,
+    facilityItems: raw.facilityItems !== undefined ? raw.facilityItems : base.facilityItems ?? FACILITIES,
   }
 }
 
@@ -63,6 +86,21 @@ function mergePages(raw: Partial<SitePages> | null | undefined): SitePages {
   }
 }
 
+function applyDraft(live: SiteContent, draft: SiteContentDraft | null | undefined): SiteContent {
+  if (!draft) return live
+  return {
+    ...live,
+    announcement: draft.announcement ? { ...live.announcement, ...draft.announcement } : live.announcement,
+    hero: draft.hero ? { ...live.hero, ...draft.hero } : live.hero,
+    contact: draft.contact ? { ...live.contact, ...draft.contact } : live.contact,
+    stats: draft.stats ?? live.stats,
+    sections: draft.sections ? mergeSections({ ...live.sections, ...draft.sections }) : live.sections,
+    pages: draft.pages ? mergePages({ ...live.pages, ...draft.pages }) : live.pages,
+    navigation: draft.navigation ? mergeNavigation(draft.navigation) : live.navigation,
+    draft,
+  }
+}
+
 async function loadFromFile(): Promise<SiteContent | null> {
   try {
     const raw = await readFile(CMS_FILE, "utf-8")
@@ -72,7 +110,25 @@ async function loadFromFile(): Promise<SiteContent | null> {
   }
 }
 
-export async function getSiteContent(): Promise<SiteContent> {
+function normalizeRow(data: Record<string, unknown>): SiteContent {
+  const settings = (data.settings as CmsSettingsBag | undefined) ?? {}
+  return {
+    announcement: { ...defaultContent.announcement, ...(data.announcement as SiteContent["announcement"]) },
+    hero: { ...defaultContent.hero, ...(data.hero as SiteContent["hero"]) },
+    contact: { ...defaultContent.contact, ...(data.contact as SiteContent["contact"]) },
+    stats: (data.stats as SiteContent["stats"]) ?? defaultContent.stats,
+    sections: mergeSections(data.sections as Partial<SiteSections> | undefined),
+    pages: mergePages(data.pages as Partial<SitePages> | undefined),
+    seo: mergeSeoStore(data.seo as SiteContent["seo"]),
+    navigation: mergeNavigation(settings.navigation),
+    draft: settings.draft ?? null,
+    updatedAt: data.updated_at as string | undefined,
+  }
+}
+
+export async function getSiteContent(opts?: { includeDraft?: boolean }): Promise<SiteContent> {
+  let live: SiteContent = defaultContent
+
   try {
     const db = createServerClient()
     const { data, error } = await db
@@ -81,26 +137,53 @@ export async function getSiteContent(): Promise<SiteContent> {
       .eq("id", 1)
       .maybeSingle()
 
-    if (error || !data) return (await loadFromFile()) ?? defaultContent
-
-    return {
-      announcement: { ...defaultContent.announcement, ...(data.announcement as SiteContent["announcement"]) },
-      hero: { ...defaultContent.hero, ...(data.hero as SiteContent["hero"]) },
-      contact: { ...defaultContent.contact, ...(data.contact as SiteContent["contact"]) },
-      stats: (data.stats as SiteContent["stats"]) ?? defaultContent.stats,
-      sections: mergeSections(data.sections as Partial<SiteSections> | undefined),
-      pages: mergePages(data.pages as Partial<SitePages> | undefined),
-      seo: mergeSeoStore(data.seo as SiteContent["seo"]),
-      updatedAt: data.updated_at as string | undefined,
+    if (!error && data) {
+      live = normalizeRow(data as Record<string, unknown>)
+    } else {
+      live = (await loadFromFile()) ?? defaultContent
+      if (!live.navigation) live = { ...live, navigation: mergeNavigation(live.navigation) }
     }
   } catch {
-    return (await loadFromFile()) ?? defaultContent
+    live = (await loadFromFile()) ?? defaultContent
   }
+
+  let includeDraft = opts?.includeDraft
+  if (includeDraft === undefined) {
+    try {
+      const jar = await cookies()
+      includeDraft = jar.get(CMS_PREVIEW_COOKIE)?.value === "1"
+    } catch {
+      includeDraft = false
+    }
+  }
+
+  return includeDraft ? applyDraft(live, live.draft) : live
 }
 
-export async function saveSiteContent(content: SiteContent): Promise<void> {
+export async function saveSiteContent(content: SiteContent, opts?: { asDraft?: boolean }): Promise<void> {
   try {
     const db = createServerClient()
+    const currentSettings = await readSettingsBag()
+
+    if (opts?.asDraft) {
+      const draft: SiteContentDraft = {
+        announcement: content.announcement,
+        hero: content.hero,
+        contact: content.contact,
+        stats: content.stats,
+        sections: content.sections,
+        pages: content.pages,
+        navigation: content.navigation,
+        updatedAt: new Date().toISOString(),
+      }
+      await db.from("site_content").upsert({
+        id: 1,
+        settings: { ...currentSettings, draft, navigation: currentSettings.navigation ?? content.navigation },
+        updated_at: new Date().toISOString(),
+      } as never)
+      return
+    }
+
     await db.from("site_content").upsert({
       id: 1,
       announcement: content.announcement,
@@ -110,10 +193,29 @@ export async function saveSiteContent(content: SiteContent): Promise<void> {
       sections: content.sections,
       pages: content.pages,
       seo: content.seo ?? mergeSeoStore(),
+      settings: {
+        ...currentSettings,
+        navigation: content.navigation ?? currentSettings.navigation,
+        draft: content.draft === undefined ? null : content.draft,
+      },
       updated_at: new Date().toISOString(),
-    })
+    } as never)
   } catch {
     await mkdir(path.dirname(CMS_FILE), { recursive: true })
     await writeFile(CMS_FILE, JSON.stringify({ ...content, updatedAt: new Date().toISOString() }, null, 2))
+  }
+}
+
+export async function clearCmsDraft(): Promise<void> {
+  try {
+    const db = createServerClient()
+    const currentSettings = await readSettingsBag()
+    const { draft: _removed, ...rest } = currentSettings
+    await db.from("site_content").update({
+      settings: { ...rest, draft: null },
+      updated_at: new Date().toISOString(),
+    } as never).eq("id", 1)
+  } catch {
+    // file fallback ignores draft
   }
 }

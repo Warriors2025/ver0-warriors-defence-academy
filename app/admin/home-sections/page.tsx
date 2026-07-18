@@ -1,13 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Save, CheckCircle, Plus, Trash2, Layers } from "lucide-react"
+import { Save, CheckCircle, Layers } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ImagePicker } from "@/components/admin/image-picker"
-import type { SiteSections, ActivityItem, BookItem, VideoItem } from "@/lib/site-content"
+import { ArrayEditor } from "@/components/admin/array-editor"
+import type { SiteSections } from "@/lib/site-content"
 
 export default function HomeSectionsEditorPage() {
   const [sections, setSections] = useState<Pick<SiteSections, "activities" | "books" | "videos"> | null>(null)
@@ -59,31 +60,15 @@ export default function HomeSectionsEditorPage() {
     )
   }
 
-  function updateActivity(i: number, field: keyof ActivityItem, val: string) {
-    const items = [...sections!.activities.items]
-    items[i] = { ...items[i], [field]: val }
-    setSections({ ...sections!, activities: { ...sections!.activities, items } })
-  }
-
-  function updateBook(i: number, field: keyof BookItem, val: string | number | null) {
-    const items = [...sections!.books.items]
-    items[i] = { ...items[i], [field]: val }
-    setSections({ ...sections!, books: { ...sections!.books, items } })
-  }
-
-  function updateVideo(i: number, field: keyof VideoItem, val: string) {
-    const items = [...sections!.videos.items]
-    items[i] = { ...items[i], [field]: val }
-    setSections({ ...sections!, videos: { ...sections!.videos, items } })
-  }
-
   return (
     <div className="max-w-3xl space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Layers className="h-6 w-6 text-primary" /> Homepage Sections
         </h1>
-        <p className="text-muted-foreground text-sm mt-1">Edit Activities, Books, and Video Gallery on the homepage.</p>
+        <p className="text-muted-foreground text-sm mt-1">
+          Edit Activities, Books, and Video Gallery. Drag to reorder; add or remove items freely.
+        </p>
       </div>
 
       {saved && (
@@ -94,7 +79,6 @@ export default function HomeSectionsEditorPage() {
       {error && <p className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">{error}</p>}
 
       <form onSubmit={handleSave} className="space-y-8">
-        {/* Activities */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-4">
           <h2 className="font-semibold">Outdoor Activities</h2>
           <div className="grid sm:grid-cols-3 gap-3">
@@ -102,53 +86,75 @@ export default function HomeSectionsEditorPage() {
             <div className="space-y-1.5 sm:col-span-2"><Label>Title</Label><Input value={sections.activities.title} onChange={(e) => setSections({ ...sections, activities: { ...sections.activities, title: e.target.value } })} /></div>
           </div>
           <div className="space-y-1.5"><Label>Subtitle</Label><Textarea value={sections.activities.subtitle} onChange={(e) => setSections({ ...sections, activities: { ...sections.activities, subtitle: e.target.value } })} rows={2} /></div>
-          {sections.activities.items.map((item, i) => (
-            <div key={i} className="border border-border rounded-lg p-4 space-y-3">
-              <div className="flex justify-between"><span className="text-xs font-semibold text-muted-foreground">Activity {i + 1}</span></div>
-              <ImagePicker uploadPreset="feature" value={item.image} onChange={(v) => updateActivity(i, "image", v)} label="Image" />
-              <Input value={item.title} onChange={(e) => updateActivity(i, "title", e.target.value)} placeholder="Title" />
-              <Input value={item.tag} onChange={(e) => updateActivity(i, "tag", e.target.value)} placeholder="Tag" />
-            </div>
-          ))}
+          <ArrayEditor
+            label="Activity Items"
+            items={sections.activities.items}
+            onChange={(items) => setSections({ ...sections, activities: { ...sections.activities, items } })}
+            emptyItem={{ image: "", title: "", tag: "" }}
+            fields={[
+              { key: "image", label: "Image", type: "image", imagePreset: "feature" },
+              { key: "title", label: "Title" },
+              { key: "tag", label: "Tag" },
+            ]}
+            itemLabel={(item, i) => String(item.title || `Activity ${i + 1}`)}
+          />
         </section>
 
-        {/* Books */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-4">
           <h2 className="font-semibold">Books Section</h2>
           <div className="grid sm:grid-cols-2 gap-3">
             <div className="space-y-1.5"><Label>Eyebrow</Label><Input value={sections.books.eyebrow} onChange={(e) => setSections({ ...sections, books: { ...sections.books, eyebrow: e.target.value } })} /></div>
-            <div className="space-y-1.5"><Label>Footer Note (optional)</Label><Input value={sections.books.promoCode} onChange={(e) => setSections({ ...sections, books: { ...sections.books, promoCode: e.target.value } })} placeholder="Leave blank for default student-provided message" /></div>
+            <div className="space-y-1.5"><Label>Footer Note (optional)</Label><Input value={sections.books.promoCode} onChange={(e) => setSections({ ...sections, books: { ...sections.books, promoCode: e.target.value } })} placeholder="Leave blank for default message" /></div>
           </div>
           <div className="space-y-1.5"><Label>Title</Label><Input value={sections.books.title} onChange={(e) => setSections({ ...sections, books: { ...sections.books, title: e.target.value } })} /></div>
           <div className="space-y-1.5"><Label>Subtitle</Label><Textarea value={sections.books.subtitle} onChange={(e) => setSections({ ...sections, books: { ...sections.books, subtitle: e.target.value } })} rows={2} /></div>
-          {sections.books.items.map((book, i) => (
-            <div key={i} className="border border-border rounded-lg p-4 space-y-3">
-              <span className="text-xs font-semibold text-muted-foreground">Book {i + 1}</span>
-              <ImagePicker uploadPreset="book" value={book.image} onChange={(v) => updateBook(i, "image", v)} label="Cover" />
-              <Input value={book.title} onChange={(e) => updateBook(i, "title", e.target.value)} placeholder="Title" />
-              <Input value={book.subtitle} onChange={(e) => updateBook(i, "subtitle", e.target.value)} placeholder="Subtitle" />
-              <div className="grid grid-cols-2 gap-2">
-                <Input type="number" step="0.1" min="0" max="5" value={book.rating} onChange={(e) => updateBook(i, "rating", Number(e.target.value))} placeholder="Rating" />
-                <Input value={book.badge ?? ""} onChange={(e) => updateBook(i, "badge", e.target.value || null)} placeholder="Badge (optional)" />
-              </div>
-            </div>
-          ))}
+          <ArrayEditor
+            label="Books"
+            items={sections.books.items}
+            onChange={(items) => setSections({
+              ...sections,
+              books: {
+                ...sections.books,
+                items: items.map((b) => ({
+                  title: String(b.title ?? ""),
+                  subtitle: String(b.subtitle ?? ""),
+                  price: String(b.price ?? ""),
+                  originalPrice: String(b.originalPrice ?? ""),
+                  rating: Number(b.rating ?? 5),
+                  image: String(b.image ?? ""),
+                  badge: b.badge ? String(b.badge) : null,
+                })),
+              },
+            })}
+            emptyItem={{ title: "", subtitle: "", price: "", originalPrice: "", rating: 5, image: "", badge: "" }}
+            fields={[
+              { key: "image", label: "Cover", type: "image", imagePreset: "book" },
+              { key: "title", label: "Title" },
+              { key: "subtitle", label: "Subtitle" },
+              { key: "rating", label: "Rating", type: "number" },
+              { key: "badge", label: "Badge (optional)" },
+            ]}
+            itemLabel={(item, i) => String(item.title || `Book ${i + 1}`)}
+          />
         </section>
 
-        {/* Videos */}
         <section className="bg-card border border-border rounded-xl p-6 space-y-4">
           <h2 className="font-semibold">Video Gallery</h2>
           <div className="space-y-1.5"><Label>Eyebrow</Label><Input value={sections.videos.eyebrow} onChange={(e) => setSections({ ...sections, videos: { ...sections.videos, eyebrow: e.target.value } })} /></div>
           <div className="space-y-1.5"><Label>Title</Label><Input value={sections.videos.title} onChange={(e) => setSections({ ...sections, videos: { ...sections.videos, title: e.target.value } })} /></div>
           <div className="space-y-1.5"><Label>Subtitle</Label><Textarea value={sections.videos.subtitle} onChange={(e) => setSections({ ...sections, videos: { ...sections.videos, subtitle: e.target.value } })} rows={2} /></div>
-          {sections.videos.items.map((video, i) => (
-            <div key={i} className="border border-border rounded-lg p-4 space-y-3">
-              <span className="text-xs font-semibold text-muted-foreground">Video {i + 1}</span>
-              <Input value={video.title} onChange={(e) => updateVideo(i, "title", e.target.value)} placeholder="Title" />
-              <ImagePicker uploadPreset="thumbnail" value={video.thumbnail} onChange={(v) => updateVideo(i, "thumbnail", v)} label="Thumbnail" />
-              <Input value={video.videoId} onChange={(e) => updateVideo(i, "videoId", e.target.value)} placeholder="YouTube Video ID" />
-            </div>
-          ))}
+          <ArrayEditor
+            label="Videos"
+            items={sections.videos.items}
+            onChange={(items) => setSections({ ...sections, videos: { ...sections.videos, items } })}
+            emptyItem={{ title: "", thumbnail: "", videoId: "" }}
+            fields={[
+              { key: "title", label: "Title" },
+              { key: "thumbnail", label: "Thumbnail", type: "image", imagePreset: "thumbnail" },
+              { key: "videoId", label: "YouTube Video ID", placeholder: "dQw4w9WgXcQ" },
+            ]}
+            itemLabel={(item, i) => String(item.title || `Video ${i + 1}`)}
+          />
         </section>
 
         <Button type="submit" disabled={saving} className="gap-2">

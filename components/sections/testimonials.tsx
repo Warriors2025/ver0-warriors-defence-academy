@@ -126,8 +126,13 @@ export function TestimonialsSection({ testimonials: items }: { testimonials?: Te
                 </div>
                 
                 <div className="flex items-center gap-4 pt-4 border-t border-primary-foreground/10">
-                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-accent" />
+                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden relative">
+                    {testimonial.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={testimonial.imageUrl} alt={testimonial.name} className="absolute inset-0 h-full w-full object-cover" />
+                    ) : (
+                      <User className="h-6 w-6 text-accent" />
+                    )}
                   </div>
                   <div>
                     <h4 className="font-semibold text-primary-foreground">

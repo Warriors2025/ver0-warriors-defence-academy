@@ -3,16 +3,28 @@ import { revalidatePath } from "next/cache"
 import { requireAdminSession, unauthorizedResponse } from "@/lib/admin-auth"
 import { updateRow, deleteRow } from "@/lib/admin-crud"
 
+function normalizeBlogBody(body: Record<string, unknown>) {
+  const row = { ...body }
+  delete row.id
+  delete row.created_at
+  delete row.updated_at
+  if (typeof row.tags === "string") {
+    row.tags = row.tags.split("\n").map((s) => s.trim()).filter(Boolean)
+  }
+  return row
+}
+
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   if (!(await requireAdminSession())) return unauthorizedResponse()
   const { id } = await params
   try {
-    const body = await req.json()
+    const body = normalizeBlogBody(await req.json())
     const item = await updateRow("blog_posts", id, {
       ...body,
       published_at: body.is_published ? (body.published_at ?? new Date().toISOString()) : null,
     })
     revalidatePath("/blog")
+    if (body.slug) revalidatePath(`/blog/${body.slug}`)
     return NextResponse.json({ item })
   } catch {
     return NextResponse.json({ error: "Failed to update post" }, { status: 500 })

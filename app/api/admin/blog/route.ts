@@ -3,6 +3,14 @@ import { revalidatePath } from "next/cache"
 import { requireAdminSession, unauthorizedResponse } from "@/lib/admin-auth"
 import { listRows, createRow } from "@/lib/admin-crud"
 
+function normalizeBlogBody(body: Record<string, unknown>) {
+  const row = { ...body }
+  if (typeof row.tags === "string") {
+    row.tags = row.tags.split("\n").map((s) => s.trim()).filter(Boolean)
+  }
+  return row
+}
+
 export async function GET() {
   if (!(await requireAdminSession())) return unauthorizedResponse()
   try {
@@ -16,7 +24,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   if (!(await requireAdminSession())) return unauthorizedResponse()
   try {
-    const body = await req.json()
+    const body = normalizeBlogBody(await req.json())
     const item = await createRow("blog_posts", {
       ...body,
       published_at: body.is_published ? new Date().toISOString() : null,

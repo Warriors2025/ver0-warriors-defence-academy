@@ -8,6 +8,8 @@ import type { FeatureItem } from "@/lib/site-content"
 import { defaultSections } from "@/lib/site-content"
 import { getFacilityHref } from "@/lib/facilities-data"
 import { CmsField } from "@/components/cms/cms-field"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import type { HeadingLevel } from "@/lib/seo"
 
 const ICONS = [Building2, BookOpen, MapPin, FileCheck, Trophy, MessageCircle, HelpCircle, Users]
 
@@ -16,6 +18,7 @@ type FeaturesSectionProps = {
   title?: string
   subtitle?: string
   features?: FeatureItem[]
+  titleLevel?: HeadingLevel
 }
 
 export function FeaturesSection({
@@ -23,6 +26,7 @@ export function FeaturesSection({
   title = defaultSections.featuresHeader.title,
   subtitle = defaultSections.featuresHeader.subtitle,
   features = defaultSections.features,
+  titleLevel = "h2",
 }: FeaturesSectionProps) {
   const [hero, ...rest] = features
 
@@ -34,9 +38,9 @@ export function FeaturesSection({
             <CmsField id="sections.featuresHeader.eyebrow" label="Features Eyebrow" section="features">
               <span className="text-sm font-semibold uppercase tracking-widest text-accent">{eyebrow}</span>
             </CmsField>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-3 leading-tight">
-              <CmsField id="sections.featuresHeader.title" label="Features Title" section="features" block>{title}</CmsField>
-            </h2>
+            <HeadingTag level={titleLevel} className="text-3xl md:text-4xl font-bold text-foreground mt-3 leading-tight">
+              <CmsField id="sections.featuresHeader.title" label="Features Title" section="features">{title}</CmsField>
+            </HeadingTag>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
               <CmsField id="sections.featuresHeader.subtitle" label="Features Subtitle" section="features" block>{subtitle}</CmsField>
             </p>

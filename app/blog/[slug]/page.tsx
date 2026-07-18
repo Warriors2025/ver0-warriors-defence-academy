@@ -87,8 +87,12 @@ export default async function BlogPostPage({ params }: Props) {
         <section className="py-12 bg-background">
           <div className="container mx-auto px-4 max-w-3xl">
             <div
-              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br />") }}
+              className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-primary"
+              dangerouslySetInnerHTML={{
+                __html: /<\/?[a-z][\s\S]*>/i.test(post.content)
+                  ? post.content
+                  : post.content.replace(/\n/g, "<br />"),
+              }}
             />
           </div>
         </section>

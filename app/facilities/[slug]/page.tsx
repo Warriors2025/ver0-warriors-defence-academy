@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { FACILITIES, getFacilityBySlug, getFacilityPhotos } from "@/lib/facilities-data"
+import { FACILITIES, getFacilityBySlug, getFacilityPhotos, getFacilities } from "@/lib/facilities-data"
 import { getSiteContent } from "@/lib/site-content.server"
 import { FacilityPhotosGallery } from "@/components/facility-photos-gallery"
 import {
@@ -27,7 +27,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const facility = getFacilityBySlug(slug)
+  const content = await getSiteContent()
+  const facility = getFacilityBySlug(slug, content.sections.facilityItems)
   if (!facility) return { title: "Facility Not Found" }
 
   return {
@@ -47,13 +48,13 @@ export default async function FacilityDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const facility = getFacilityBySlug(slug)
+  const content = await getSiteContent()
+  const facility = getFacilityBySlug(slug, content.sections.facilityItems)
   if (!facility) notFound()
 
-  const content = await getSiteContent()
   const photos = getFacilityPhotos(slug, content.sections.facilityPhotos)
 
-  const others = FACILITIES.filter((f) => f.slug !== slug).slice(0, 3)
+  const others = getFacilities(content.sections.facilityItems).filter((f) => f.slug !== slug).slice(0, 3)
 
   return (
     <main className="min-h-screen">

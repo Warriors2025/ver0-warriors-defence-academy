@@ -26,7 +26,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/about",
     description: "About page hero, mission, vision, milestones, and values.",
     editable: true,
-    adminPath: "/admin/site-pages",
+    visualEditor: true,
+    adminPath: "/admin/editor/about",
     sections: ["hero", "mission", "vision", "milestones", "values"],
   },
   {
@@ -35,7 +36,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/courses",
     description: "Course listings and individual course pages.",
     editable: true,
-    adminPath: "/admin/courses",
+    visualEditor: true,
+    adminPath: "/admin/editor/courses",
     sections: ["hero", "stats", "courses"],
   },
   {
@@ -44,7 +46,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/contact",
     description: "Contact details, office hours, and map.",
     editable: true,
-    adminPath: "/admin/site-pages",
+    visualEditor: true,
+    adminPath: "/admin/editor/contact",
     sections: ["contact", "hero"],
   },
   {
@@ -70,7 +73,8 @@ export const CMS_PAGES: CmsPage[] = [
     title: "Facilities",
     path: "/facilities",
     description: "Campus facilities including GTO ground, library, sports, and mentorship.",
-    editable: false,
+    editable: true,
+    adminPath: "/admin/facilities",
     sections: ["facilities"],
   },
   {
@@ -79,7 +83,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/results",
     description: "Student selections and achievements.",
     editable: true,
-    adminPath: "/admin/results",
+    visualEditor: true,
+    adminPath: "/admin/editor/results",
     sections: ["hero", "stats", "selections"],
   },
   {
@@ -88,7 +93,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/admissions",
     description: "Admission process, batches, fees, and scholarships.",
     editable: true,
-    adminPath: "/admin/admissions",
+    visualEditor: true,
+    adminPath: "/admin/editor/admissions",
     sections: ["hero", "batches", "steps", "fees"],
   },
   {
@@ -97,7 +103,8 @@ export const CMS_PAGES: CmsPage[] = [
     path: "/register",
     description: "Student registration form.",
     editable: true,
-    adminPath: "/admin/site-pages",
+    visualEditor: true,
+    adminPath: "/admin/editor/register",
     sections: ["hero", "form"],
   },
 ]

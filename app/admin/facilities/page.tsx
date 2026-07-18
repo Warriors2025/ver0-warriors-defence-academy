@@ -1,20 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Save, CheckCircle, Plus, Trash2, Building2, ExternalLink } from "lucide-react"
+import { Save, CheckCircle, Building2, Image as ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { ImagePicker } from "@/components/admin/image-picker"
-import {
-  FACILITIES,
-  DEFAULT_FACILITY_PHOTOS,
-  type FacilityPhoto,
-} from "@/lib/facilities-data"
+import { ArrayEditor } from "@/components/admin/array-editor"
+import { cn } from "@/lib/utils"
+import type { Facility, FacilityPhoto } from "@/lib/facilities-data"
+import { FACILITIES, DEFAULT_FACILITY_PHOTOS } from "@/lib/facilities-data"
 
-export default function AdminFacilitiesPhotosPage() {
+export default function AdminFacilitiesPage() {
+  const [items, setItems] = useState<Facility[]>([])
   const [photosBySlug, setPhotosBySlug] = useState<Record<string, FacilityPhoto[]>>({})
+  const [activeSlug, setActiveSlug] = useState("")
+  const [tab, setTab] = useState<"copy" | "photos">("copy")
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -24,165 +26,190 @@ export default function AdminFacilitiesPhotosPage() {
     fetch("/api/content")
       .then((r) => r.json())
       .then((json) => {
-        const cms = json.sections?.facilityPhotos as Record<string, FacilityPhoto[]> | undefined
-        const merged: Record<string, FacilityPhoto[]> = {}
-        for (const f of FACILITIES) {
-          merged[f.slug] = cms?.[f.slug]?.length
-            ? cms[f.slug]
-            : DEFAULT_FACILITY_PHOTOS[f.slug] ?? []
-        }
-        setPhotosBySlug(merged)
+        const facilityItems: Facility[] = json.sections?.facilityItems?.length
+          ? json.sections.facilityItems
+          : FACILITIES
+        setItems(facilityItems)
+        setActiveSlug(facilityItems[0]?.slug ?? "")
+        setPhotosBySlug(json.sections?.facilityPhotos ?? DEFAULT_FACILITY_PHOTOS)
         setLoading(false)
       })
       .catch(() => setLoading(false))
   }, [])
 
-  function updatePhoto(slug: string, index: number, field: keyof FacilityPhoto, value: string) {
-    setPhotosBySlug((prev) => {
-      const items = [...(prev[slug] ?? [])]
-      items[index] = { ...items[index], [field]: value }
-      return { ...prev, [slug]: items }
-    })
-  }
+  const active = items.find((f) => f.slug === activeSlug) ?? items[0]
 
-  function addPhoto(slug: string) {
-    setPhotosBySlug((prev) => ({
-      ...prev,
-      [slug]: [...(prev[slug] ?? []), { src: "", alt: "" }],
-    }))
-  }
-
-  function removePhoto(slug: string, index: number) {
-    setPhotosBySlug((prev) => ({
-      ...prev,
-      [slug]: (prev[slug] ?? []).filter((_, i) => i !== index),
-    }))
-  }
-
-  function resetToDefaults(slug: string) {
-    setPhotosBySlug((prev) => ({
-      ...prev,
-      [slug]: DEFAULT_FACILITY_PHOTOS[slug] ?? [],
-    }))
-  }
-
-  async function handleSave(e: React.FormEvent) {
-    e.preventDefault()
+  async function handleSave() {
     setSaving(true)
     setError("")
     try {
       const res = await fetch("/api/content", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sections: { facilityPhotos: photosBySlug } }),
+        body: JSON.stringify({
+          sections: {
+            facilityItems: items,
+            facilityPhotos: photosBySlug,
+          },
+        }),
       })
       if (!res.ok) throw new Error("Save failed")
       setSaved(true)
       setTimeout(() => setSaved(false), 3000)
     } catch {
-      setError("Failed to save. Check Supabase service role key.")
+      setError("Failed to save facilities.")
     } finally {
       setSaving(false)
     }
   }
 
-  if (loading) {
-    return <p className="text-muted-foreground text-sm">Loading facility photos...</p>
+  function updateActive(patch: Partial<Facility>) {
+    if (!active) return
+    setItems(items.map((f) => (f.slug === active.slug ? { ...f, ...patch } : f)))
   }
 
+  if (loading || !active) {
+    return (
+      <div className="flex items-center justify-center h-48">
+        <div className="w-6 h-6 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+      </div>
+    )
+  }
+
+  const photos = photosBySlug[active.slug] ?? []
+
   return (
-    <div className="max-w-4xl space-y-8">
+    <div className="max-w-4xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Building2 className="h-6 w-6 text-primary" />
-          Facility Photos
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
+          <Building2 className="h-6 w-6 text-primary" /> Facilities
         </h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Upload and manage photo galleries shown on each facility page at{" "}
-          <code className="text-xs bg-muted px-1 rounded">/facilities/[slug]</code>.
+          Edit facility page copy and photo galleries — no code changes needed.
         </p>
       </div>
 
       {saved && (
-        <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
           <CheckCircle className="h-4 w-4" /> Saved successfully
         </div>
       )}
-      {error && (
-        <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-4 py-3">
-          {error}
-        </div>
-      )}
+      {error && <p className="text-sm text-destructive bg-destructive/10 rounded-lg px-3 py-2">{error}</p>}
 
-      <form onSubmit={handleSave} className="space-y-8">
-        {FACILITIES.map((facility) => (
-          <section key={facility.slug} className="bg-card border border-border rounded-xl p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h2 className="font-semibold text-foreground">{facility.title}</h2>
-                <p className="text-xs text-muted-foreground mt-0.5">/facilities/{facility.slug}</p>
+      <div className="flex flex-wrap gap-2">
+        {items.map((f) => (
+          <button
+            key={f.slug}
+            type="button"
+            onClick={() => setActiveSlug(f.slug)}
+            className={cn(
+              "px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
+              active.slug === f.slug ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {f.title}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex gap-2">
+        <Button type="button" size="sm" variant={tab === "copy" ? "default" : "outline"} onClick={() => setTab("copy")}>
+          Page Copy
+        </Button>
+        <Button type="button" size="sm" variant={tab === "photos" ? "default" : "outline"} onClick={() => setTab("photos")} className="gap-1">
+          <ImageIcon className="h-3.5 w-3.5" /> Photos
+        </Button>
+      </div>
+
+      <div className="bg-card border border-border rounded-xl p-6 space-y-4">
+        {tab === "copy" ? (
+          <>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label>Title</Label>
+                <Input value={active.title} onChange={(e) => updateActive({ title: e.target.value })} />
               </div>
-              <div className="flex flex-wrap gap-2">
-                <Link href={`/facilities/${facility.slug}`} target="_blank">
-                  <Button type="button" variant="outline" size="sm" className="gap-1.5">
-                    <ExternalLink className="h-3.5 w-3.5" /> Preview
-                  </Button>
-                </Link>
-                <Button type="button" variant="outline" size="sm" onClick={() => resetToDefaults(facility.slug)}>
-                  Reset defaults
-                </Button>
-                <Button type="button" variant="outline" size="sm" className="gap-1.5" onClick={() => addPhoto(facility.slug)}>
-                  <Plus className="h-3.5 w-3.5" /> Add photo
-                </Button>
+              <div className="space-y-1.5">
+                <Label>URL Slug</Label>
+                <Input value={active.slug} disabled className="opacity-60" />
               </div>
             </div>
+            <div className="space-y-1.5">
+              <Label>Tagline</Label>
+              <Input value={active.tagline} onChange={(e) => updateActive({ tagline: e.target.value })} />
+            </div>
+            <div className="space-y-1.5">
+              <Label>Description</Label>
+              <Textarea value={active.description} onChange={(e) => updateActive({ description: e.target.value })} rows={4} />
+            </div>
+            <ImagePicker
+              value={active.image}
+              onChange={(v) => updateActive({ image: v })}
+              label="Hero Image"
+              uploadPreset="feature"
+            />
+            <ArrayEditor
+              label="Highlights"
+              items={active.highlights.map((text) => ({ text }))}
+              onChange={(rows) => updateActive({ highlights: rows.map((r) => String(r.text ?? "")) })}
+              emptyItem={{ text: "" }}
+              fields={[{ key: "text", label: "Highlight" }]}
+              itemLabel={(_, i) => `Highlight ${i + 1}`}
+            />
+            <ArrayEditor
+              label="Benefits"
+              items={active.benefits.map((text) => ({ text }))}
+              onChange={(rows) => updateActive({ benefits: rows.map((r) => String(r.text ?? "")) })}
+              emptyItem={{ text: "" }}
+              fields={[{ key: "text", label: "Benefit" }]}
+              itemLabel={(_, i) => `Benefit ${i + 1}`}
+            />
+            <ArrayEditor
+              label="Related Courses"
+              items={active.relatedCourses}
+              onChange={(rows) =>
+                updateActive({
+                  relatedCourses: rows.map((r) => ({
+                    title: String(r.title ?? ""),
+                    href: String(r.href ?? ""),
+                  })),
+                })
+              }
+              emptyItem={{ title: "", href: "/courses/" }}
+              fields={[
+                { key: "title", label: "Course Title" },
+                { key: "href", label: "Link", placeholder: "/courses/nda" },
+              ]}
+              itemLabel={(item, i) => String(item.title || `Course ${i + 1}`)}
+            />
+          </>
+        ) : (
+          <ArrayEditor
+            label={`${active.title} Photos`}
+            items={photos}
+            onChange={(rows) =>
+              setPhotosBySlug({
+                ...photosBySlug,
+                [active.slug]: rows.map((r) => ({
+                  src: String(r.src ?? ""),
+                  alt: String(r.alt ?? ""),
+                })),
+              })
+            }
+            emptyItem={{ src: "", alt: "" }}
+            fields={[
+              { key: "src", label: "Photo", type: "image", imagePreset: "gallery" },
+              { key: "alt", label: "Alt text" },
+            ]}
+            itemLabel={(item, i) => String(item.alt || `Photo ${i + 1}`)}
+          />
+        )}
+      </div>
 
-            {(photosBySlug[facility.slug] ?? []).length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4 text-center border border-dashed border-border rounded-lg">
-                No photos yet. Click &quot;Add photo&quot; to upload images for this facility.
-              </p>
-            ) : (
-              <div className="space-y-4">
-                {(photosBySlug[facility.slug] ?? []).map((photo, i) => (
-                  <div key={i} className="border border-border rounded-lg p-4 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-muted-foreground">Photo {i + 1}</span>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive"
-                        onClick={() => removePhoto(facility.slug, i)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <ImagePicker
-                      uploadPreset="gallery"
-                      value={photo.src}
-                      onChange={(src) => updatePhoto(facility.slug, i, "src", src)}
-                      label="Image"
-                    />
-                    <div className="space-y-1.5">
-                      <Label>Caption / alt text</Label>
-                      <Input
-                        value={photo.alt}
-                        onChange={(e) => updatePhoto(facility.slug, i, "alt", e.target.value)}
-                        placeholder="Describe this photo for accessibility"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        ))}
-
-        <Button type="submit" disabled={saving} className="gap-2">
-          <Save className="h-4 w-4" />
-          {saving ? "Saving..." : "Save All Facility Photos"}
-        </Button>
-      </form>
+      <Button onClick={handleSave} disabled={saving} className="gap-2">
+        <Save className="h-4 w-4" />
+        {saving ? "Saving..." : "Save Facilities"}
+      </Button>
     </div>
   )
 }

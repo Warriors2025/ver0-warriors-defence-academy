@@ -8,7 +8,7 @@ import {
   processUploadedImage,
   type ImagePreset,
 } from "@/lib/image-processing"
-import { listMediaUploads, uploadMediaFile } from "@/lib/media-storage"
+import { listMediaUploads, uploadMediaFile, deleteMediaFile } from "@/lib/media-storage"
 
 const IMAGE_EXT = new Set([".webp", ".jpg", ".jpeg", ".png", ".gif", ".svg"])
 
@@ -123,4 +123,27 @@ export async function POST(req: NextRequest) {
       storage: "supabase",
     },
   })
+}
+
+export async function DELETE(req: NextRequest) {
+  if (!(await requireAdminSession())) return unauthorizedResponse()
+
+  const { searchParams } = new URL(req.url)
+  const url = searchParams.get("url")
+  if (!url) {
+    return NextResponse.json({ error: "Missing url parameter" }, { status: 400 })
+  }
+
+  // Only allow deleting Supabase uploads, not bundled /images/*
+  if (url.startsWith("/")) {
+    return NextResponse.json({ error: "Bundled site images cannot be deleted here." }, { status: 400 })
+  }
+
+  try {
+    await deleteMediaFile(url)
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Delete failed"
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }

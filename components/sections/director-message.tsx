@@ -5,12 +5,18 @@ import { Quote } from "lucide-react"
 import type { DirectorContent } from "@/lib/site-content"
 import { defaultSections } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import type { HeadingLevel } from "@/lib/seo"
 
 type DirectorMessageSectionProps = {
   director?: DirectorContent
+  titleLevel?: HeadingLevel
 }
 
-export function DirectorMessageSection({ director = defaultSections.director }: DirectorMessageSectionProps) {
+export function DirectorMessageSection({
+  director = defaultSections.director,
+  titleLevel = "h2",
+}: DirectorMessageSectionProps) {
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -18,9 +24,9 @@ export function DirectorMessageSection({ director = defaultSections.director }: 
           <CmsField id="sections.director.eyebrow" label="Director Eyebrow" section="director">
             <span className="text-accent font-semibold text-sm uppercase tracking-wider">{director.eyebrow}</span>
           </CmsField>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mt-3 mb-4 text-balance">
-            <CmsField id="sections.director.title" label="Director Section Title" section="director" block>{director.title}</CmsField>
-          </h2>
+          <HeadingTag level={titleLevel} className="text-3xl md:text-4xl font-bold text-foreground mt-3 mb-4 text-balance">
+            <CmsField id="sections.director.title" label="Director Section Title" section="director">{director.title}</CmsField>
+          </HeadingTag>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">

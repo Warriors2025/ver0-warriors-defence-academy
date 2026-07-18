@@ -4,36 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getSiteContent } from "@/lib/site-content.server"
 import { FooterContactInfo } from "@/components/footer-contact-info"
-
-const quickLinks = [
-  { title: "Home", href: "/" },
-  { title: "About Us", href: "/about" },
-  { title: "Courses", href: "/courses" },
-  { title: "Results", href: "/results" },
-  { title: "Blog", href: "/blog" },
-  { title: "Gallery", href: "/gallery" },
-  { title: "Facilities", href: "/facilities" },
-  { title: "Contact", href: "/contact" },
-  { title: "Register", href: "/register" },
-]
-
-const courses = [
-  { title: "NDA Course", href: "/courses/nda" },
-  { title: "NDA Foundation", href: "/courses/nda-foundation" },
-  { title: "CDS Course", href: "/courses/cds" },
-  { title: "SSB Interview", href: "/courses/ssb" },
-  { title: "AFCAT Course", href: "/courses/afcat" },
-  { title: "MNS Course", href: "/courses/mns" },
-]
+import { DEFAULT_NAVIGATION } from "@/lib/navigation"
 
 export async function Footer() {
-  const { contact } = await getSiteContent()
+  const { contact, navigation } = await getSiteContent()
+  const quickLinks = navigation?.footerQuickLinks ?? DEFAULT_NAVIGATION.footerQuickLinks
+  const courses = navigation?.footerCourses ?? DEFAULT_NAVIGATION.footerCourses
+  const about = navigation?.footerAbout ?? DEFAULT_NAVIGATION.footerAbout
 
   return (
     <footer className="bg-brand-deep text-brand-deep-foreground">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* About */}
           <div className="space-y-6">
             <Link href="/" className="inline-block group" aria-label="Warriors Defence Academy home">
               <span className="text-xl font-bold text-accent leading-tight group-hover:underline underline-offset-4">
@@ -41,7 +23,7 @@ export async function Footer() {
               </span>
             </Link>
             <p className="text-brand-deep-foreground/80 leading-relaxed">
-              India&apos;s premier defence coaching institute preparing future officers for NDA, CDS, AFCAT, and SSB with excellence and dedication.
+              {about}
             </p>
             <div className="flex gap-4">
               <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-brand-deep-foreground/10 hover:bg-accent hover:text-accent-foreground transition-colors">
@@ -56,7 +38,6 @@ export async function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-lg font-semibold text-accent mb-6">Quick Links</h3>
             <ul className="space-y-3">
@@ -70,7 +51,6 @@ export async function Footer() {
             </ul>
           </div>
 
-          {/* Courses */}
           <div>
             <h3 className="text-lg font-semibold text-accent mb-6">Our Courses</h3>
             <ul className="space-y-3">
@@ -84,7 +64,6 @@ export async function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold text-accent mb-6">Contact Us</h3>
             <FooterContactInfo contact={contact} />

@@ -1,16 +1,24 @@
-import { redirect, notFound } from "next/navigation"
 import { VisualPageEditor } from "@/components/admin/visual-page-editor"
+import { PagePreviewEditor } from "@/components/admin/page-preview-editor"
 import { getCmsPage } from "@/lib/cms-pages"
+import { notFound } from "next/navigation"
 
-export default async function EditorPage({ params }: { params: Promise<{ slug: string }> }) {
+const PREVIEW_SLUGS = new Set(["about", "contact", "courses", "admissions", "results", "register"])
+
+type Props = { params: Promise<{ slug: string }> }
+
+export default async function AdminEditorPage({ params }: Props) {
   const { slug } = await params
   const page = getCmsPage(slug)
-  if (!page) notFound()
+  if (!page?.editable) notFound()
 
-  // Only the homepage has a visual split-pane editor
-  if (!page.visualEditor) {
-    redirect(page.adminPath ?? "/admin/pages")
+  if (slug === "home") {
+    return <VisualPageEditor slug="home" />
   }
 
-  return <VisualPageEditor slug={slug} />
+  if (PREVIEW_SLUGS.has(slug)) {
+    return <PagePreviewEditor slug={slug as "about" | "contact" | "courses" | "admissions" | "results" | "register"} />
+  }
+
+  notFound()
 }

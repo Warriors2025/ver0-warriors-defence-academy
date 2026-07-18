@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Upload, ImageIcon, Copy, CheckCircle } from "lucide-react"
+import { Upload, ImageIcon, Copy, CheckCircle, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { IMAGE_PRESETS } from "@/lib/image-presets"
 
@@ -13,6 +13,10 @@ type UploadMeta = {
   format: string
 }
 
+function isUploaded(url: string) {
+  return url.includes("/storage/v1/object/public/media/")
+}
+
 export default function AdminMediaPage() {
   const [images, setImages] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -20,6 +24,7 @@ export default function AdminMediaPage() {
   const [copied, setCopied] = useState<string | null>(null)
   const [uploadNote, setUploadNote] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState("")
+  const [deleting, setDeleting] = useState<string | null>(null)
 
   function load() {
     setLoading(true)
@@ -67,13 +72,34 @@ export default function AdminMediaPage() {
     setTimeout(() => setCopied(null), 2000)
   }
 
+  async function handleDelete(url: string) {
+    if (!isUploaded(url)) {
+      setUploadError("Bundled site images cannot be deleted from the media library.")
+      return
+    }
+    if (!confirm("Delete this uploaded image from storage?")) return
+    setDeleting(url)
+    setUploadError("")
+    try {
+      const res = await fetch(`/api/admin/media?url=${encodeURIComponent(url)}`, { method: "DELETE" })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || "Delete failed")
+      setImages((prev) => prev.filter((u) => u !== url))
+      setUploadNote("Image deleted from storage.")
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Delete failed")
+    } finally {
+      setDeleting(null)
+    }
+  }
+
   return (
     <div className="max-w-5xl space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Media Library</h1>
           <p className="text-muted-foreground text-sm mt-1">
-            Uploads go to Supabase Storage, compressed as WebP ({IMAGE_PRESETS.general.label}).
+            Uploads go to Supabase Storage, compressed as WebP ({IMAGE_PRESETS.general.label}). Uploaded files can be deleted; bundled assets cannot.
           </p>
         </div>
         <label className="cursor-pointer">
@@ -107,11 +133,23 @@ export default function AdminMediaPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-2">
-                <p className="text-white text-[10px] text-center truncate w-full">{img}</p>
+                <p className="text-white text-[10px] text-center truncate w-full">{img.split("/").pop()}</p>
                 <Button size="sm" variant="secondary" className="h-7 text-xs gap-1" onClick={() => copyUrl(img)}>
                   {copied === img ? <CheckCircle className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                   {copied === img ? "Copied!" : "Copy URL"}
                 </Button>
+                {isUploaded(img) && (
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    className="h-7 text-xs gap-1"
+                    disabled={deleting === img}
+                    onClick={() => handleDelete(img)}
+                  >
+                    <Trash2 className="h-3 w-3" />
+                    {deleting === img ? "Deleting…" : "Delete"}
+                  </Button>
+                )}
               </div>
             </div>
           ))}

@@ -6,17 +6,21 @@ import { ArrowRight, Phone, Calendar, Shield } from "lucide-react"
 import type { CtaContent } from "@/lib/site-content"
 import { defaultSections, defaultContent } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import type { HeadingLevel } from "@/lib/seo"
 
 type CTASectionProps = {
   cta?: CtaContent
   phone1?: string
   phone2?: string
+  titleLevel?: HeadingLevel
 }
 
 export function CTASection({
   cta = defaultSections.cta,
   phone1 = defaultContent.contact.phone1,
   phone2 = defaultContent.contact.phone2,
+  titleLevel = "h2",
 }: CTASectionProps) {
   return (
     <section className="relative py-24 overflow-hidden bg-primary text-primary-foreground">
@@ -39,12 +43,12 @@ export function CTASection({
             </CmsField>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
+          <HeadingTag level={titleLevel} className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground mb-6 leading-tight">
             <CmsField id="sections.cta.title" label="CTA Title" section="cta">{cta.title}</CmsField>{" "}
             <span className="text-accent">
               <CmsField id="sections.cta.highlight" label="CTA Highlight" section="cta">{cta.highlight}</CmsField>
             </span>
-          </h2>
+          </HeadingTag>
 
           <p className="text-primary-foreground/75 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             <CmsField id="sections.cta.subtitle" label="CTA Subtitle" section="cta" block>{cta.subtitle}</CmsField>

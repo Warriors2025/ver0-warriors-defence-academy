@@ -9,7 +9,7 @@ import {
   BarChart3, BookOpen, LogOut, Shield, ChevronRight, ExternalLink,
   FileText, Eye, Users, MessageSquare, HelpCircle, Star, Newspaper,
   Images, Inbox, UserCheck, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
-  Building2,
+  Building2, Menu,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -22,6 +22,7 @@ const navItems = [
   { href: "/admin/editor/home", label: "Visual Editor", icon: Eye, exact: false },
   { href: "/admin/site-pages", label: "Site Pages", icon: FileText, exact: false },
   { href: "/admin/home-sections", label: "Home Sections", icon: Layers, exact: false },
+  { href: "/admin/navigation", label: "Navigation", icon: Menu, exact: false },
   { href: "/admin/media", label: "Media", icon: Images, exact: false },
   { href: "/admin/general", label: "Announcement", icon: Megaphone, exact: false },
   { href: "/admin/hero", label: "Hero Section", icon: ImageIcon, exact: false },
@@ -32,7 +33,7 @@ const navItems = [
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle, exact: false },
   { href: "/admin/blog", label: "Blog", icon: Newspaper, exact: false },
   { href: "/admin/gallery", label: "Gallery", icon: Images, exact: false },
-  { href: "/admin/facilities", label: "Facility Photos", icon: Building2, exact: false },
+  { href: "/admin/facilities", label: "Facilities", icon: Building2, exact: false },
   { href: "/admin/courses", label: "Courses", icon: BookOpen, exact: false },
   { href: "/admin/results", label: "Results", icon: Trophy, exact: false },
   { href: "/admin/admissions", label: "Admissions", icon: GraduationCap, exact: false },

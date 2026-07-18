@@ -1,10 +1,13 @@
 import type { SitePages, ActivityItem, BookItem, VideoItem } from "@/lib/site-content-pages"
 import { defaultPages, defaultActivities, defaultBooks, defaultVideos } from "@/lib/site-content-pages"
-import type { FacilityPhoto } from "@/lib/facilities-data"
+import type { Facility, FacilityPhoto } from "@/lib/facilities-data"
+import { FACILITIES } from "@/lib/facilities-data"
 import type { SeoStore } from "@/lib/seo"
 import { DEFAULT_SEO_STORE } from "@/lib/seo"
+import type { NavigationContent } from "@/lib/navigation"
+import { DEFAULT_NAVIGATION } from "@/lib/navigation"
 
-export type { SitePages, ActivityItem, BookItem, VideoItem }
+export type { SitePages, ActivityItem, BookItem, VideoItem, NavigationContent }
 
 export type HeroSlide = { src: string; alt: string; caption: string }
 
@@ -59,6 +62,20 @@ export type SiteSections = {
   books: { eyebrow: string; title: string; subtitle: string; promoCode: string; items: BookItem[] }
   videos: { eyebrow: string; title: string; subtitle: string; items: VideoItem[] }
   facilityPhotos?: Record<string, FacilityPhoto[]>
+  /** Full facility page copy — overrides hardcoded FACILITIES defaults when set */
+  facilityItems?: Facility[]
+}
+
+/** Unpublished CMS changes stored in site_content.settings.draft */
+export type SiteContentDraft = {
+  announcement?: SiteContent["announcement"]
+  hero?: SiteContent["hero"]
+  contact?: SiteContent["contact"]
+  stats?: SiteContent["stats"]
+  sections?: Partial<SiteSections>
+  pages?: Partial<SitePages>
+  navigation?: NavigationContent
+  updatedAt?: string
 }
 
 export type SiteContent = {
@@ -84,6 +101,8 @@ export type SiteContent = {
   sections: SiteSections
   pages: SitePages
   seo?: SeoStore
+  navigation?: NavigationContent
+  draft?: SiteContentDraft | null
   updatedAt?: string
 }
 
@@ -169,6 +188,7 @@ const defaultSections: SiteSections = {
     subtitle: defaultVideos.header.subtitle,
     items: defaultVideos.items,
   },
+  facilityItems: FACILITIES,
 }
 
 const defaultContent: SiteContent = {
@@ -212,6 +232,8 @@ const defaultContent: SiteContent = {
   sections: defaultSections,
   pages: defaultPages,
   seo: DEFAULT_SEO_STORE,
+  navigation: DEFAULT_NAVIGATION,
+  draft: null,
 }
 
 export { defaultContent, defaultSections }

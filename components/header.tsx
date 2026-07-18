@@ -6,6 +6,7 @@ import { Phone } from "lucide-react"
 export async function Header() {
   const content = await getSiteContent()
   const { text, phone } = content.announcement
+  const navigation = content.navigation
 
   return (
     <>
@@ -30,7 +31,11 @@ export async function Header() {
       </div>
 
       {/* Interactive sticky nav — client component */}
-      <HeaderNav phone={phone} />
+      <HeaderNav
+        phone={phone}
+        navLinks={navigation?.navLinks}
+        courses={navigation?.courses}
+      />
     </>
   )
 }

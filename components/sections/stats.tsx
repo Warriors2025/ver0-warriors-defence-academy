@@ -4,11 +4,14 @@ import { useEffect, useState, useRef } from "react"
 import type { AnimatedStat } from "@/lib/site-content"
 import { defaultSections } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import type { HeadingLevel } from "@/lib/seo"
 
 type StatsSectionProps = {
   eyebrow?: string
   title?: string
   stats?: AnimatedStat[]
+  titleLevel?: HeadingLevel
 }
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
@@ -42,6 +45,7 @@ export function StatsSection({
   eyebrow = defaultSections.statsSection.eyebrow,
   title = defaultSections.statsSection.title,
   stats = defaultSections.statsSection.stats,
+  titleLevel = "h2",
 }: StatsSectionProps) {
   return (
     <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
@@ -57,9 +61,9 @@ export function StatsSection({
           <CmsField id="sections.statsSection.eyebrow" label="Stats Eyebrow" section="stats">
             <span className="text-accent text-sm font-semibold uppercase tracking-widest">{eyebrow}</span>
           </CmsField>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mt-3">
-            <CmsField id="sections.statsSection.title" label="Stats Title" section="stats" block>{title}</CmsField>
-          </h2>
+          <HeadingTag level={titleLevel} className="text-3xl md:text-4xl font-bold text-primary-foreground mt-3">
+            <CmsField id="sections.statsSection.title" label="Stats Title" section="stats">{title}</CmsField>
+          </HeadingTag>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-primary-foreground/10">

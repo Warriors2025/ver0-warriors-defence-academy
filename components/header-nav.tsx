@@ -7,28 +7,29 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Menu, Phone, X, GraduationCap, ChevronDown, ChevronRight,
-  BookOpen, Users, Sword, Plane, Anchor, Heart,
+  BookOpen, Users, Sword, Plane, Anchor, Heart, Shield, Target, Award,
+  type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { NavCourseItem, NavLinkItem } from "@/lib/navigation"
+import { DEFAULT_NAVIGATION } from "@/lib/navigation"
 
-const courses = [
-  { title: "NDA Course",           href: "/courses/nda",            description: "Written exam + SSB prep",             icon: Sword,         badge: "Popular" },
-  { title: "NDA Foundation",       href: "/courses/nda-foundation",  description: "Integrated Class 10-12 programme",    icon: BookOpen,      badge: null },
-  { title: "CDS Course",           href: "/courses/cds",            description: "For graduate defence aspirants",       icon: GraduationCap, badge: null },
-  { title: "SSB Interview",        href: "/courses/ssb",            description: "21-day intensive SSB training",        icon: Users,         badge: "Top Rated" },
-  { title: "AFCAT Course",         href: "/courses/afcat",          description: "Air Force admission test prep",        icon: Plane,         badge: null },
-  { title: "Indian Navy Agniveer", href: "/courses/navy-agniveer",  description: "Navy SSR/AA exam coaching",            icon: Anchor,        badge: "New" },
-  { title: "Airforce X/Y",         href: "/courses/airforce-xy",    description: "IAF Group X & Y preparation",         icon: Sword,         badge: null },
-  { title: "MNS Course",           href: "/courses/mns",            description: "Military Nursing Service prep",        icon: Heart,         badge: "For Women" },
-]
+const ICON_MAP: Record<string, LucideIcon> = {
+  Sword,
+  BookOpen,
+  GraduationCap,
+  Users,
+  Plane,
+  Anchor,
+  Heart,
+  Shield,
+  Target,
+  Award,
+}
 
-const navLinks = [
-  { title: "About Us", href: "/about" },
-  { title: "Results",  href: "/results" },
-  { title: "Blog",     href: "/blog" },
-  { title: "Gallery",  href: "/gallery" },
-  { title: "Contact",  href: "/contact" },
-]
+function resolveIcon(name: string): LucideIcon {
+  return ICON_MAP[name] ?? BookOpen
+}
 
 function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname()
@@ -50,11 +51,21 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   )
 }
 
-export function HeaderNav({ phone }: { phone: string }) {
-  const [scrolled, setScrolled]       = useState(false)
-  const [mobileOpen, setMobileOpen]   = useState(false)
+type Props = {
+  phone: string
+  navLinks?: NavLinkItem[]
+  courses?: NavCourseItem[]
+}
+
+export function HeaderNav({
+  phone,
+  navLinks = DEFAULT_NAVIGATION.navLinks,
+  courses = DEFAULT_NAVIGATION.courses,
+}: Props) {
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
   const [coursesOpen, setCoursesOpen] = useState(false)
-  const [dropOpen, setDropOpen]       = useState(false)
+  const [dropOpen, setDropOpen] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -89,12 +100,9 @@ export function HeaderNav({ phone }: { phone: string }) {
 
       <div className="container mx-auto px-4">
         <div className="flex h-16 lg:h-[68px] items-center">
-
-          {/* Desktop nav */}
           <nav className="hidden lg:flex flex-1 items-center justify-center gap-1" aria-label="Main navigation">
             <NavLink href="/">Home</NavLink>
 
-            {/* Courses dropdown */}
             <div ref={dropRef} className="relative">
               <button
                 onClick={() => setDropOpen((v) => !v)}
@@ -129,31 +137,34 @@ export function HeaderNav({ phone }: { phone: string }) {
                   </div>
 
                   <ul className="grid grid-cols-2 gap-px bg-border p-px">
-                    {courses.map((c) => (
-                      <li key={c.title} className="bg-background">
-                        <Link
-                          href={c.href}
-                          role="menuitem"
-                          onClick={() => setDropOpen(false)}
-                          className="group flex items-center gap-3 px-4 py-3 hover:bg-accent/8 transition-colors duration-150"
-                        >
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
-                            <c.icon className="h-4 w-4 text-primary" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-foreground leading-none">{c.title}</span>
-                              {c.badge && (
-                                <span className="text-[10px] font-semibold bg-accent/15 text-accent rounded-full px-1.5 py-0.5">
-                                  {c.badge}
-                                </span>
-                              )}
+                    {courses.map((c) => {
+                      const Icon = resolveIcon(c.icon)
+                      return (
+                        <li key={c.title} className="bg-background">
+                          <Link
+                            href={c.href}
+                            role="menuitem"
+                            onClick={() => setDropOpen(false)}
+                            className="group flex items-center gap-3 px-4 py-3 hover:bg-accent/8 transition-colors duration-150"
+                          >
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/15 transition-colors">
+                              <Icon className="h-4 w-4 text-primary" />
                             </div>
-                            <p className="text-xs text-muted-foreground mt-0.5 truncate">{c.description}</p>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium text-foreground leading-none">{c.title}</span>
+                                {c.badge && (
+                                  <span className="text-[10px] font-semibold bg-accent/15 text-accent rounded-full px-1.5 py-0.5">
+                                    {c.badge}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-muted-foreground mt-0.5 truncate">{c.description}</p>
+                            </div>
+                          </Link>
+                        </li>
+                      )
+                    })}
                   </ul>
 
                   <div className="px-5 py-3 bg-muted/30 border-t border-border flex items-center justify-between">
@@ -171,7 +182,6 @@ export function HeaderNav({ phone }: { phone: string }) {
             ))}
           </nav>
 
-          {/* Right actions (desktop) */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <a
               href={`tel:${phone.replace(/\s/g, "")}`}
@@ -185,7 +195,6 @@ export function HeaderNav({ phone }: { phone: string }) {
             </Link>
           </div>
 
-          {/* Mobile */}
           <div className="flex lg:hidden items-center gap-2 ml-auto">
             <Link href="/register">
               <Button size="sm" className="h-9 px-4 text-xs font-semibold">Enroll Now</Button>
@@ -235,17 +244,20 @@ export function HeaderNav({ phone }: { phone: string }) {
 
                     {coursesOpen && (
                       <div className="mt-1 mb-1 ml-3 pl-3 border-l-2 border-accent/40 space-y-0.5">
-                        {courses.map((c) => (
-                          <Link
-                            key={c.title}
-                            href={c.href}
-                            onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-2.5 h-10 px-2 text-sm text-muted-foreground rounded-md hover:bg-muted hover:text-primary transition-colors"
-                          >
-                            <c.icon className="h-3.5 w-3.5 shrink-0 text-accent" />
-                            {c.title}
-                          </Link>
-                        ))}
+                        {courses.map((c) => {
+                          const Icon = resolveIcon(c.icon)
+                          return (
+                            <Link
+                              key={c.title}
+                              href={c.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="flex items-center gap-2.5 h-10 px-2 text-sm text-muted-foreground rounded-md hover:bg-muted hover:text-primary transition-colors"
+                            >
+                              <Icon className="h-3.5 w-3.5 shrink-0 text-accent" />
+                              {c.title}
+                            </Link>
+                          )
+                        })}
                       </div>
                     )}
                   </div>
@@ -277,7 +289,6 @@ export function HeaderNav({ phone }: { phone: string }) {
               </SheetContent>
             </Sheet>
           </div>
-
         </div>
       </div>
     </header>

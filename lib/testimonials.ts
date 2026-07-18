@@ -6,6 +6,7 @@ export type Testimonial = {
   course: string
   content: string
   rating: number
+  imageUrl?: string
 }
 
 const STATIC: Testimonial[] = [
@@ -29,6 +30,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       course: row.course || "",
       content: row.content,
       rating: row.rating ?? 5,
+      imageUrl: (row as { image_url?: string | null }).image_url || undefined,
     }))
   } catch {
     return STATIC

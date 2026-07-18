@@ -96,7 +96,26 @@ export async function uploadMediaFile(opts: {
   }
 
   return {
-    path: objectPath,
     url,
+    path: objectPath,
   }
+}
+
+export async function deleteMediaFile(objectPathOrUrl: string): Promise<void> {
+  const supabase = createServerClient()
+  let objectPath = objectPathOrUrl
+
+  // Accept full public URL or storage path
+  const marker = `/storage/v1/object/public/${MEDIA_BUCKET}/`
+  const idx = objectPathOrUrl.indexOf(marker)
+  if (idx >= 0) {
+    objectPath = objectPathOrUrl.slice(idx + marker.length)
+  } else if (objectPathOrUrl.startsWith("http")) {
+    throw new Error("Can only delete uploads stored in Supabase media bucket.")
+  } else if (objectPathOrUrl.startsWith("/")) {
+    throw new Error("Bundled public images cannot be deleted from the media library.")
+  }
+
+  const { error } = await supabase.storage.from(MEDIA_BUCKET).remove([objectPath])
+  if (error) throw new Error(error.message)
 }

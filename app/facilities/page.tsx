@@ -5,6 +5,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { getFacilities } from "@/lib/facilities-data"
+import { getSiteContent } from "@/lib/site-content.server"
 import { ArrowRight, Building2, CheckCircle, ChevronRight } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -13,8 +14,9 @@ export const metadata: Metadata = {
     "Explore world-class facilities at Warriors Defence Academy — GTO ground, library, mock tests, sports, English classes, doubt counter, and expert mentorship in Lucknow.",
 }
 
-export default function FacilitiesPage() {
-  const facilities = getFacilities()
+export default async function FacilitiesPage() {
+  const content = await getSiteContent()
+  const facilities = getFacilities(content.sections.facilityItems)
 
   return (
     <main className="min-h-screen">

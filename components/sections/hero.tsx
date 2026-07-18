@@ -8,17 +8,21 @@ import { ArrowRight, Play, ChevronLeft, ChevronRight, Shield, Trophy } from "luc
 import type { HeroSlide, SiteContent } from "@/lib/site-content"
 import { defaultContent } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
+import { HeadingTag } from "@/components/seo/heading-tag"
+import type { HeadingLevel } from "@/lib/seo"
 
 type HeroSectionProps = {
   hero?: SiteContent["hero"]
   slides?: HeroSlide[]
   achievement?: { value: string; label: string }
+  headlineLevel?: HeadingLevel
 }
 
 export function HeroSection({
   hero = defaultContent.hero,
   slides = defaultContent.sections.heroSlides,
   achievement = defaultContent.sections.heroAchievement,
+  headlineLevel = "h1",
 }: HeroSectionProps) {
   const [current, setCurrent] = useState(0)
 
@@ -47,12 +51,12 @@ export function HeroSection({
               </CmsField>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-foreground">
-              <CmsField id="hero.headline" label="Hero Headline" section="hero" block>{hero.headline}</CmsField>{" "}
+            <HeadingTag level={headlineLevel} className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-foreground">
+              <CmsField id="hero.headline" label="Hero Headline" section="hero">{hero.headline}</CmsField>{" "}
               <span className="text-gradient">
                 <CmsField id="hero.highlightText" label="Hero Highlight Text" section="hero">{hero.highlightText}</CmsField>
               </span>
-            </h1>
+            </HeadingTag>
 
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg">
               <CmsField id="hero.tagline" label="Hero Tagline" section="hero" block>{hero.tagline}</CmsField>

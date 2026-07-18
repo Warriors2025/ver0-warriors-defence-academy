@@ -21,7 +21,7 @@ import { getSiteContent } from "@/lib/site-content.server"
 import { CmsEditorBridge } from "@/components/cms/cms-editor-bridge"
 import { PageJsonLd } from "@/components/seo/page-json-ld"
 import { getPageSchemaJsonLd, getPageSeo, buildPageMetadata } from "@/lib/seo.server"
-import { mergeSeoStore, resolveImageSeo } from "@/lib/seo"
+import { mergeSeoStore, resolveHeading, resolveImageSeo } from "@/lib/seo"
 import type { Metadata } from "next"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -52,6 +52,11 @@ export default async function HomePage({
     const imgSeo = resolveImageSeo(seoStore, slide.src, { alt: slide.alt, caption: slide.caption })
     return { ...slide, alt: imgSeo.alt || slide.alt, caption: imgSeo.caption || slide.caption }
   })
+  const heroHeading = resolveHeading(seoStore, "hero.headline", "h1")
+  const featuresHeading = resolveHeading(seoStore, "sections.featuresHeader.title", "h2")
+  const statsHeading = resolveHeading(seoStore, "sections.statsSection.title", "h2")
+  const directorHeading = resolveHeading(seoStore, "sections.director.title", "h2")
+  const ctaHeading = resolveHeading(seoStore, "sections.cta.title", "h2")
 
   return (
     <main className="min-h-screen">
@@ -59,20 +64,27 @@ export default async function HomePage({
       {cmsEditMode && <CmsEditorBridge />}
       <HeroMenuBanner />
       <Header />
-      <HeroSection hero={hero} slides={heroSlides} achievement={sections.heroAchievement} />
+      <HeroSection
+        hero={hero}
+        slides={heroSlides}
+        achievement={sections.heroAchievement}
+        headlineLevel={heroHeading}
+      />
       <FeaturesSection
         eyebrow={sections.featuresHeader.eyebrow}
         title={sections.featuresHeader.title}
         subtitle={sections.featuresHeader.subtitle}
         features={sections.features}
+        titleLevel={featuresHeading}
       />
       <StatsSection
         eyebrow={sections.statsSection.eyebrow}
         title={sections.statsSection.title}
         stats={sections.statsSection.stats}
+        titleLevel={statsHeading}
       />
       <CoursesSection courses={courses} />
-      <DirectorMessageSection director={sections.director} />
+      <DirectorMessageSection director={sections.director} titleLevel={directorHeading} />
       <OutdoorActivitiesSection
         eyebrow={sections.activities.eyebrow}
         title={sections.activities.title}
@@ -95,7 +107,12 @@ export default async function HomePage({
       <MentorsSection mentors={mentors} />
       <TestimonialsSection testimonials={testimonials} />
       <FAQSection faqs={faqs} />
-      <CTASection cta={sections.cta} phone1={contact.phone1} phone2={contact.phone2} />
+      <CTASection
+        cta={sections.cta}
+        phone1={contact.phone1}
+        phone2={contact.phone2}
+        titleLevel={ctaHeading}
+      />
       <Footer />
     </main>
   )
