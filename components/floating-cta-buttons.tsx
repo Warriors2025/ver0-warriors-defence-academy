@@ -1,6 +1,7 @@
 "use client"
 
-import { usePathname, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
 import { Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -26,9 +27,13 @@ export function FloatingCtaButtons({
   whatsappMessage = "Hi! I want to know more about defence coaching at Warriors Defence Academy.",
 }: Props) {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const isEmbed =
-    searchParams?.get("embed") === "1" || searchParams?.get("embed") === "true"
+  const [isEmbed, setIsEmbed] = useState(false)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const embed = params.get("embed")
+    setIsEmbed(embed === "1" || embed === "true")
+  }, [])
 
   // Hide on admin/payment pages and when iframed into WordPress (?embed=1)
   if (
