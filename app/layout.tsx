@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next"
-import { Suspense } from "react"
 import { Inter, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { AppProviders } from "@/components/providers"
@@ -188,9 +187,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <AppProviders>{children}</AppProviders>
-        <Suspense fallback={null}>
-          <FloatingCta />
-        </Suspense>
+        <FloatingCta />
         <TrackingScripts tags={trackingTags} />
         <Analytics />
       </body>
