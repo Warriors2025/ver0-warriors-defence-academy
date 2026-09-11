@@ -367,9 +367,9 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto pb-2">
       {/* Progress */}
-      <div className="mb-8">
+      <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
           {steps.map((step, index) => (
             <div key={step.id} className={`flex items-center ${index < steps.length - 1 ? "flex-1" : ""}`}>
@@ -778,8 +778,8 @@ export function RegisterForm() {
       </Card>
 
       {/* Help Section */}
-      <div className="mt-8 text-center">
-        <p className="text-muted-foreground mb-4">Need help with registration?</p>
+      <div className="mt-4 mb-1 text-center">
+        <p className="text-muted-foreground mb-3">Need help with registration?</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="tel:+919452245729" className="flex items-center justify-center gap-2 text-primary hover:underline">
             <Phone className="h-4 w-4" />

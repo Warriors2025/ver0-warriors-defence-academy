@@ -28,17 +28,23 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const hero = pages.register.hero
 
   if (isEmbed) {
+    // Compact layout for WordPress iframe: no min-h-screen (that created
+    // a huge empty gap), no site chrome, tight vertical padding.
     return (
-      <main className="min-h-screen bg-background">
+      <main
+        className="bg-background"
+        data-iframe-height
+        style={{ minHeight: 0, paddingBottom: 8 }}
+      >
         <PageJsonLd data={schema} />
         <IframeResizerContent />
-        <section className="py-6 md:py-8">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center mb-6">
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+        <section className="pt-3 pb-2">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="max-w-3xl mx-auto text-center mb-4">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-1">
                 {hero.title}
               </h1>
-              <p className="text-muted-foreground text-sm md:text-base">
+              <p className="text-muted-foreground text-sm">
                 {hero.subtitle}
               </p>
             </div>

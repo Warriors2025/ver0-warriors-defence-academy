@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -26,8 +26,19 @@ export function FloatingCtaButtons({
   whatsappMessage = "Hi! I want to know more about defence coaching at Warriors Defence Academy.",
 }: Props) {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const isEmbed =
+    searchParams?.get("embed") === "1" || searchParams?.get("embed") === "true"
 
-  if (pathname?.startsWith("/admin") || pathname?.startsWith("/payments") || pathname === "/fee-payment") return null
+  // Hide on admin/payment pages and when iframed into WordPress (?embed=1)
+  if (
+    isEmbed ||
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/payments") ||
+    pathname === "/fee-payment"
+  ) {
+    return null
+  }
 
   const tel = digitsOnly(phone)
   if (!tel) return null
