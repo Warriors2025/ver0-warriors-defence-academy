@@ -107,7 +107,7 @@ export const defaultPages: SitePages = {
   register: {
     hero: {
       eyebrow: "Apply for NDA Coaching",
-      title: "Register for NDA Coaching at Warriors Defence Academy",
+      title: "Free Sankalp SSB Registration",
       subtitle: "Take the first step towards your defence career. Fill the form below and our counselors will contact you within 24 hours. Free counseling session for all applicants.",
     },
   },
