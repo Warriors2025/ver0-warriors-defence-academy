@@ -27,7 +27,7 @@ export function FloatingCtaButtons({
 }: Props) {
   const pathname = usePathname()
 
-  if (pathname?.startsWith("/admin")) return null
+  if (pathname?.startsWith("/admin") || pathname?.startsWith("/payments") || pathname === "/fee-payment") return null
 
   const tel = digitsOnly(phone)
   if (!tel) return null

@@ -115,9 +115,9 @@ const defaultSections: SiteSections = {
   ],
   heroAchievement: { value: "AIR #1", label: "Multiple Years" },
   featuresHeader: {
-    eyebrow: "World-Class Facilities",
-    title: "Why Warriors Defence Academy Stands Apart",
-    subtitle: "Infrastructure and training support designed for every stage of your defence career journey.",
+    eyebrow: "Why Students Choose Us",
+    title: "Why We Are the Best NDA Coaching in India",
+    subtitle: "From India's largest GTO ground to retired military faculty — infrastructure built for NDA coaching success.",
   },
   features: [
     { title: "Largest GTO Ground", description: "India's largest GTO training ground with modern obstacles for comprehensive physical and tactical readiness.", image: "/images/features/gto-ground.webp", href: "/facilities/gto-ground", large: true },
@@ -131,7 +131,7 @@ const defaultSections: SiteSections = {
   ],
   statsSection: {
     eyebrow: "Our Track Record",
-    title: "Numbers That Speak for Themselves",
+    title: "Proven Results from Top NDA Coaching in India",
     stats: [
       { value: 50000, suffix: "+", label: "Students Trained", description: "Across all defence programmes" },
       { value: 5000, suffix: "+", label: "Successful Selections", description: "Into NDA, CDS, AFCAT & more" },
@@ -200,7 +200,8 @@ const defaultContent: SiteContent = {
     badge: "India's No. 1 NDA Coaching Institute",
     headline: "Best NDA Coaching in",
     highlightText: "Lucknow & India",
-    tagline: "Warriors Defence Academy — India's top-ranked NDA, CDS & SSB coaching institute in Lucknow. Train under retired military officers with 50,000+ alumni network & India's largest GTO ground.",
+    tagline:
+      "Warriors Defence Academy is the best NDA coaching and top NDA coaching in India — based in Lucknow. Train under retired military officers with 50,000+ alumni, 5,000+ selections, and India's largest GTO ground.",
     features: [
       "India's Largest GTO Ground",
       "Retired Military Faculty",

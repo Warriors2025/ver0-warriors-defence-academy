@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    const required = ["firstName", "lastName", "email", "phone", "course", "dob"]
+    const required = ["firstName", "lastName", "phone", "course", "dob", "ssbSubtype", "examRollNo"]
     for (const field of required) {
       if (!data[field]) {
         return NextResponse.json(
@@ -15,12 +15,23 @@ export async function POST(request: Request) {
       }
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(data.email)) {
+    const allowedSubtypes = ["nda", "cds", "afcat"]
+    if (!allowedSubtypes.includes(String(data.ssbSubtype).toLowerCase())) {
       return NextResponse.json(
-        { success: false, message: "Invalid email address" },
+        { success: false, message: "Invalid SSB sub-type. Choose NDA, CDS, or AFCAT." },
         { status: 400 }
       )
+    }
+
+    const email = typeof data.email === "string" ? data.email.trim() : ""
+    if (email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        return NextResponse.json(
+          { success: false, message: "Invalid email address" },
+          { status: 400 }
+        )
+      }
     }
 
     const phoneRegex = /^[6-9]\d{9}$/
@@ -38,9 +49,11 @@ export async function POST(request: Request) {
       registration_id:       registrationId,
       first_name:            data.firstName,
       last_name:             data.lastName,
-      email:                 data.email,
+      email:                 email || null,
       phone:                 data.phone,
       course:                data.course,
+      ssb_subtype:           data.ssbSubtype            || null,
+      exam_roll_no:          typeof data.examRollNo === "string" ? data.examRollNo.trim() : null,
       date_of_birth:         data.dob,
       gender:                data.gender                || null,
       address:               data.address               || null,
@@ -72,7 +85,7 @@ export async function POST(request: Request) {
       registrationId,
       data: {
         name:   `${data.firstName} ${data.lastName}`,
-        email:  data.email,
+        email:  email || null,
         course: data.course,
       },
     })

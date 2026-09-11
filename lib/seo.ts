@@ -105,15 +105,15 @@ export const DEFAULT_SEO_STORE: SeoStore = {
 export function defaultSeoForPage(page: CmsPage): PageSeo {
   if (page.slug === "home") {
     const homeTitle = "Best NDA Coaching in India | Warriors Defence Academy"
-    // 156 chars — within the 120-160 target range
+    // 155 chars — within the 120-160 target range
     const homeDesc =
-      "Warriors Defence Academy — India's best NDA coaching in Lucknow. 50,000+ students, 5,000+ selections. Retired military faculty & largest GTO ground. Enroll now!"
+      "Best NDA coaching & top NDA coaching in India at Warriors Defence Academy, Lucknow. 50,000+ students, 5,000+ selections. Enroll now!"
     return {
       ...DEFAULT_PAGE_SEO,
       metaTitle: homeTitle,
       metaDescription: homeDesc,
       metaKeywords:
-        "best nda coaching, nda coaching in india, best nda coaching in lucknow, nda coaching lucknow, nda coaching, cds coaching lucknow, ssb interview coaching, defence academy lucknow, warriors defence academy, nda preparation india",
+        "best nda coaching, best nda coaching in india, nda coaching, top nda coaching in india, best nda coaching in lucknow, nda coaching lucknow, cds coaching lucknow, ssb interview coaching, warriors defence academy",
       canonicalUrl: SITE_URL,
       robotsIndex: true,
       robotsFollow: true,
@@ -127,6 +127,8 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
         "India's top NDA coaching institute in Lucknow — 50,000+ trained students, 5,000+ selections, retired military faculty & India's largest GTO ground.",
       twitterImage: "/images/og-image.webp",
       focusKeyword: "best nda coaching in india",
+      featuredSnippet:
+        "Warriors Defence Academy is the best NDA coaching and top NDA coaching in India, based in Lucknow, with 50,000+ students trained and 5,000+ selections.",
       schemaType: "EducationalOrganization",
     }
   }
@@ -684,6 +686,10 @@ export function buildHomeSchemaGraph(): object {
           { "@type": "State", name: "Uttar Pradesh" },
         ],
         knowsAbout: [
+          "Best NDA Coaching",
+          "Best NDA Coaching in India",
+          "NDA Coaching",
+          "Top NDA Coaching in India",
           "NDA Exam Preparation",
           "CDS Coaching",
           "SSB Interview Preparation",
@@ -695,7 +701,7 @@ export function buildHomeSchemaGraph(): object {
           "GTO Task Training",
         ],
         keywords:
-          "best nda coaching in india, best nda coaching in lucknow, nda coaching, nda coaching lucknow, cds coaching, ssb coaching, defence academy lucknow",
+          "best nda coaching, best nda coaching in india, nda coaching, top nda coaching in india, best nda coaching in lucknow, nda coaching lucknow, cds coaching, ssb coaching, defence academy lucknow",
       },
 
       /* ── 2. WebSite ── */
@@ -716,7 +722,7 @@ export function buildHomeSchemaGraph(): object {
         url: SITE_URL,
         name: "Best NDA Coaching in India | Warriors Defence Academy Lucknow",
         description:
-          "Join Warriors Defence Academy — India's best NDA coaching in Lucknow. 50,000+ students trained, 5,000+ selections. Expert military faculty & largest GTO ground. Enroll now!",
+          "Best NDA coaching and top NDA coaching in India at Warriors Defence Academy, Lucknow. 50,000+ students trained, 5,000+ selections. Expert military faculty & largest GTO ground. Enroll now!",
         isPartOf: { "@id": siteId },
         about: { "@id": orgId },
         inLanguage: "en-IN",
@@ -736,7 +742,15 @@ export function buildHomeSchemaGraph(): object {
             name: "Which is the best NDA coaching in India?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Warriors Defence Academy in Lucknow is widely recognised as the best NDA coaching institute in India. With 50,000+ students trained, 5,000+ successful selections into NDA, CDS and SSB, and a 15+ year track record, it is led by retired military officers and features India's largest GTO training ground. Located at Kapoorthala Chauraha, Lucknow.",
+              text: "Warriors Defence Academy in Lucknow is widely recognised as the best NDA coaching in India. With 50,000+ students trained, 5,000+ successful selections into NDA, CDS and SSB, and a 15+ year track record, it is led by retired military officers and features India's largest GTO training ground. Located at Kapoorthala Chauraha, Lucknow.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Which is the top NDA coaching in India?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Warriors Defence Academy is among the top NDA coaching institutes in India. Located in Lucknow, it delivers best NDA coaching with retired military faculty, India's largest GTO ground, hostel facilities, and 5,000+ defence selections.",
             },
           },
           {

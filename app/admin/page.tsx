@@ -4,7 +4,7 @@ import { createServerClient } from "@/lib/supabase"
 import {
   Megaphone, Image as ImageIcon, Phone, BarChart3,
   BookOpen, ArrowRight, CheckCircle, Clock, MessageSquare, Users,
-  Eye, FileText, Images, AlertTriangle, Trophy, GraduationCap, Layers, UserCog, Search, Bot, Code2, Tags,
+  Eye, FileText, Images, AlertTriangle, Trophy, GraduationCap, Layers, UserCog, Search, Bot, Code2, Tags, CreditCard,
 } from "lucide-react"
 
 const serviceRoleConfigured =
@@ -154,15 +154,18 @@ export default async function AdminDashboardPage() {
   let content = await getSiteContent()
   let newMsgs = 0
   let pendingRegs = 0
+  let pendingFees = 0
 
   try {
     const db = createServerClient()
-    const [{ count: msgs }, { count: regs }] = await Promise.all([
+    const [{ count: msgs }, { count: regs }, { count: fees }] = await Promise.all([
       db.from("contact_submissions").select("*", { count: "exact", head: true }).eq("status", "new"),
       db.from("registrations").select("*", { count: "exact", head: true }).eq("status", "pending"),
+      db.from("fee_payments").select("*", { count: "exact", head: true }).eq("status", "pending"),
     ])
     newMsgs = msgs ?? 0
     pendingRegs = regs ?? 0
+    pendingFees = fees ?? 0
   } catch {
     // Supabase service role not configured — inbox counts unavailable
   }
@@ -237,6 +240,20 @@ export default async function AdminDashboardPage() {
           <p className="text-xs text-muted-foreground mt-0.5 group-hover:text-yellow-600 transition-colors">View all →</p>
         </Link>
       </div>
+
+      <Link href="/payments"
+        className="flex items-center justify-between gap-4 bg-card border border-border rounded-xl p-5 hover:border-[#e0a72e]/50 transition-colors group">
+        <div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+            <CreditCard className="h-4 w-4 text-[#e0a72e]" />
+            Pending fee payments
+          </div>
+          <p className="text-xl font-bold text-foreground">{pendingFees}</p>
+          <p className="text-xs text-muted-foreground mt-0.5 group-hover:text-[#0b2e59] transition-colors">
+            Open the fee payments dashboard →
+          </p>
+        </div>
+      </Link>
 
       {/* Quick preview of current values */}
       <div className="bg-card border border-border rounded-xl p-5">

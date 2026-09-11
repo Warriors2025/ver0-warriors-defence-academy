@@ -9,7 +9,7 @@ import {
   BarChart3, BookOpen, LogOut, Shield, ChevronRight, ExternalLink,
   FileText, Eye, Users, MessageSquare, HelpCircle, Star, Newspaper,
   Images, Inbox, UserCheck, Trophy, GraduationCap, Layers, UserCog, Search, Bot,
-  Building2, Menu, Code2, Tags,
+  Building2, Menu, Code2, Tags, CreditCard,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -42,6 +42,7 @@ const navItems = [
   { href: "/admin/users", label: "Users", icon: UserCog, exact: false },
   { href: "/admin/submissions", label: "Messages", icon: Inbox, exact: false },
   { href: "/admin/registrations", label: "Registrations", icon: UserCheck, exact: false },
+  { href: "/payments", label: "Fee Payments", icon: CreditCard, exact: false },
 ]
 
 function AdminSidebar() {

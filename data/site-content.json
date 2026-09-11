@@ -4,21 +4,21 @@
     "phone": "+91 94522 45729"
   },
   "hero": {
-    "badge": "India's Premier Defence Academy",
-    "headline": "Shape India's Future",
-    "highlightText": "Defence Officer",
-    "tagline": "Join the ranks of India's finest military officers. Expert coaching for NDA, CDS, AFCAT, SSB and more.",
+    "badge": "India's No. 1 NDA Coaching Institute",
+    "headline": "Best NDA Coaching in",
+    "highlightText": "Lucknow & India",
+    "tagline": "Warriors Defence Academy is the best NDA coaching and top NDA coaching in India — based in Lucknow. Train under retired military officers with 50,000+ alumni, 5,000+ selections, and India's largest GTO ground.",
     "features": [
-      "NDA • CDS • AFCAT coaching",
-      "SSB interview training",
-      "Physical fitness programs",
-      "Expert retired officer faculty"
+      "India's Largest GTO Ground",
+      "Retired Military Faculty",
+      "SSB Interview Prep",
+      "15+ Years Track Record"
     ],
     "stats": [
       { "value": "50,000+", "label": "Students Trained" },
       { "value": "5,000+", "label": "Selections" },
-      { "value": "15+", "label": "Years" },
-      { "value": "200+", "label": "Mentors" }
+      { "value": "200+", "label": "Expert Mentors" },
+      { "value": "15+", "label": "Years of Excellence" }
     ]
   },
   "contact": {
@@ -36,5 +36,5 @@
     { "value": "200+", "label": "Expert Mentors", "description": "Retired officers" },
     { "value": "15+", "label": "Years Experience", "description": "Of excellence" }
   ],
-  "updatedAt": "2026-06-24T00:00:00.000Z"
+  "updatedAt": "2026-09-09T00:00:00.000Z"
 }

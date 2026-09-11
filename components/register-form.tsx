@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -22,7 +21,10 @@ import {
   CreditCard,
   Phone,
   Mail,
+  Loader2,
+  Receipt,
 } from "lucide-react"
+import { SEAT_BOOKING_FEE_INR, calculateTotalPayable } from "@/lib/pricing"
 
 const steps = [
   { id: 1, title: "Personal Info", icon: User },
@@ -31,33 +33,88 @@ const steps = [
   { id: 4, title: "Confirmation", icon: CreditCard },
 ]
 
-const coursesFallback = [
-  { id: "nda", name: "NDA Course", duration: "6-12 Months" },
-  { id: "nda-foundation", name: "NDA Foundation", duration: "2-3 Years" },
-  { id: "cds", name: "CDS Course", duration: "6 Months" },
-  { id: "ssb", name: "SSB Interview Training", duration: "21 Days" },
-  { id: "afcat", name: "AFCAT Course", duration: "4-6 Months" },
-  { id: "navy-agniveer", name: "Indian Navy Agniveer", duration: "3-4 Months" },
-  { id: "airforce-xy", name: "Airforce X/Y Group", duration: "4-6 Months" },
-  { id: "mns", name: "MNS Course", duration: "3-6 Months" },
+const RAZORPAY_CHECKOUT_SRC = "https://checkout.razorpay.com/v1/checkout.js"
+
+type RazorpayCheckoutOptions = {
+  key: string
+  amount: number
+  currency: string
+  order_id: string
+  name: string
+  description?: string
+  prefill?: { name?: string; email?: string; contact?: string }
+  theme?: { color?: string }
+  handler: (response: {
+    razorpay_payment_id: string
+    razorpay_order_id: string
+    razorpay_signature: string
+  }) => void
+  modal?: { ondismiss?: () => void }
+}
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: RazorpayCheckoutOptions) => { open: () => void }
+  }
+}
+
+function loadRazorpayCheckout(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (window.Razorpay) return resolve(true)
+    const existing = document.querySelector(`script[src="${RAZORPAY_CHECKOUT_SRC}"]`)
+    if (existing) {
+      existing.addEventListener("load", () => resolve(true))
+      existing.addEventListener("error", () => resolve(false))
+      return
+    }
+    const script = document.createElement("script")
+    script.src = RAZORPAY_CHECKOUT_SRC
+    script.onload = () => resolve(true)
+    script.onerror = () => resolve(false)
+    document.body.appendChild(script)
+  })
+}
+
+const courses = [
+  { id: "ssb", name: "SSB Interview Training", duration: "1 Year" },
 ]
 
 const batchTypes = [
-  { id: "offline", name: "Offline (On-Campus)", description: "Full-time residential program" },
-  { id: "online", name: "Online Classes", description: "Live interactive sessions" },
-  { id: "hybrid", name: "Hybrid Mode", description: "Combination of online and offline" },
+  { id: "offline", name: "Offline (On-Campus)", description: "Full-time on-campus training" },
 ]
 
-export function RegisterForm({
-  courses: coursesProp,
-}: {
-  courses?: { id: string; name: string; duration: string }[]
-}) {
-  const courses = coursesProp?.length ? coursesProp : coursesFallback
+const ssbSubtypes = [
+  { id: "nda", name: "NDA" },
+  { id: "cds", name: "CDS" },
+  { id: "afcat", name: "AFCAT" },
+]
+
+const preferredBatchMonths = [
+  { id: "january-2026", name: "January 2026" },
+  { id: "february-2026", name: "February 2026" },
+  { id: "march-2026", name: "March 2026" },
+  { id: "april-2026", name: "April 2026" },
+  { id: "may-2026", name: "May 2026" },
+  { id: "june-2026", name: "June 2026" },
+  { id: "july-2026", name: "July 2026" },
+  { id: "august-2026", name: "August 2026" },
+  { id: "september-2026", name: "September 2026" },
+  { id: "october-2026", name: "October 2026" },
+  { id: "november-2026", name: "November 2026" },
+  { id: "december-2026", name: "December 2026" },
+]
+
+export function RegisterForm() {
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState("")
+  const [registrationId, setRegistrationId] = useState<string | null>(null)
+  const [paymentPending, setPaymentPending] = useState(false)
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
+  const [paymentError, setPaymentError] = useState("")
+  const [paidAmount, setPaidAmount] = useState<number | null>(null)
+  const [receiptNo, setReceiptNo] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -69,8 +126,10 @@ export function RegisterForm({
     city: "",
     state: "",
     pincode: "",
-    course: "",
-    batchType: "",
+    course: "ssb",
+    ssbSubtype: "",
+    examRollNo: "",
+    batchType: "offline",
     preferredBatch: "",
     hostelRequired: false,
     highestQualification: "",
@@ -85,7 +144,20 @@ export function RegisterForm({
     setFormData({ ...formData, [field]: value })
   }
 
-  const nextStep = () => { if (currentStep < 4) setCurrentStep(currentStep + 1) }
+  const nextStep = () => {
+    if (currentStep === 2) {
+      if (!formData.ssbSubtype) {
+        setSubmitError("Please select an SSB sub-type (NDA, CDS, or AFCAT).")
+        return
+      }
+      if (!formData.examRollNo.trim()) {
+        setSubmitError("Please enter your NDA/CDS(UPSC) roll number.")
+        return
+      }
+    }
+    setSubmitError("")
+    if (currentStep < 4) setCurrentStep(currentStep + 1)
+  }
   const prevStep = () => { if (currentStep > 1) setCurrentStep(currentStep - 1) }
 
   const handleSubmit = async () => {
@@ -102,7 +174,9 @@ export function RegisterForm({
         setSubmitError(json.message || "Registration failed. Please try again.")
         return
       }
-      setIsSubmitted(true)
+      setRegistrationId(json.registrationId)
+      setPaymentPending(true)
+      await startPayment(json.registrationId)
     } catch {
       setSubmitError("Network error. Please check your connection and try again.")
     } finally {
@@ -110,7 +184,72 @@ export function RegisterForm({
     }
   }
 
+  /** Creates a Razorpay order for the registration and opens the checkout widget. */
+  const startPayment = async (regId: string) => {
+    setIsProcessingPayment(true)
+    setPaymentError("")
+    try {
+      const orderRes = await fetch("/api/payments/razorpay/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ registrationId: regId }),
+      })
+      const order = await orderRes.json()
+      if (!orderRes.ok || !order.success) {
+        setPaymentError(order.message || "Could not start payment. Please try again.")
+        return
+      }
+      setPaidAmount(order.amount / 100)
+
+      const loaded = await loadRazorpayCheckout()
+      if (!loaded || !window.Razorpay) {
+        setPaymentError("Could not load the payment gateway. Check your connection and try again.")
+        return
+      }
+
+      const checkout = new window.Razorpay({
+        key: order.keyId,
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.orderId,
+        name: "Warriors Defence Academy",
+        description: "Seat booking fee",
+        prefill: { name: order.name, email: order.email, contact: order.phone },
+        handler: async (response) => {
+          try {
+            const verifyRes = await fetch("/api/payments/razorpay/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ registrationId: regId, ...response }),
+            })
+            const verified = await verifyRes.json()
+            if (!verifyRes.ok || !verified.success) {
+              setPaymentError(verified.message || "Payment verification failed. Please contact support.")
+              return
+            }
+            setReceiptNo(verified.receiptNo)
+            setPaymentPending(false)
+            setIsSubmitted(true)
+          } catch {
+            setPaymentError("Network error while verifying payment. Please contact support with your payment ID.")
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            setPaymentError("Payment was not completed. Your registration is saved — you can retry payment below.")
+          },
+        },
+      })
+      checkout.open()
+    } catch {
+      setPaymentError("Network error while starting payment. Please try again.")
+    } finally {
+      setIsProcessingPayment(false)
+    }
+  }
+
   const progressValue = (currentStep / steps.length) * 100
+  const seatBookingTotal = calculateTotalPayable(SEAT_BOOKING_FEE_INR)
 
   if (isSubmitted) {
     return (
@@ -119,12 +258,34 @@ export function RegisterForm({
           <CheckCircle className="h-12 w-12 text-primary" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          Registration Successful!
+          Registration & Payment Successful!
         </h2>
         <p className="text-muted-foreground text-lg mb-8">
-          Thank you for registering with Warriors Defence Academy. Our team will
-          contact you shortly to confirm your enrollment and provide further details.
+          Thank you for registering with Warriors Defence Academy. Your seat-booking
+          payment has been received.
         </p>
+
+        {receiptNo && (
+          <Card className="bg-primary/5 border-primary/20 mb-6">
+            <CardContent className="p-6 flex items-center justify-center gap-4">
+              <Receipt className="h-8 w-8 text-primary flex-shrink-0" />
+              <div className="text-left">
+                <p className="text-sm text-muted-foreground">Receipt Number</p>
+                <p className="text-xl font-bold text-foreground">{receiptNo}</p>
+                {registrationId && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Registration ID: <span className="font-medium">{registrationId}</span>
+                  </p>
+                )}
+                {paidAmount !== null && (
+                  <p className="text-sm text-muted-foreground">
+                    Amount Paid: <span className="font-medium">₹{paidAmount.toFixed(2)}</span>
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <Card className="bg-secondary/50 border-0 mb-8">
           <CardContent className="p-6">
@@ -132,7 +293,7 @@ export function RegisterForm({
             <ul className="space-y-3 text-left text-muted-foreground">
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <span>You will receive a confirmation email with your registration details</span>
+                <span>Razorpay will text/email your payment receipt to the mobile number and email you entered</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
@@ -140,7 +301,7 @@ export function RegisterForm({
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                <span>Complete the fee payment to confirm your seat in the batch</span>
+                <span>The remaining course fee can be paid later from the Fee Payment page</span>
               </li>
             </ul>
           </CardContent>
@@ -156,6 +317,45 @@ export function RegisterForm({
             </Button>
           </Link>
         </div>
+      </div>
+    )
+  }
+
+  if (paymentPending) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-8">
+        <div className="w-24 h-24 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-6">
+          <CreditCard className="h-12 w-12 text-accent" />
+        </div>
+        <h2 className="text-3xl font-bold text-foreground mb-4">Complete Your Payment</h2>
+        <p className="text-muted-foreground text-lg mb-2">
+          Your registration is saved{registrationId ? ` (ID: ${registrationId})` : ""}. Pay the
+          seat-booking fee via Razorpay to confirm your seat.
+        </p>
+        {paidAmount !== null && (
+          <p className="text-2xl font-bold text-foreground mb-6">₹{paidAmount.toFixed(2)}</p>
+        )}
+        {paymentError && (
+          <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2 mb-6 max-w-md mx-auto">
+            {paymentError}
+          </p>
+        )}
+        <Button
+          size="lg"
+          className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
+          disabled={isProcessingPayment}
+          onClick={() => registrationId && startPayment(registrationId)}
+        >
+          {isProcessingPayment ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" /> Opening Payment...
+            </>
+          ) : (
+            <>
+              <CreditCard className="h-4 w-4" /> Pay Now
+            </>
+          )}
+        </Button>
       </div>
     )
   }
@@ -218,8 +418,8 @@ export function RegisterForm({
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address *</Label>
-                  <Input id="email" type="email" placeholder="Enter email" value={formData.email}
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input id="email" type="email" placeholder="Enter email (optional)" value={formData.email}
                     onChange={(e) => updateFormData("email", e.target.value)} className="h-12" />
                 </div>
                 <div className="space-y-2">
@@ -285,7 +485,7 @@ export function RegisterForm({
               <div className="space-y-2">
                 <Label>Select Course *</Label>
                 <RadioGroup value={formData.course} onValueChange={(value) => updateFormData("course", value)}
-                  className="grid md:grid-cols-2 gap-4 mt-2">
+                  className="grid gap-4 mt-2">
                   {courses.map((course) => (
                     <div key={course.id}
                       className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-colors cursor-pointer ${
@@ -302,9 +502,45 @@ export function RegisterForm({
               </div>
 
               <div className="space-y-2">
+                <Label>SSB Sub-Type *</Label>
+                <RadioGroup
+                  value={formData.ssbSubtype}
+                  onValueChange={(value) => updateFormData("ssbSubtype", value)}
+                  className="grid sm:grid-cols-3 gap-4 mt-2"
+                >
+                  {ssbSubtypes.map((subtype) => (
+                    <div
+                      key={subtype.id}
+                      className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-colors cursor-pointer ${
+                        formData.ssbSubtype === subtype.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50"
+                      }`}
+                    >
+                      <RadioGroupItem value={subtype.id} id={`ssb-${subtype.id}`} />
+                      <Label htmlFor={`ssb-${subtype.id}`} className="font-medium cursor-pointer">
+                        {subtype.name}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="examRollNo">NDA/CDS(UPSC) roll no *</Label>
+                <Input
+                  id="examRollNo"
+                  placeholder="Enter your NDA/CDS(UPSC) roll number"
+                  value={formData.examRollNo}
+                  onChange={(e) => updateFormData("examRollNo", e.target.value)}
+                  className="h-12"
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label>Batch Type *</Label>
                 <RadioGroup value={formData.batchType} onValueChange={(value) => updateFormData("batchType", value)}
-                  className="grid md:grid-cols-3 gap-4 mt-2">
+                  className="grid gap-4 mt-2">
                   {batchTypes.map((batch) => (
                     <div key={batch.id}
                       className={`flex flex-col p-4 rounded-lg border-2 transition-colors cursor-pointer ${
@@ -324,12 +560,11 @@ export function RegisterForm({
                 <div className="space-y-2">
                   <Label htmlFor="preferredBatch">Preferred Batch Month</Label>
                   <Select value={formData.preferredBatch} onValueChange={(value) => updateFormData("preferredBatch", value)}>
-                    <SelectTrigger className="h-12"><SelectValue placeholder="Select month" /></SelectTrigger>
+                    <SelectTrigger className="h-12 w-full"><SelectValue placeholder="Select month" /></SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="april-2026">April 2026</SelectItem>
-                      <SelectItem value="may-2026">May 2026</SelectItem>
-                      <SelectItem value="june-2026">June 2026</SelectItem>
-                      <SelectItem value="july-2026">July 2026</SelectItem>
+                      {preferredBatchMonths.map((month) => (
+                        <SelectItem key={month.id} value={month.id}>{month.name}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -422,7 +657,7 @@ export function RegisterForm({
                   </h3>
                   <div className="grid md:grid-cols-2 gap-3 text-sm">
                     <div><span className="text-muted-foreground">Name:</span>{" "}<span className="font-medium">{formData.firstName} {formData.lastName}</span></div>
-                    <div><span className="text-muted-foreground">Email:</span>{" "}<span className="font-medium">{formData.email}</span></div>
+                    <div><span className="text-muted-foreground">Email:</span>{" "}<span className="font-medium">{formData.email || "—"}</span></div>
                     <div><span className="text-muted-foreground">Phone:</span>{" "}<span className="font-medium">{formData.phone}</span></div>
                     <div><span className="text-muted-foreground">DOB:</span>{" "}<span className="font-medium">{formData.dob}</span></div>
                     <div className="md:col-span-2">
@@ -439,8 +674,10 @@ export function RegisterForm({
                   </h3>
                   <div className="grid md:grid-cols-2 gap-3 text-sm">
                     <div><span className="text-muted-foreground">Course:</span>{" "}<span className="font-medium">{courses.find(c => c.id === formData.course)?.name || "-"}</span></div>
+                    <div><span className="text-muted-foreground">SSB Sub-Type:</span>{" "}<span className="font-medium">{ssbSubtypes.find(s => s.id === formData.ssbSubtype)?.name || "-"}</span></div>
+                    <div><span className="text-muted-foreground">Exam Roll No:</span>{" "}<span className="font-medium">{formData.examRollNo || "-"}</span></div>
                     <div><span className="text-muted-foreground">Batch Type:</span>{" "}<span className="font-medium">{batchTypes.find(b => b.id === formData.batchType)?.name || "-"}</span></div>
-                    <div><span className="text-muted-foreground">Preferred Batch:</span>{" "}<span className="font-medium">{formData.preferredBatch || "-"}</span></div>
+                    <div><span className="text-muted-foreground">Preferred Batch:</span>{" "}<span className="font-medium">{preferredBatchMonths.find(m => m.id === formData.preferredBatch)?.name || "-"}</span></div>
                     <div><span className="text-muted-foreground">Hostel:</span>{" "}<span className="font-medium">{formData.hostelRequired ? "Yes" : "No"}</span></div>
                   </div>
                 </div>
@@ -456,6 +693,30 @@ export function RegisterForm({
                     <div><span className="text-muted-foreground">Passing Year:</span>{" "}<span className="font-medium">{formData.passingYear || "-"}</span></div>
                     <div><span className="text-muted-foreground">Percentage:</span>{" "}<span className="font-medium">{formData.percentage || "-"}</span></div>
                   </div>
+                </div>
+
+                <div className="bg-secondary/30 rounded-lg p-4">
+                  <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-primary" />
+                    Seat-Booking Payment
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Seat-booking fee</span>
+                      <span className="font-medium">₹{seatBookingTotal.baseAmountInr.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Payment gateway charges</span>
+                      <span className="font-medium">₹{seatBookingTotal.gatewayFee.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between pt-2 mt-2 border-t border-border text-base font-semibold">
+                      <span>Total payable now</span>
+                      <span>₹{seatBookingTotal.total.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-3">
+                    This confirms your seat. The remaining course fee is paid separately later.
+                  </p>
                 </div>
 
                 <div className="flex items-start space-x-3 p-4 bg-primary/5 rounded-lg border border-primary/20">
@@ -494,8 +755,15 @@ export function RegisterForm({
               ) : (
                 <Button type="button" onClick={handleSubmit} disabled={!formData.termsAccepted || isLoading}
                   className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2">
-                  <CheckCircle className="h-4 w-4" />
-                  {isLoading ? "Submitting..." : "Submit Registration"}
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="h-4 w-4" /> Submit & Pay ₹{seatBookingTotal.total.toFixed(2)}
+                    </>
+                  )}
                 </Button>
               )}
             </div>

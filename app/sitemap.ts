@@ -35,6 +35,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
+  const feePaymentPage: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/fee-payment`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+  ]
+
   const facilityPages: MetadataRoute.Sitemap = [
     {
       url: `${SITE_URL}/facilities`,
@@ -50,5 +59,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ]
 
-  return [...staticPages, ...coursePages, ...facilityPages, ...blogPages]
+  return [...staticPages, ...coursePages, ...facilityPages, ...feePaymentPage, ...blogPages]
 }

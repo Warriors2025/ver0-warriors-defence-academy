@@ -97,8 +97,11 @@ export default async function RegistrationsPage() {
                     <span className="flex items-center gap-1"><Mail className="h-3.5 w-3.5" />{r.email}</span>
                     <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5" />{r.phone}</span>
                     <span className="flex items-center gap-1">
-                      <BookOpen className="h-3.5 w-3.5" />{COURSE_LABELS[r.course] ?? r.course}
+                      <BookOpen className="h-3.5 w-3.5" />
+                      {COURSE_LABELS[r.course] ?? r.course}
+                      {r.ssb_subtype ? ` · ${String(r.ssb_subtype).toUpperCase()}` : ""}
                     </span>
+                    {r.exam_roll_no && <span className="text-xs font-mono">Roll: {r.exam_roll_no}</span>}
                     {r.batch_type && <span className="text-xs">{r.batch_type}</span>}
                     <span className="flex items-center gap-1">
                       <Clock className="h-3.5 w-3.5" />

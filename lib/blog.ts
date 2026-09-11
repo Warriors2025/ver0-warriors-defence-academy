@@ -54,6 +54,20 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
 export type BlogPostDetail = BlogPost & { content: string }
 
+/** Strip scripts / JSON-LD from CMS HTML — schema is injected separately via PageJsonLd. */
+export function sanitizeBlogHtml(html: string): string {
+  if (!html) return ""
+  let cleaned = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "")
+    .trim()
+
+  if (!/<\/?[a-z][\s\S]*>/i.test(cleaned)) {
+    cleaned = cleaned.replace(/\n/g, "<br />")
+  }
+  return cleaned
+}
+
 export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | null> {
   try {
     const { data, error } = await supabase
@@ -69,7 +83,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
       return { ...fallback, content: `<p>${fallback.excerpt}</p>` }
     }
 
-    return { ...mapPost(data), content: (data.content as string) || "" }
+    return { ...mapPost(data), content: sanitizeBlogHtml((data.content as string) || "") }
   } catch {
     const fallback = STATIC_POSTS.find((p) => p.slug === slug)
     return fallback ? { ...fallback, content: `<p>${fallback.excerpt}</p>` } : null

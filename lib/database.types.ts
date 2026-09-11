@@ -177,13 +177,15 @@ export type Database = {
       registrations: {
         Row: {
           address: string | null
+          amount: number | null
           batch_type: string | null
           board: string | null
           city: string | null
           course: string
           created_at: string | null
           date_of_birth: string
-          email: string
+          email: string | null
+          exam_roll_no: string | null
           first_name: string
           gender: string | null
           highest_qualification: string | null
@@ -191,24 +193,31 @@ export type Database = {
           id: string
           last_name: string
           passing_year: string | null
+          payment_status: string
           percentage: string | null
           phone: string
           pincode: string | null
           preferred_batch: string | null
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          receipt_no: string | null
           registration_id: string
           school_name: string | null
+          ssb_subtype: string | null
           state: string | null
           status: string
         }
         Insert: {
           address?: string | null
+          amount?: number | null
           batch_type?: string | null
           board?: string | null
           city?: string | null
           course: string
           created_at?: string | null
           date_of_birth: string
-          email: string
+          email?: string | null
+          exam_roll_no?: string | null
           first_name: string
           gender?: string | null
           highest_qualification?: string | null
@@ -216,24 +225,31 @@ export type Database = {
           id?: string
           last_name: string
           passing_year?: string | null
+          payment_status?: string
           percentage?: string | null
           phone: string
           pincode?: string | null
           preferred_batch?: string | null
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          receipt_no?: string | null
           registration_id: string
           school_name?: string | null
+          ssb_subtype?: string | null
           state?: string | null
           status?: string
         }
         Update: {
           address?: string | null
+          amount?: number | null
           batch_type?: string | null
           board?: string | null
           city?: string | null
           course?: string
           created_at?: string | null
           date_of_birth?: string
-          email?: string
+          email?: string | null
+          exam_roll_no?: string | null
           first_name?: string
           gender?: string | null
           highest_qualification?: string | null
@@ -241,12 +257,17 @@ export type Database = {
           id?: string
           last_name?: string
           passing_year?: string | null
+          payment_status?: string
           percentage?: string | null
           phone?: string
           pincode?: string | null
           preferred_batch?: string | null
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          receipt_no?: string | null
           registration_id?: string
           school_name?: string | null
+          ssb_subtype?: string | null
           state?: string | null
           status?: string
         }
@@ -288,6 +309,60 @@ export type Database = {
           rank?: string | null
           sort_order?: number | null
           student_name?: string
+        }
+        Relationships: []
+      }
+      fee_payments: {
+        Row: {
+          amount: number
+          contact_number: string
+          course: string
+          course_validity: string | null
+          created_at: string | null
+          father_name: string
+          id: string
+          notes: string | null
+          payment_date: string
+          reg_no: string | null
+          screenshot_path: string
+          status: string
+          student_name: string
+          submission_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          contact_number: string
+          course: string
+          course_validity?: string | null
+          created_at?: string | null
+          father_name: string
+          id?: string
+          notes?: string | null
+          payment_date: string
+          reg_no?: string | null
+          screenshot_path: string
+          status?: string
+          student_name: string
+          submission_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          contact_number?: string
+          course?: string
+          course_validity?: string | null
+          created_at?: string | null
+          father_name?: string
+          id?: string
+          notes?: string | null
+          payment_date?: string
+          reg_no?: string | null
+          screenshot_path?: string
+          status?: string
+          student_name?: string
+          submission_id?: string
+          updated_at?: string | null
         }
         Relationships: []
       }

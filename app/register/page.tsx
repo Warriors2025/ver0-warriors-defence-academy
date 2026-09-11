@@ -2,7 +2,6 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Badge } from "@/components/ui/badge"
 import { RegisterForm } from "@/components/register-form"
-import { getCourseOptions } from "@/lib/courses"
 import { getSiteContent } from "@/lib/site-content.server"
 import type { Metadata } from "next"
 import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
@@ -14,8 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RegisterPage() {
-  const [courseOptions, { pages }, schema] = await Promise.all([
-    getCourseOptions(),
+  const [{ pages }, schema] = await Promise.all([
     getSiteContent(),
     getPageSchemaJsonLd("register"),
   ])
@@ -44,7 +42,7 @@ export default async function RegisterPage() {
 
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
-          <RegisterForm courses={courseOptions} />
+          <RegisterForm />
         </div>
       </section>
 

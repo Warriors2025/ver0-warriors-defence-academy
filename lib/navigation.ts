@@ -47,6 +47,7 @@ export const DEFAULT_NAVIGATION: NavigationContent = {
     { title: "Facilities", href: "/facilities" },
     { title: "Contact", href: "/contact" },
     { title: "Register", href: "/register" },
+    { title: "Fee Payment", href: "/fee-payment" },
   ],
   footerCourses: [
     { title: "NDA Course", href: "/courses/nda" },

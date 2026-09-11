@@ -1,0 +1,45 @@
+.paydesk {
+  --olive: #1f5b2d;
+  --olive-deep: #143c1d;
+  --gold: #c9a227;
+  --maroon: #540413;
+  --sand: #f3eee3;
+  --ink: #172117;
+  --muted: #5d6758;
+}
+
+@keyframes paydesk-stamp {
+  0% { transform: scale(1.35) rotate(-12deg); opacity: 0; }
+  60% { transform: scale(0.96) rotate(-8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+}
+
+@keyframes paydesk-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.35); }
+  50% { box-shadow: 0 0 0 10px rgba(201, 162, 39, 0); }
+}
+
+.paydesk-stamp {
+  animation: paydesk-stamp 520ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.paydesk-qr-live {
+  animation: paydesk-glow 2.4s ease-in-out infinite;
+}
+
+.paydesk-stage {
+  animation: paydesk-in 280ms ease-out both;
+}
+
+@keyframes paydesk-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paydesk-stamp,
+  .paydesk-qr-live,
+  .paydesk-stage {
+    animation: none;
+  }
+}
