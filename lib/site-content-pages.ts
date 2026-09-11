@@ -60,8 +60,8 @@ export const defaultPages: SitePages = {
   contact: {
     hero: {
       eyebrow: "Get in Touch — Lucknow",
-      title: "Contact Warriors Defence Academy",
-      subtitle: "Reach India's best NDA coaching institute in Lucknow. Call +91 94522 45729 or visit us at Kapoorthala Chauraha, Lucknow — Mon to Sat, 9 AM to 6 PM.",
+      title: "Warriors Defence Academy Lucknow Address & Contact",
+      subtitle: "Visit 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow 226024. Call +91 94522 45729 or +91 70810 11964 — Mon to Sat, 9 AM to 6 PM.",
     },
     officeHours: "Mon – Sat, 9:00 AM – 6:00 PM",
     sundayHours: "Sunday: Closed",
@@ -70,8 +70,8 @@ export const defaultPages: SitePages = {
   courses: {
     hero: {
       eyebrow: "NDA, CDS & SSB Coaching",
-      title: "Best NDA & Defence Coaching Courses in Lucknow",
-      subtitle: "Expert-designed NDA, CDS, AFCAT & SSB coaching programmes in Lucknow led by retired military officers — 5,000+ selections, 15+ years of proven results.",
+      title: "NDA Coaching in Lucknow — CDS, SSB & AFCAT Courses",
+      subtitle: "NDA coaching in Lucknow plus CDS, AFCAT and best SSB coaching in Lucknow — led by retired military officers with 5,000+ selections.",
     },
     stats: [
       { value: "9+", label: "Programmes" },

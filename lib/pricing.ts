@@ -7,24 +7,20 @@
 
 /**
  * Seat-booking fee charged at registration (in INR, whole rupees).
- * The full course fee is settled separately later via the manual /fee-payment flow.
+ * Inclusive of tax and payment gateway charges. The full course fee is settled
+ * separately later via the manual /fee-payment flow.
  * Change this single constant to adjust the amount charged at registration.
  */
-export const SEAT_BOOKING_FEE_INR = 1000
+export const SEAT_BOOKING_FEE_INR = 1499
 
 /**
- * Razorpay's own transaction fee is passed on to the student instead of being
- * absorbed by the academy. Razorpay charges ~2% + 18% GST on cards/netbanking/
- * wallets (UPI is typically fee-free under the RBI zero-MDR rule, but the exact
- * rate depends on the payment method the student picks inside the checkout
- * widget, which isn't known until after checkout opens). We approximate this
- * upfront with a fixed pass-through percentage so the amount is fixed before
- * the Razorpay order is created. Adjust to match your actual negotiated rate.
+ * Returns the amount charged at registration. Kept as a function so call sites
+ * (UI + Razorpay order creation) share one source of truth.
  */
-export const GATEWAY_FEE_PASS_THROUGH_PERCENT = 2.36
-
-export function calculateTotalPayable(baseAmountInr: number) {
-  const gatewayFee = Math.round(baseAmountInr * (GATEWAY_FEE_PASS_THROUGH_PERCENT / 100))
-  const total = baseAmountInr + gatewayFee
-  return { baseAmountInr, gatewayFee, total }
+export function calculateTotalPayable(baseAmountInr: number = SEAT_BOOKING_FEE_INR) {
+  return {
+    baseAmountInr,
+    gatewayFee: 0,
+    total: baseAmountInr,
+  }
 }

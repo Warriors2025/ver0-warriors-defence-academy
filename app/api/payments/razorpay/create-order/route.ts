@@ -5,8 +5,8 @@ import { calculateTotalPayable, getRazorpayClient, SEAT_BOOKING_FEE_INR } from "
 export const runtime = "nodejs"
 
 /**
- * Creates (or re-creates, on retry) a Razorpay order for the seat-booking fee
- * of an already-saved registration, and stores the order id against it.
+ * Creates (or reuses) a Razorpay order for the seat-booking fee of an
+ * already-saved registration, and stores the order id against it.
  */
 export async function POST(request: Request) {
   try {
@@ -21,7 +21,9 @@ export async function POST(request: Request) {
     const db = createServerClient()
     const { data: registration, error: fetchError } = await db
       .from("registrations")
-      .select("registration_id, first_name, last_name, email, phone, payment_status")
+      .select(
+        "registration_id, first_name, last_name, email, phone, payment_status, razorpay_order_id, amount"
+      )
       .eq("registration_id", registrationId)
       .single()
 
@@ -71,15 +73,51 @@ export async function POST(request: Request) {
 
     const { total } = calculateTotalPayable(SEAT_BOOKING_FEE_INR)
     const razorpay = getRazorpayClient()
+    const name = `${registration.first_name} ${registration.last_name}`
+    const email = registration.email || ""
+    const phone = registration.phone
+
+    // Reuse an existing unpaid order when possible so a successful payment on
+    // the first attempt is not orphaned by a retry that creates a new order.
+    if (registration.razorpay_order_id) {
+      try {
+        const existing = await razorpay.orders.fetch(registration.razorpay_order_id)
+        if (existing.status === "paid") {
+          await db
+            .from("registrations")
+            .update({ payment_status: "paid", status: "enrolled", amount: total })
+            .eq("registration_id", registrationId)
+          return NextResponse.json(
+            { success: false, message: "This registration has already been paid for." },
+            { status: 409 }
+          )
+        }
+        if (existing.status === "created" || existing.status === "attempted") {
+          return NextResponse.json({
+            success: true,
+            orderId: existing.id,
+            amount: existing.amount,
+            currency: existing.currency,
+            keyId,
+            name,
+            email,
+            phone,
+          })
+        }
+      } catch (existingError) {
+        console.warn("Razorpay create-order: could not reuse existing order:", existingError)
+      }
+    }
+
     const order = await razorpay.orders.create({
       amount: total * 100, // paise
       currency: "INR",
       receipt: registrationId.slice(0, 40),
       notes: {
         registrationId,
-        name: `${registration.first_name} ${registration.last_name}`,
-        email: registration.email || "",
-        phone: registration.phone,
+        name,
+        email,
+        phone,
       },
     })
 
@@ -106,9 +144,9 @@ export async function POST(request: Request) {
       amount: order.amount,
       currency: order.currency,
       keyId,
-      name: `${registration.first_name} ${registration.last_name}`,
-      email: registration.email || "",
-      phone: registration.phone,
+      name,
+      email,
+      phone,
     })
   } catch (error) {
     console.error("Razorpay create-order error:", error)

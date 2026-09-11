@@ -104,31 +104,32 @@ export const DEFAULT_SEO_STORE: SeoStore = {
 /** Default SEO per CMS page slug. */
 export function defaultSeoForPage(page: CmsPage): PageSeo {
   if (page.slug === "home") {
-    const homeTitle = "Best NDA Coaching in India | Warriors Defence Academy"
-    // 155 chars — within the 120-160 target range
+    // GSC 3m: "best nda coaching in lucknow" pos 3.4 / 1.9K impr;
+    // "best nda coaching in india" still pos 13.2 — keep as secondary.
+    const homeTitle = "Best NDA Coaching in Lucknow | Warriors Defence Academy"
     const homeDesc =
-      "Best NDA coaching & top NDA coaching in India at Warriors Defence Academy, Lucknow. 50,000+ students, 5,000+ selections. Enroll now!"
+      "Best NDA coaching in Lucknow at Warriors Defence Academy — 50,000+ students, 5,000+ selections, India's largest GTO ground. Enroll now!"
     return {
       ...DEFAULT_PAGE_SEO,
       metaTitle: homeTitle,
       metaDescription: homeDesc,
       metaKeywords:
-        "best nda coaching, best nda coaching in india, nda coaching, top nda coaching in india, best nda coaching in lucknow, nda coaching lucknow, cds coaching lucknow, ssb interview coaching, warriors defence academy",
+        "best nda coaching in lucknow, nda coaching in lucknow, best nda coaching, best nda coaching in india, top nda coaching in lucknow, defence academy lucknow, ssb coaching in lucknow, cds coaching lucknow, warriors defence academy fees, warriors defence academy",
       canonicalUrl: SITE_URL,
       robotsIndex: true,
       robotsFollow: true,
-      ogTitle: "Best NDA Coaching in India | Warriors Defence Academy Lucknow",
+      ogTitle: "Best NDA Coaching in Lucknow | Warriors Defence Academy",
       ogDescription:
-        "India's top NDA coaching institute in Lucknow — 50,000+ trained students, 5,000+ selections, retired military faculty & India's largest GTO ground.",
+        "Best NDA coaching in Lucknow — 50,000+ trained students, 5,000+ selections, retired military faculty & India's largest GTO ground. Apply today.",
       ogImage: "/images/og-image.webp",
       twitterCard: "summary_large_image",
-      twitterTitle: "Best NDA Coaching in India | Warriors Defence Academy Lucknow",
+      twitterTitle: "Best NDA Coaching in Lucknow | Warriors Defence Academy",
       twitterDescription:
-        "India's top NDA coaching institute in Lucknow — 50,000+ trained students, 5,000+ selections, retired military faculty & India's largest GTO ground.",
+        "Best NDA coaching in Lucknow — 50,000+ trained students, 5,000+ selections, retired military faculty & India's largest GTO ground. Apply today.",
       twitterImage: "/images/og-image.webp",
-      focusKeyword: "best nda coaching in india",
+      focusKeyword: "best nda coaching in lucknow",
       featuredSnippet:
-        "Warriors Defence Academy is the best NDA coaching and top NDA coaching in India, based in Lucknow, with 50,000+ students trained and 5,000+ selections.",
+        "Warriors Defence Academy is the best NDA coaching in Lucknow, with 50,000+ students trained, 5,000+ selections, and India's largest GTO ground.",
       schemaType: "EducationalOrganization",
     }
   }
@@ -136,39 +137,39 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
   // Per-page optimised defaults
   const pageSeoMap: Record<string, Partial<PageSeo>> = {
     about: {
-      metaTitle: "About Warriors Defence Academy | Best NDA Coaching Lucknow",
+      metaTitle: "Warriors Defence Academy Lucknow | Best Defence Academy",
       metaDescription:
-        "Warriors Defence Academy — India's best NDA coaching in Lucknow since 2010. 50,000+ students, 5,000+ selections & retired military faculty. Know our story.",
+        "About Warriors Defence Academy Lucknow — best defence academy with 50,000+ students, 5,000+ selections & retired military faculty. Know our story.",
       metaKeywords:
-        "warriors defence academy lucknow, about warriors defence academy, best defence academy lucknow, nda coaching institute lucknow, defence academy india",
-      ogTitle: "About Warriors Defence Academy | Best NDA Coaching in Lucknow",
+        "warriors defence academy lucknow, defence academy lucknow, best defence academy lucknow, wda academy lucknow, nda coaching institute lucknow",
+      ogTitle: "Warriors Defence Academy Lucknow | Best Defence Academy",
       ogDescription:
-        "India's top NDA coaching institute in Lucknow since 2010 — 50,000+ students trained, 5,000+ selections, retired military faculty & India's largest GTO ground.",
+        "Warriors Defence Academy Lucknow since 2010 — 50,000+ students, 5,000+ selections, retired military faculty & India's largest GTO ground.",
       focusKeyword: "warriors defence academy lucknow",
       schemaType: "EducationalOrganization",
     },
     courses: {
-      metaTitle: "NDA CDS SSB Coaching Courses | Warriors Defence Academy",
+      metaTitle: "NDA Coaching in Lucknow Courses | CDS SSB AFCAT",
       metaDescription:
-        "Explore NDA, CDS, AFCAT & SSB coaching programmes at Warriors Defence Academy, Lucknow. 9+ courses, retired military faculty, 5,000+ selections. Enroll today!",
+        "NDA coaching in Lucknow plus CDS, AFCAT & SSB coaching at Warriors Defence Academy. 9+ courses, 5,000+ selections. Enroll today!",
       metaKeywords:
-        "nda coaching courses, cds coaching lucknow, ssb interview coaching, afcat coaching, defence coaching programmes lucknow, warriors defence academy courses",
-      ogTitle: "NDA & CDS Coaching Courses | Warriors Defence Academy Lucknow",
+        "nda coaching in lucknow, nda coaching courses lucknow, cds coaching in lucknow, ssb coaching in lucknow, afcat coaching, defence academy lucknow courses",
+      ogTitle: "NDA Coaching in Lucknow | CDS SSB AFCAT Courses",
       ogDescription:
-        "NDA, CDS, AFCAT & SSB coaching at Warriors Defence Academy Lucknow — 9+ programmes led by retired military officers. 5,000+ selections. Apply now.",
-      focusKeyword: "nda coaching courses lucknow",
+        "NDA, CDS, AFCAT & SSB coaching in Lucknow at Warriors Defence Academy — 9+ programmes, retired officers, 5,000+ selections. Apply now.",
+      focusKeyword: "nda coaching in lucknow",
       schemaType: "EducationalOrganization",
     },
     contact: {
-      metaTitle: "Contact Warriors Defence Academy | NDA Coaching Lucknow",
+      metaTitle: "Warriors Defence Academy Lucknow Address & Contact",
       metaDescription:
-        "Contact Warriors Defence Academy, Lucknow — India's best NDA coaching. Call +91 94522 45729. Visit: Kapoorthala Chauraha, Lucknow 226024. Mon–Sat 9 AM–6 PM.",
+        "Warriors Defence Academy Lucknow address: Kapoorthala Chauraha, 226024. Call +91 94522 45729 | +91 70810 11964. Visit Mon–Sat 9 AM–6 PM.",
       metaKeywords:
-        "warriors defence academy contact, nda coaching lucknow address, warriors academy phone number, defence coaching lucknow contact",
-      ogTitle: "Contact Warriors Defence Academy | NDA Coaching Lucknow",
+        "warriors defence academy lucknow address, warriors defence academy contact number, nda coaching lucknow address, wda lucknow contact",
+      ogTitle: "Warriors Defence Academy Lucknow Address & Contact",
       ogDescription:
-        "Get in touch with Warriors Defence Academy — Lucknow's #1 NDA coaching. +91 94522 45729 | Kapoorthala Chauraha, Lucknow.",
-      focusKeyword: "warriors defence academy contact lucknow",
+        "Visit Warriors Defence Academy — Kapoorthala Chauraha, Lucknow 226024. Call +91 94522 45729 for NDA coaching admissions.",
+      focusKeyword: "warriors defence academy lucknow address",
       schemaType: "LocalBusiness",
     },
     results: {
@@ -208,27 +209,27 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       schemaType: "EducationalOrganization",
     },
     blog: {
-      metaTitle: "NDA CDS SSB Exam Tips & Guides | Warriors Defence Academy",
+      metaTitle: "NDA Exam Date, SSB OIR & Defence Guides | WDA Blog",
       metaDescription:
-        "Expert NDA, CDS & SSB preparation tips, exam guides and defence career advice from Warriors Defence Academy — India's best NDA coaching institute in Lucknow.",
+        "NDA 2026 exam dates, SSB OIR questions, lecturette topics, army badges & Agniveer guides from Warriors Defence Academy Lucknow. Read free tips.",
       metaKeywords:
-        "nda exam tips, nda coaching blog, cds exam preparation guide, ssb interview tips, defence exam 2026, warriors defence academy blog",
-      ogTitle: "NDA & Defence Exam Blog | Warriors Defence Academy",
+        "nda exam date 2026, ssb oir questions, lecturette topics for ssb, indian army badges, agniveer recruitment 2026, nda syllabus, warriors defence academy blog",
+      ogTitle: "NDA Exam Date, SSB OIR & Defence Guides | WDA Blog",
       ogDescription:
-        "Expert NDA, CDS & SSB preparation tips and guides from Warriors Defence Academy — India's best NDA coaching institute.",
-      focusKeyword: "nda exam preparation tips",
+        "Free NDA exam date 2026 updates, SSB OIR practice, lecturette topics and defence career guides from Warriors Defence Academy Lucknow.",
+      focusKeyword: "nda exam date 2026",
       schemaType: "Article",
     },
     gallery: {
-      metaTitle: "Campus Gallery | Warriors Defence Academy Lucknow",
+      metaTitle: "Warriors Defence Academy Photos | Campus Gallery Lucknow",
       metaDescription:
-        "Warriors Defence Academy campus gallery — India's largest GTO ground, training sessions & student life. Photos from Lucknow's top NDA coaching institute.",
+        "Warriors Defence Academy photos — GTO ground, training & campus life in Lucknow. See why students choose the best NDA coaching in Lucknow.",
       metaKeywords:
-        "warriors defence academy gallery, nda coaching campus lucknow, gto ground photos, defence academy campus india",
-      ogTitle: "Campus Gallery | Warriors Defence Academy Lucknow",
+        "warriors defence academy photos, warriors defence academy gallery, nda coaching campus lucknow, gto ground photos lucknow",
+      ogTitle: "Warriors Defence Academy Photos | Campus Gallery Lucknow",
       ogDescription:
-        "See the campus of India's best NDA coaching institute — Warriors Defence Academy, Lucknow. India's largest GTO ground, training & student life.",
-      focusKeyword: "warriors defence academy campus lucknow",
+        "Browse Warriors Defence Academy photos — India's largest GTO ground, hostel life and training at Lucknow campus.",
+      focusKeyword: "warriors defence academy photos",
       schemaType: "WebPage",
     },
     facilities: {
@@ -374,16 +375,64 @@ export function defaultEntitySeo(
 ): PageSeo {
   const ogImage = data.image || "/images/og-image.webp"
   if (type === "course") {
-    // Append location + brand to course titles for pan-India keyword coverage
-    const metaTitle = `${data.title} Coaching in Lucknow | Warriors Defence Academy`
-    const metaDesc = data.description.length > 155
-      ? data.description.slice(0, 152) + "..."
-      : data.description
+    // GSC-aligned course titles (local commercial intent)
+    const courseSeoOverrides: Record<string, Partial<PageSeo>> = {
+      "/courses/nda": {
+        metaTitle: "NDA Coaching in Lucknow | Best NDA Course WDA",
+        metaDescription:
+          "NDA coaching in Lucknow at Warriors Defence Academy — written exam + SSB, India's largest GTO ground, 5,000+ selections. Enroll now!",
+        focusKeyword: "nda coaching in lucknow",
+        metaKeywords:
+          "nda coaching in lucknow, best nda coaching in lucknow, nda coaching lucknow, nda course lucknow, warriors defence academy",
+      },
+      "/courses/nda-foundation": {
+        metaTitle: "NDA Foundation Coaching After 10th in Lucknow",
+        metaDescription:
+          "NDA foundation coaching after 10th in Lucknow — school + NDA prep, hostel, PT & SSB grooming at Warriors Defence Academy. Apply today!",
+        focusKeyword: "nda foundation coaching after 10th in lucknow",
+        metaKeywords:
+          "nda foundation coaching after 10th, nda foundation course lucknow, nda coaching after 10th, best nda foundation lucknow",
+      },
+      "/courses/ssb": {
+        metaTitle: "SSB Coaching in Lucknow | Best SSB Training WDA",
+        metaDescription:
+          "Best SSB coaching in Lucknow on India's largest GTO ground — OIR, psychology, GTO & interview drills. 21-day intensive. Enroll now!",
+        focusKeyword: "ssb coaching in lucknow",
+        metaKeywords:
+          "ssb coaching in lucknow, best ssb coaching in lucknow, ssb training center lucknow, ssb interview coaching lucknow",
+      },
+      "/courses/cds": {
+        metaTitle: "CDS Coaching in Lucknow | Warriors Defence Academy",
+        metaDescription:
+          "CDS coaching in Lucknow with syllabus plan, mocks & SSB prep at Warriors Defence Academy. Graduate officer entry. Apply today!",
+        focusKeyword: "cds coaching in lucknow",
+        metaKeywords:
+          "cds coaching in lucknow, best cds coaching lucknow, cds exam coaching, warriors defence academy cds",
+      },
+      "/courses/navy-agniveer": {
+        metaTitle: "Agniveer Recruitment Coaching Lucknow | Navy SSR",
+        metaDescription:
+          "Agniveer recruitment 2026 coaching in Lucknow — Navy SSR/AA written, PT & swim training at Warriors Defence Academy. Enroll now!",
+        focusKeyword: "agniveer recruitment 2026",
+        metaKeywords:
+          "agniveer recruitment 2026, agniveer vacancy 2026, navy agniveer coaching lucknow, agniveer notification 2026",
+      },
+    }
+    const override = courseSeoOverrides[data.path] ?? {}
+    const metaTitle =
+      override.metaTitle || `${data.title} Coaching in Lucknow | Warriors Defence Academy`
+    const metaDesc =
+      override.metaDescription ||
+      (data.description.length > 155 ? data.description.slice(0, 152) + "..." : data.description)
+    const focusKeyword =
+      override.focusKeyword || `${data.title.toLowerCase()} coaching lucknow`
     return {
       ...DEFAULT_PAGE_SEO,
       metaTitle,
       metaDescription: metaDesc,
-      metaKeywords: `${data.title.toLowerCase()} coaching lucknow, ${data.title.toLowerCase()} coaching india, warriors defence academy, best ${data.title.toLowerCase()} coaching`,
+      metaKeywords:
+        override.metaKeywords ||
+        `${data.title.toLowerCase()} coaching lucknow, ${data.title.toLowerCase()} coaching india, warriors defence academy, best ${data.title.toLowerCase()} coaching`,
       canonicalUrl: `${SITE_URL}${data.path}`,
       ogTitle: metaTitle,
       ogDescription: metaDesc,
@@ -391,7 +440,7 @@ export function defaultEntitySeo(
       twitterTitle: metaTitle,
       twitterDescription: metaDesc,
       twitterImage: ogImage,
-      focusKeyword: `${data.title.toLowerCase()} coaching lucknow`,
+      focusKeyword,
       schemaType: "Course",
     }
   }
@@ -686,22 +735,22 @@ export function buildHomeSchemaGraph(): object {
           { "@type": "State", name: "Uttar Pradesh" },
         ],
         knowsAbout: [
+          "Best NDA Coaching in Lucknow",
+          "NDA Coaching in Lucknow",
           "Best NDA Coaching",
           "Best NDA Coaching in India",
-          "NDA Coaching",
-          "Top NDA Coaching in India",
-          "NDA Exam Preparation",
-          "CDS Coaching",
-          "SSB Interview Preparation",
-          "AFCAT Exam",
-          "Defence Career Coaching",
-          "Military Training",
-          "Sainik School Coaching",
-          "Physical Fitness Training for Defence",
+          "SSB Coaching in Lucknow",
+          "CDS Coaching in Lucknow",
+          "NDA Exam Date 2026",
+          "SSB OIR Test",
+          "NDA Foundation Coaching After 10th",
+          "Agniveer Recruitment 2026",
+          "Warriors Defence Academy Fees",
+          "Defence Academy Lucknow",
           "GTO Task Training",
         ],
         keywords:
-          "best nda coaching, best nda coaching in india, nda coaching, top nda coaching in india, best nda coaching in lucknow, nda coaching lucknow, cds coaching, ssb coaching, defence academy lucknow",
+          "best nda coaching in lucknow, nda coaching in lucknow, best nda coaching in india, ssb coaching in lucknow, cds coaching in lucknow, defence academy lucknow, warriors defence academy fees, nda exam date 2026",
       },
 
       /* ── 2. WebSite ── */
@@ -710,7 +759,7 @@ export function buildHomeSchemaGraph(): object {
         "@id": siteId,
         url: SITE_URL,
         name: "Warriors Defence Academy",
-        description: "Best NDA Coaching in India — Warriors Defence Academy, Lucknow",
+        description: "Best NDA Coaching in Lucknow — Warriors Defence Academy",
         publisher: { "@id": orgId },
         inLanguage: "en-IN",
       },

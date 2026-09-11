@@ -1,7 +1,7 @@
 import Razorpay from "razorpay"
 import crypto from "crypto"
 
-export { SEAT_BOOKING_FEE_INR, GATEWAY_FEE_PASS_THROUGH_PERCENT, calculateTotalPayable } from "@/lib/pricing"
+export { SEAT_BOOKING_FEE_INR, calculateTotalPayable } from "@/lib/pricing"
 
 let client: Razorpay | null = null
 

@@ -24,7 +24,7 @@ import {
   Loader2,
   Receipt,
 } from "lucide-react"
-import { SEAT_BOOKING_FEE_INR, calculateTotalPayable } from "@/lib/pricing"
+import { SEAT_BOOKING_FEE_INR } from "@/lib/pricing"
 
 const steps = [
   { id: 1, title: "Personal Info", icon: User },
@@ -133,9 +133,7 @@ export function RegisterForm() {
     preferredBatch: "",
     hostelRequired: false,
     highestQualification: "",
-    board: "",
     passingYear: "",
-    percentage: "",
     schoolName: "",
     termsAccepted: false,
   })
@@ -255,7 +253,7 @@ export function RegisterForm() {
   }
 
   const progressValue = (currentStep / steps.length) * 100
-  const seatBookingTotal = calculateTotalPayable(SEAT_BOOKING_FEE_INR)
+  const seatBookingFee = SEAT_BOOKING_FEE_INR
 
   if (isSubmitted) {
     return (
@@ -264,11 +262,11 @@ export function RegisterForm() {
           <CheckCircle className="h-12 w-12 text-primary" />
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          Registration & Payment Successful!
+          Welcome to Warriors Defence Academy, {formData.firstName}! 🎖️
         </h2>
         <p className="text-muted-foreground text-lg mb-8">
-          Thank you for registering with Warriors Defence Academy. Your seat-booking
-          payment has been received.
+          Your seat for SSB Interview Training is confirmed. Keep your receipt number
+          handy for any queries — our team will be in touch shortly.
         </p>
 
         {receiptNo && (
@@ -313,6 +311,8 @@ export function RegisterForm() {
           </CardContent>
         </Card>
 
+        <p className="text-primary font-semibold mb-6">Jai Hind! 🇮🇳</p>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/">
             <Button>Back to Home</Button>
@@ -338,9 +338,8 @@ export function RegisterForm() {
           Your registration is saved{registrationId ? ` (ID: ${registrationId})` : ""}. Pay the
           seat-booking fee via Razorpay to confirm your seat.
         </p>
-        {paidAmount !== null && (
-          <p className="text-2xl font-bold text-foreground mb-6">₹{paidAmount.toFixed(2)}</p>
-        )}
+        <p className="text-2xl font-bold text-foreground mb-1">₹{seatBookingFee}</p>
+        <p className="text-xs text-muted-foreground mb-6">Inclusive of tax</p>
         {paymentError && (
           <p className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2 mb-6 max-w-md mx-auto">
             {paymentError}
@@ -609,21 +608,6 @@ export function RegisterForm() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="board">Board/University *</Label>
-                  <Select value={formData.board} onValueChange={(value) => updateFormData("board", value)}>
-                    <SelectTrigger className="h-12"><SelectValue placeholder="Select board" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="cbse">CBSE</SelectItem>
-                      <SelectItem value="icse">ICSE</SelectItem>
-                      <SelectItem value="state">State Board</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
                   <Label htmlFor="passingYear">Passing Year *</Label>
                   <Select value={formData.passingYear} onValueChange={(value) => updateFormData("passingYear", value)}>
                     <SelectTrigger className="h-12"><SelectValue placeholder="Select year" /></SelectTrigger>
@@ -633,12 +617,6 @@ export function RegisterForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="percentage">Percentage/CGPA *</Label>
-                  <Input id="percentage" placeholder="Enter percentage or CGPA" value={formData.percentage}
-                    onChange={(e) => updateFormData("percentage", e.target.value)} className="h-12" />
                 </div>
               </div>
 
@@ -695,9 +673,7 @@ export function RegisterForm() {
                   </h3>
                   <div className="grid md:grid-cols-2 gap-3 text-sm">
                     <div><span className="text-muted-foreground">Qualification:</span>{" "}<span className="font-medium">{formData.highestQualification || "-"}</span></div>
-                    <div><span className="text-muted-foreground">Board:</span>{" "}<span className="font-medium">{formData.board || "-"}</span></div>
                     <div><span className="text-muted-foreground">Passing Year:</span>{" "}<span className="font-medium">{formData.passingYear || "-"}</span></div>
-                    <div><span className="text-muted-foreground">Percentage:</span>{" "}<span className="font-medium">{formData.percentage || "-"}</span></div>
                   </div>
                 </div>
 
@@ -706,22 +682,12 @@ export function RegisterForm() {
                     <CreditCard className="h-4 w-4 text-primary" />
                     Seat-Booking Payment
                   </h3>
-                  <div className="space-y-1 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Seat-booking fee</span>
-                      <span className="font-medium">₹{seatBookingTotal.baseAmountInr.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Payment gateway charges</span>
-                      <span className="font-medium">₹{seatBookingTotal.gatewayFee.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between pt-2 mt-2 border-t border-border text-base font-semibold">
-                      <span>Total payable now</span>
-                      <span>₹{seatBookingTotal.total.toFixed(2)}</span>
-                    </div>
+                  <div className="flex justify-between items-baseline text-base font-semibold">
+                    <span>Total payable now</span>
+                    <span>₹{seatBookingFee}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-3">
-                    This confirms your seat. The remaining course fee is paid separately later.
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Inclusive of all tax.
                   </p>
                 </div>
 
@@ -767,7 +733,7 @@ export function RegisterForm() {
                     </>
                   ) : (
                     <>
-                      <CreditCard className="h-4 w-4" /> Submit & Pay ₹{seatBookingTotal.total.toFixed(2)}
+                      <CreditCard className="h-4 w-4" /> Submit & Pay ₹{seatBookingFee}
                     </>
                   )}
                 </Button>

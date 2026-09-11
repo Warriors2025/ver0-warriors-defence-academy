@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
-import { makeReceiptNo, verifyPaymentSignature } from "@/lib/razorpay"
+import { getRazorpayClient, makeReceiptNo, verifyPaymentSignature } from "@/lib/razorpay"
 
 export const runtime = "nodejs"
 
@@ -41,30 +41,61 @@ export async function POST(request: Request) {
       .eq("registration_id", registrationId)
       .single()
 
-    if (fetchError || !registration || registration.razorpay_order_id !== orderId) {
+    if (fetchError || !registration) {
       console.error("Razorpay verify: registration lookup failed:", fetchError)
       return NextResponse.json(
-        { success: false, message: "Registration/order mismatch. Please contact support." },
+        { success: false, message: "Registration not found. Please contact support." },
         { status: 400 }
       )
     }
 
+    // Retrying checkout can overwrite razorpay_order_id with a newer unpaid order.
+    // If the paid order no longer matches the stored one, confirm via Razorpay notes.
+    if (registration.razorpay_order_id !== orderId) {
+      try {
+        const razorpay = getRazorpayClient()
+        const order = await razorpay.orders.fetch(orderId)
+        const orderRegistrationId =
+          order?.notes && typeof order.notes === "object"
+            ? (order.notes as Record<string, string>).registrationId
+            : undefined
+        if (orderRegistrationId !== registrationId) {
+          return NextResponse.json(
+            { success: false, message: "Registration/order mismatch. Please contact support." },
+            { status: 400 }
+          )
+        }
+      } catch (orderError) {
+        console.error("Razorpay verify: could not fetch order for mismatch check:", orderError)
+        return NextResponse.json(
+          { success: false, message: "Registration/order mismatch. Please contact support." },
+          { status: 400 }
+        )
+      }
+    }
+
     const receiptNo = registration.receipt_no || makeReceiptNo(registrationId)
     if (registration.payment_status !== "paid") {
+      // status must be one of: pending | contacted | enrolled | rejected
       const { error: updateError } = await db
         .from("registrations")
         .update({
           payment_status: "paid",
+          razorpay_order_id: orderId,
           razorpay_payment_id: paymentId,
           receipt_no: receiptNo,
-          status: "confirmed",
+          status: "enrolled",
         })
         .eq("registration_id", registrationId)
 
       if (updateError) {
         console.error("Failed to mark registration as paid:", updateError)
         return NextResponse.json(
-          { success: false, message: "Payment succeeded but could not be recorded. Please contact support." },
+          {
+            success: false,
+            message: "Payment succeeded but could not be recorded. Please contact support.",
+            detail: updateError.message,
+          },
           { status: 500 }
         )
       }

@@ -14,8 +14,8 @@ export const COURSE_SEED_DETAILS: Record<string, CourseSeed> = {
   "nda": {
     id: "nda",
     title: "NDA Course",
-    tagline: "Complete Preparation for National Defence Academy",
-    description: "Our NDA Course provides comprehensive preparation for the NDA written exam and SSB interview. With expert guidance, rigorous practice, and complete physical training, we ensure you are fully prepared to join the prestigious National Defence Academy.",
+    tagline: "Best NDA Coaching in Lucknow — Written Exam + SSB",
+    description: "Join NDA coaching in Lucknow at Warriors Defence Academy for complete UPSC NDA written preparation and SSB interview training. Practise on India's largest GTO ground with retired military mentors, weekly mocks, and a proven selection track record.",
     duration: "6–12 Months",
     students: "2,000+",
     rating: 4.8,
@@ -68,8 +68,8 @@ export const COURSE_SEED_DETAILS: Record<string, CourseSeed> = {
   "nda-foundation": {
     id: "nda-foundation",
     title: "NDA Foundation Course",
-    tagline: "Start Your Defence Journey After Class 10",
-    description: "Our NDA Foundation Course is an integrated program that combines regular schooling with NDA preparation. Students live and study on campus, following a disciplined schedule that prepares them for both board exams and NDA selection.",
+    tagline: "NDA Foundation Coaching After 10th in Lucknow",
+    description: "Start NDA foundation coaching after 10th in Lucknow with integrated Class 11–12 academics, hostel discipline, daily PT, and early SSB grooming at Warriors Defence Academy.",
     duration: "2–3 Years",
     students: "500+",
     rating: 4.9,
@@ -122,8 +122,8 @@ export const COURSE_SEED_DETAILS: Record<string, CourseSeed> = {
   "cds": {
     id: "cds",
     title: "CDS Course",
-    tagline: "Combined Defence Services Examination Preparation",
-    description: "The CDS Course provides structured preparation for the Combined Defence Services Examination. Our comprehensive program covers all aspects of the written exam and SSB interview preparation.",
+    tagline: "CDS Coaching in Lucknow — Written + SSB",
+    description: "CDS coaching in Lucknow for graduates targeting IMA, INA, AFA and OTA. Clear syllabus coverage, mocks, current affairs and SSB interview prep at Warriors Defence Academy.",
     duration: "6 Months",
     students: "1,500+",
     rating: 4.8,
@@ -176,8 +176,8 @@ export const COURSE_SEED_DETAILS: Record<string, CourseSeed> = {
   "ssb": {
     id: "ssb",
     title: "SSB Interview Training",
-    tagline: "21-Day Comprehensive SSB Preparation",
-    description: "Our SSB Interview Training is a 21-day intensive program that prepares you for every aspect of the Service Selection Board interview. From psychological tests to GTO tasks, we ensure you develop officer-like qualities.",
+    tagline: "Best SSB Coaching in Lucknow — 21 Days on Real GTO Ground",
+    description: "SSB coaching in Lucknow with OIR sample practice, psychology (TAT/WAT/SRT), GTO tasks and personal interview drills on India's largest GTO ground at Warriors Defence Academy.",
     duration: "21 Days",
     students: "3,000+",
     rating: 4.9,

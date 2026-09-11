@@ -49,7 +49,7 @@ export async function POST(request: Request) {
           payment_status: "paid",
           razorpay_payment_id: paymentId ?? null,
           receipt_no: receiptNo,
-          status: "confirmed",
+          status: "enrolled",
         })
         .eq("registration_id", registration.registration_id)
 
