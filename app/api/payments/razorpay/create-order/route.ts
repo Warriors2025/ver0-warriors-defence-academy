@@ -25,17 +25,47 @@ export async function POST(request: Request) {
       .eq("registration_id", registrationId)
       .single()
 
-    if (fetchError || !registration) {
+    if (fetchError) {
       console.error("Razorpay create-order: registration lookup failed:", fetchError)
+      const missingColumn =
+        typeof fetchError.message === "string" &&
+        /payment_status|column .* does not exist/i.test(fetchError.message)
       return NextResponse.json(
-        { success: false, message: "Registration not found" },
+        {
+          success: false,
+          message: missingColumn
+            ? "Payment columns are missing in the database. Run the Razorpay registrations migration, then retry."
+            : "Registration not found. Please submit the form again.",
+          detail: fetchError.message,
+        },
+        { status: missingColumn ? 500 : 404 }
+      )
+    }
+
+    if (!registration) {
+      return NextResponse.json(
+        { success: false, message: "Registration not found. Please submit the form again." },
         { status: 404 }
       )
     }
+
     if (registration.payment_status === "paid") {
       return NextResponse.json(
         { success: false, message: "This registration has already been paid for." },
         { status: 409 }
+      )
+    }
+
+    const keyId =
+      process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID
+    if (!keyId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Razorpay Key Id is not configured. Set NEXT_PUBLIC_RAZORPAY_KEY_ID (or RAZORPAY_KEY_ID) in the environment.",
+        },
+        { status: 500 }
       )
     }
 
@@ -44,11 +74,11 @@ export async function POST(request: Request) {
     const order = await razorpay.orders.create({
       amount: total * 100, // paise
       currency: "INR",
-      receipt: registrationId,
+      receipt: registrationId.slice(0, 40),
       notes: {
         registrationId,
         name: `${registration.first_name} ${registration.last_name}`,
-        email: registration.email,
+        email: registration.email || "",
         phone: registration.phone,
       },
     })
@@ -60,6 +90,14 @@ export async function POST(request: Request) {
 
     if (updateError) {
       console.error("Failed to store Razorpay order id:", updateError)
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Payment order created but could not be saved. Please contact support.",
+          detail: updateError.message,
+        },
+        { status: 500 }
+      )
     }
 
     return NextResponse.json({
@@ -67,16 +105,17 @@ export async function POST(request: Request) {
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      keyId,
       name: `${registration.first_name} ${registration.last_name}`,
-      email: registration.email,
+      email: registration.email || "",
       phone: registration.phone,
     })
   } catch (error) {
     console.error("Razorpay create-order error:", error)
-    return NextResponse.json(
-      { success: false, message: "Could not start payment. Please try again." },
-      { status: 500 }
-    )
+    const message =
+      error instanceof Error && /RAZORPAY|not configured/i.test(error.message)
+        ? error.message
+        : "Could not start payment. Please try again."
+    return NextResponse.json({ success: false, message }, { status: 500 })
   }
 }

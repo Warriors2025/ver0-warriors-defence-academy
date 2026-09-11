@@ -199,6 +199,12 @@ export function RegisterForm() {
         setPaymentError(order.message || "Could not start payment. Please try again.")
         return
       }
+      if (!order.keyId) {
+        setPaymentError(
+          "Payment gateway Key Id is missing on the server. Add NEXT_PUBLIC_RAZORPAY_KEY_ID and redeploy."
+        )
+        return
+      }
       setPaidAmount(order.amount / 100)
 
       const loaded = await loadRazorpayCheckout()
