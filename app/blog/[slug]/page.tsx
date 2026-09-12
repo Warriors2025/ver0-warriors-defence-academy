@@ -231,23 +231,26 @@ export default async function BlogPostPage({ params }: Props) {
               structured coaching for NDA, CDS, AFCAT &amp; SSB.
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/register">
-                <Button
-                  size="lg"
-                  className="h-12 gap-2 bg-accent px-7 font-semibold text-accent-foreground hover:bg-accent/90"
-                >
-                  Enroll Now
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
               <a href={`tel:${phone.replace(/\s/g, "")}`}>
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="h-12 gap-2 border-primary-foreground/35 bg-transparent px-7 font-semibold text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                  className="h-12 gap-2 bg-accent px-7 font-semibold text-accent-foreground hover:bg-accent/90 cursor-pointer"
                 >
                   <Phone className="h-4 w-4" />
-                  {phone}
+                  Call Now
+                </Button>
+              </a>
+              <a
+                href="https://wa.me/919452245729?text=Hi%21%20I%20read%20your%20blog%20and%20want%20counselling%20for%20NDA%20coaching."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-12 gap-2 border-primary-foreground/35 bg-transparent px-7 font-semibold text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground cursor-pointer"
+                >
+                  WhatsApp Us
                 </Button>
               </a>
             </div>

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Play, ChevronLeft, ChevronRight, Shield, Trophy } from "lucide-react"
+import { ArrowRight, Play, ChevronLeft, ChevronRight, Shield, Trophy, Phone } from "lucide-react"
 import type { HeroSlide, SiteContent } from "@/lib/site-content"
 import { defaultContent } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
@@ -80,12 +80,12 @@ export function HeroSection({
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/register">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-7 gap-2 text-base font-semibold border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors">
-                  Apply Now
-                  <ArrowRight className="h-4 w-4" />
+              <a href="tel:+919452245729">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-7 gap-2 text-base font-semibold border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
+                  Call Now
+                  <Phone className="h-4 w-4" />
                 </Button>
-              </Link>
+              </a>
               <Button size="lg" variant="ghost" className="w-full sm:w-auto h-12 px-5 gap-2 text-base text-muted-foreground hover:text-foreground">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-primary/40">
                   <Play className="h-3 w-3 fill-primary text-primary ml-0.5" />

@@ -64,18 +64,24 @@ export default async function AdmissionsPage() {
               <p className="text-lg opacity-90 mb-8 leading-relaxed">
                 {page.hero.subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary" asChild>
-                  <Link href="/register">
-                    Apply Now
-                    <ChevronRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-                  <Download className="mr-2 h-5 w-5" />
-                  Download Brochure
-                </Button>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" variant="secondary" asChild>
+                <a href="tel:+919452245729" className="cursor-pointer">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Call Now
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" asChild>
+                <a
+                  href="https://wa.me/919452245729?text=Hi%21%20I%20want%20admission%20details%20for%20NDA%20coaching."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer"
+                >
+                  WhatsApp Us
+                </a>
+              </Button>
+            </div>
             </div>
           </div>
         </section>
@@ -219,8 +225,8 @@ export default async function AdmissionsPage() {
                     <p className="text-sm text-muted-foreground">{fee.note}</p>
                   </CardHeader>
                   <CardContent>
-                    <Button className="w-full mt-2" asChild>
-                      <Link href="/register">Enroll Now</Link>
+                    <Button className="w-full mt-2 cursor-pointer" asChild>
+                      <a href="tel:+919452245729">Call to Enroll</a>
                     </Button>
                   </CardContent>
                 </Card>

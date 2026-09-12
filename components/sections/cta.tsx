@@ -1,13 +1,13 @@
 "use client"
 
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Phone, Calendar, Shield } from "lucide-react"
+import { Phone, MessageCircle, Shield } from "lucide-react"
 import type { CtaContent } from "@/lib/site-content"
 import { defaultSections, defaultContent } from "@/lib/site-content"
 import { CmsField } from "@/components/cms/cms-field"
 import { HeadingTag } from "@/components/seo/heading-tag"
 import type { HeadingLevel } from "@/lib/seo"
+import { SITE_PHONE_TEL, siteWhatsAppHref } from "@/lib/cta"
 
 type CTASectionProps = {
   cta?: CtaContent
@@ -16,12 +16,31 @@ type CTASectionProps = {
   titleLevel?: HeadingLevel
 }
 
+function isHttp(href: string) {
+  return href.startsWith("http://") || href.startsWith("https://")
+}
+
 export function CTASection({
   cta = defaultSections.cta,
   phone1 = defaultContent.contact.phone1,
   phone2 = defaultContent.contact.phone2,
   titleLevel = "h2",
 }: CTASectionProps) {
+  const primaryHref =
+    !cta.primaryHref || cta.primaryHref.includes("/register")
+      ? SITE_PHONE_TEL
+      : cta.primaryHref
+  const secondaryHref =
+    !cta.secondaryHref ||
+    cta.secondaryHref.includes("/register") ||
+    cta.secondaryHref === "/contact"
+      ? siteWhatsAppHref()
+      : cta.secondaryHref
+
+  const primaryLabel = cta.primaryLabel === "Enroll Now" ? "Call Now" : cta.primaryLabel
+  const secondaryLabel =
+    cta.secondaryLabel === "Schedule a Campus Visit" ? "WhatsApp Us" : cta.secondaryLabel
+
   return (
     <section className="relative py-24 overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 opacity-[0.04]" style={{
@@ -55,18 +74,21 @@ export function CTASection({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href={cta.primaryHref}>
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground h-13 px-8 text-base font-semibold gap-2 shadow-lg shadow-black/20 min-h-[48px]">
-                {cta.primaryLabel}
-                <ArrowRight className="h-4 w-4" />
+            <a href={primaryHref}>
+              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground h-13 px-8 text-base font-semibold gap-2 shadow-lg shadow-black/20 min-h-[48px] cursor-pointer">
+                <Phone className="h-4 w-4" />
+                {primaryLabel}
               </Button>
-            </Link>
-            <Link href={cta.secondaryHref}>
-              <Button size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-13 px-8 text-base font-semibold gap-2 min-h-[48px]">
-                <Calendar className="h-4 w-4" />
-                {cta.secondaryLabel}
+            </a>
+            <a
+              href={secondaryHref}
+              {...(isHttp(secondaryHref) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              <Button size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground h-13 px-8 text-base font-semibold gap-2 min-h-[48px] cursor-pointer">
+                <MessageCircle className="h-4 w-4" />
+                {secondaryLabel}
               </Button>
-            </Link>
+            </a>
           </div>
 
           <div className="mt-10 pt-8 border-t border-primary-foreground/15 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-primary-foreground/70">

@@ -16,6 +16,7 @@ import {
   Flag,
   CheckCircle,
   Target,
+  Phone,
 } from "lucide-react"
 import type { Metadata } from "next"
 import { getResultsByYear, getFeaturedResults } from "@/lib/results-data"
@@ -419,17 +420,21 @@ export default async function ResultsPage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/register">
-                  <Button size="lg" className="h-13 px-8 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-base">
-                    Enroll Now
-                    <ArrowRight className="h-4 w-4" />
+                <a href="tel:+919452245729">
+                  <Button size="lg" className="h-13 px-8 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-base cursor-pointer">
+                    <Phone className="h-4 w-4" />
+                    Call Now
                   </Button>
-                </Link>
-                <Link href="/courses">
-                  <Button size="lg" variant="outline" className="h-13 px-8 border-primary text-primary hover:bg-primary/5 gap-2 text-base">
-                    View Courses
+                </a>
+                <a
+                  href="https://wa.me/919452245729?text=Hi%21%20I%20saw%20your%20results%20and%20want%20counselling."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button size="lg" variant="outline" className="h-13 px-8 border-primary text-primary hover:bg-primary/5 gap-2 text-base cursor-pointer">
+                    WhatsApp Us
                   </Button>
-                </Link>
+                </a>
               </div>
 
               {/* Trust indicators */}

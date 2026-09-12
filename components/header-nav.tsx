@@ -169,9 +169,12 @@ export function HeaderNav({
 
                   <div className="px-5 py-3 bg-muted/30 border-t border-border flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">15+ years · 5,000+ selections · Lucknow</span>
-                    <Link href="/register" onClick={() => setDropOpen(false)}>
-                      <Button size="sm" className="h-7 text-xs px-3">Enroll Now</Button>
-                    </Link>
+                    <a href={`tel:${phone.replace(/\s/g, "")}`} onClick={() => setDropOpen(false)}>
+                      <Button size="sm" className="h-7 text-xs px-3 cursor-pointer gap-1">
+                        <Phone className="h-3 w-3" />
+                        Call Now
+                      </Button>
+                    </a>
                   </div>
                 </div>
               )}
@@ -190,15 +193,21 @@ export function HeaderNav({
               <Phone className="h-3.5 w-3.5 text-accent" />
               <span className="font-medium">{phone}</span>
             </a>
-            <Link href="/register">
-              <Button className="h-9 px-5 text-sm font-semibold">Enroll Now</Button>
-            </Link>
+            <a href={`tel:${phone.replace(/\s/g, "")}`}>
+              <Button className="h-9 px-5 text-sm font-semibold cursor-pointer gap-1.5">
+                <Phone className="h-3.5 w-3.5" />
+                Call Now
+              </Button>
+            </a>
           </div>
 
           <div className="flex lg:hidden items-center gap-2 ml-auto">
-            <Link href="/register">
-              <Button size="sm" className="h-9 px-4 text-xs font-semibold">Enroll Now</Button>
-            </Link>
+            <a href={`tel:${phone.replace(/\s/g, "")}`}>
+              <Button size="sm" className="h-9 px-4 text-xs font-semibold cursor-pointer gap-1">
+                <Phone className="h-3.5 w-3.5" />
+                Call
+              </Button>
+            </a>
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open menu">
@@ -275,15 +284,20 @@ export function HeaderNav({
                 </nav>
 
                 <div className="border-t border-border p-4 space-y-2 bg-muted/30">
-                  <Link href="/register" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full h-11 font-semibold">Enroll Now</Button>
-                  </Link>
+                  <a href={`tel:${phone.replace(/\s/g, "")}`} onClick={() => setMobileOpen(false)}>
+                    <Button className="w-full h-11 font-semibold cursor-pointer gap-2">
+                      <Phone className="h-4 w-4" />
+                      Call Now
+                    </Button>
+                  </a>
                   <a
-                    href={`tel:${phone.replace(/\s/g, "")}`}
+                    href={`https://wa.me/919452245729?text=${encodeURIComponent("Hi! I want to know more about defence coaching at Warriors Defence Academy.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileOpen(false)}
                     className="flex items-center justify-center gap-2 w-full h-10 rounded-lg border border-border text-sm text-muted-foreground hover:text-foreground hover:border-accent/50 transition-colors"
                   >
-                    <Phone className="h-4 w-4 text-accent" />
-                    {phone}
+                    WhatsApp Us
                   </a>
                 </div>
               </SheetContent>

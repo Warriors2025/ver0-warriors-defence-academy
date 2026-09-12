@@ -696,18 +696,21 @@ export default async function AboutPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/register">
-                <Button size="lg" className="h-13 px-8 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-base">
-                  Enroll Now
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" className="h-13 px-8 border-primary text-primary hover:bg-primary/5 gap-2 text-base">
+              <a href="tel:+919452245729">
+                <Button size="lg" className="h-13 px-8 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-base cursor-pointer">
                   <Phone className="h-4 w-4" />
-                  Contact Us
+                  Call Now
                 </Button>
-              </Link>
+              </a>
+              <a
+                href="https://wa.me/919452245729?text=Hi%21%20I%20want%20to%20know%20more%20about%20Warriors%20Defence%20Academy."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" variant="outline" className="h-13 px-8 border-primary text-primary hover:bg-primary/5 gap-2 text-base cursor-pointer">
+                  WhatsApp Us
+                </Button>
+              </a>
             </div>
 
             {/* Trust line */}

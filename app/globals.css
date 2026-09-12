@@ -271,9 +271,21 @@ html {
     padding-right: 1rem;
   }
   
-  /* Improve touch targets on mobile */
-  button, a, input, select, textarea {
+  /* Improve touch targets on mobile — exclude compact controls (radios/checkboxes) */
+  button:not([data-slot="radio-group-item"]):not([role="radio"]):not([role="checkbox"]),
+  a,
+  input:not([type="radio"]):not([type="checkbox"]),
+  select,
+  textarea {
     min-height: 44px;
+  }
+
+  button[data-slot="radio-group-item"],
+  button[role="radio"],
+  button[role="checkbox"],
+  [data-slot="checkbox"] {
+    min-height: 0;
+    min-width: 0;
   }
   
   /* Additional mobile constraints */

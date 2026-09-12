@@ -610,14 +610,14 @@ export function RegisterForm({ embed = false }: { embed?: boolean }) {
                 <div className="space-y-2">
                   <Label>Gender *</Label>
                   <RadioGroup value={formData.gender} onValueChange={(value) => updateFormData("gender", value)}
-                    className="flex flex-wrap gap-4 sm:gap-6 mt-2">
-                    <div className="flex items-center space-x-2">
+                    className="flex flex-wrap gap-3 sm:gap-6 mt-2">
+                    <div className="flex items-center gap-2 min-h-11">
                       <RadioGroupItem value="male" id="male" />
-                      <Label htmlFor="male" className="font-normal">Male</Label>
+                      <Label htmlFor="male" className="font-normal cursor-pointer py-2">Male</Label>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2 min-h-11">
                       <RadioGroupItem value="female" id="female" />
-                      <Label htmlFor="female" className="font-normal">Female</Label>
+                      <Label htmlFor="female" className="font-normal cursor-pointer py-2">Female</Label>
                     </div>
                   </RadioGroup>
                 </div>

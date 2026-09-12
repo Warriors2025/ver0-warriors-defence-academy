@@ -171,7 +171,7 @@ const FAQS = [
   },
   {
     q: "How soon can I start?",
-    a: "New batches open regularly for NDA written, foundation and SSB. Submit the counselling form on this page or register online — a counsellor will confirm the next available seat.",
+    a: "New batches open regularly for NDA written, foundation and SSB. Call +91 94522 45729 or WhatsApp us — a counsellor will confirm the next available seat.",
   },
   {
     q: "Where can I see results and campus facilities?",
@@ -237,10 +237,10 @@ export default async function BestNdaCoachingInIndiaPage() {
                 className="h-12 cursor-pointer gap-2 bg-accent px-7 font-semibold text-accent-foreground hover:bg-accent/90"
                 asChild
               >
-                <Link href="/register">
-                  Apply for admission
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <a href={`tel:${contact.phone1.replace(/\s/g, "")}`}>
+                  <Phone className="h-4 w-4" />
+                  Call Now
+                </a>
               </Button>
               <Button
                 size="lg"
@@ -248,9 +248,12 @@ export default async function BestNdaCoachingInIndiaPage() {
                 className="h-12 cursor-pointer gap-2 border-primary-foreground/35 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 asChild
               >
-                <a href={`tel:${contact.phone1.replace(/\s/g, "")}`}>
-                  <Phone className="h-4 w-4" />
-                  {contact.phone1}
+                <a
+                  href="https://wa.me/919452245729?text=Hi%21%20I%20want%20counselling%20for%20best%20NDA%20coaching%20in%20India."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp Us
                 </a>
               </Button>
             </div>
@@ -650,10 +653,10 @@ export default async function BestNdaCoachingInIndiaPage() {
                 className="h-12 cursor-pointer gap-2 bg-accent font-semibold text-accent-foreground hover:bg-accent/90"
                 asChild
               >
-                <Link href="/register">
-                  Register online
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <a href={`tel:${contact.phone1.replace(/\s/g, "")}`}>
+                  <Phone className="h-4 w-4" />
+                  Call for admission
+                </a>
               </Button>
             </div>
           </div>

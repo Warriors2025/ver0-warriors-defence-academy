@@ -122,16 +122,19 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Link href="/register">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground h-12 px-7 font-semibold gap-2">
-                  Enroll Now
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
               <a href="tel:+919452245729">
-                <Button size="lg" variant="outline" className="h-12 px-7 font-semibold gap-2 border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+                <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground h-12 px-7 font-semibold gap-2 cursor-pointer">
                   <Phone className="h-4 w-4" />
-                  Call Us
+                  Call Now
+                </Button>
+              </a>
+              <a
+                href="https://wa.me/919452245729?text=Hi%21%20I%20want%20details%20about%20this%20course."
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" variant="outline" className="h-12 px-7 font-semibold gap-2 border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground cursor-pointer">
+                  WhatsApp Us
                 </Button>
               </a>
             </div>
@@ -318,18 +321,21 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
                   {/* CTAs */}
                   <div className="px-6 pb-6 space-y-2.5">
-                    <Link href="/register">
-                      <Button className="w-full h-11 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2">
-                        Enroll Now
-                        <ArrowRight className="h-4 w-4" />
+                    <a href="tel:+919452245729">
+                      <Button className="w-full h-11 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 cursor-pointer">
+                        <Phone className="h-4 w-4" />
+                        Call Now
                       </Button>
-                    </Link>
-                    <Link href="/contact">
-                      <Button variant="outline" className="w-full h-11 gap-2 border-primary text-primary hover:bg-primary/5 font-medium">
-                        <Calendar className="h-4 w-4" />
-                        Schedule a Call
+                    </a>
+                    <a
+                      href="https://wa.me/919452245729?text=Hi%21%20I%20want%20details%20about%20this%20course."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button variant="outline" className="w-full h-11 gap-2 border-primary text-primary hover:bg-primary/5 font-medium cursor-pointer">
+                        WhatsApp Us
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </div>
 

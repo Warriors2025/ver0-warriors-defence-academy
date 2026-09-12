@@ -662,7 +662,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
             name: "How do I enrol for the best NDA coaching at Warriors Defence Academy?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Call +91 94522 45729 or +91 70810 11964, submit the counselling form on this page, or register online. Counsellors guide you on batch timing, fees, and the right NDA or foundation programme.",
+              text: "Call +91 94522 45729 or +91 70810 11964, or message us on WhatsApp. Counsellors guide you on batch timing, fees, and the right NDA or foundation programme.",
             },
           },
         ],
@@ -893,7 +893,7 @@ export function buildHomeSchemaGraph(): object {
             name: "How do I join Warriors Defence Academy for NDA coaching?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "You can register online at warriorsdefenceacademy.com/register or visit the campus at 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Admissions for the 2026-27 batch are currently open. Call +91 94522 45729 or +91 70810 11964 for enquiries.",
+              text: "Call +91 94522 45729 or +91 70810 11964, or message us on WhatsApp for counselling. Visit the campus at 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Admissions for the 2026-27 batch are currently open.",
             },
           },
           {
