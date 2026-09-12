@@ -244,6 +244,23 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       focusKeyword: "warriors defence academy facilities lucknow",
       schemaType: "EducationalOrganization",
     },
+    "best-nda-coaching-in-india": {
+      metaTitle: "Best NDA Coaching in India",
+      metaDescription:
+        "Best NDA coaching in India at Warriors Defence Academy — 50,000+ students, 5,000+ selections & India's largest GTO ground. Enroll now!",
+      metaKeywords:
+        "best nda coaching in india, best nda coaching, top nda coaching, top nda coaching in india, best nda academy india, warriors defence academy, nda coaching institute india",
+      ogTitle: "Best NDA Coaching in India | Warriors Defence Academy",
+      ogDescription:
+        "Top NDA coaching in India with 5,000+ selections, retired military faculty and India's largest GTO ground. Apply for counselling today.",
+      twitterTitle: "Best NDA Coaching in India | Warriors Defence Academy",
+      twitterDescription:
+        "Top NDA coaching in India — 50,000+ trained, 5,000+ selections, retired officers & India's largest GTO ground. Call +91 94522 45729.",
+      focusKeyword: "best nda coaching in india",
+      featuredSnippet:
+        "Warriors Defence Academy is among the best NDA coaching institutes in India, with 50,000+ students trained, 5,000+ selections, and India's largest GTO ground in Lucknow, Uttar Pradesh.",
+      schemaType: "EducationalOrganization",
+    },
   }
 
   const overrides = pageSeoMap[page.slug] ?? {}
@@ -590,6 +607,67 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
       description: "Admissions open for NDA, CDS & SSB coaching at Warriors Defence Academy Lucknow. 2026-27 batch — limited seats.",
       telephone: ["+91-94522-45729", "+91-70810-11964"],
     })
+  } else if (slug === "best-nda-coaching-in-india") {
+    extraNodes.push(
+      {
+        "@type": "EducationalOrganization",
+        "@id": orgId,
+        name: SITE_NAME,
+        url: SITE_URL,
+        description:
+          "Best NDA coaching in India at Warriors Defence Academy, Lucknow — 50,000+ students trained, 5,000+ selections, retired military faculty and India's largest GTO ground.",
+        foundingDate: "2010",
+        numberOfStudents: 50000,
+        telephone: ["+91-94522-45729", "+91-70810-11964"],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing",
+          addressLocality: "Lucknow",
+          addressRegion: "Uttar Pradesh",
+          postalCode: "226024",
+          addressCountry: "IN",
+        },
+        areaServed: { "@type": "Country", name: "India" },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Which is the best NDA coaching in India?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Warriors Defence Academy in Lucknow, Uttar Pradesh is widely recognised among the best NDA coaching institutes in India, with 50,000+ students trained, 5,000+ selections, retired military faculty, and India's largest GTO ground for SSB preparation.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What makes top NDA coaching in India different from ordinary tuition?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Top NDA coaching in India combines written exam mastery with full SSB training — psychology tests, GTO tasks, interview practice, physical fitness, and mentorship by officers who have served in the forces — not classroom theory alone.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Do students from outside Lucknow join for NDA coaching?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. Aspirants from across India enrol at Warriors Defence Academy for residential and day programmes. Hostel support, structured batches, and pan-India counselling make it accessible beyond Lucknow.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How do I enrol for the best NDA coaching at Warriors Defence Academy?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Call +91 94522 45729 or +91 70810 11964, submit the counselling form on this page, or register online. Counsellors guide you on batch timing, fees, and the right NDA or foundation programme.",
+            },
+          },
+        ],
+      }
+    )
   }
 
   return {

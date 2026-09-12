@@ -1,0 +1,177 @@
+---
+description: On-page SEO rules for Warriors Defence Academy. Apply automatically whenever writing or updating any web content — pages, hero sections, course descriptions, blog posts, CTAs, meta tags, or schema.
+globs:
+  - "app/**/*.tsx"
+  - "app/**/*.ts"
+  - "lib/site-content.ts"
+  - "lib/seo.ts"
+  - "lib/seo.server.ts"
+  - "components/sections/**/*.tsx"
+  - "lib/cms-pages.ts"
+alwaysApply: false
+---
+
+# On-Page SEO Rules — Warriors Defence Academy (2026)
+
+Apply every applicable rule below whenever you generate or update any web content on this project.
+
+---
+
+## TARGET KEYWORDS (priority order)
+
+### Homepage primary cluster
+1. `best nda coaching in lucknow` — primary (GSC pos ~3.4)
+2. `nda coaching in lucknow` — secondary
+3. `best nda coaching` — secondary (also on India page)
+4. Brand: `warriors defence academy`, `warriors defence academy fees`
+
+### India landing (`/best-nda-coaching-in-india`)
+1. `best nda coaching in india` — primary
+2. `best nda coaching` — secondary
+3. `top nda coaching` — secondary
+4. `top nda coaching in india` — secondary
+
+### Site-wide secondary
+6. `ssb coaching in lucknow`, `cds coaching in lucknow`, `defence academy lucknow`, `nda exam date 2026`, `ssb oir`
+
+### Keyword tracking sheet (required)
+Whenever you assign or change target keywords for any page, update:
+- `seo/keyword-map.csv`
+- `seo/KEYWORD-MAP.md`
+
+Record: page, path, primary keyword, secondary keywords, status, last_updated.
+No two pages may share the same primary keyword.
+
+---
+
+## 1. TITLE TAGS
+
+- Max **53–60 characters**
+- Primary keyword in the **first 3 words**
+- Formula: `[Primary Keyword] | [Brand Name]`
+- Home page title: `Best NDA Coaching in Lucknow | Warriors Defence Academy`
+- No duplicate titles across pages
+- Include year modifier ("2026") only for time-sensitive content
+
+## 2. META DESCRIPTIONS
+
+- **120–160 characters** exactly (never exceed 160)
+- Include primary keyword naturally
+- End with a CTA: "Enroll now", "Apply today", "Call now"
+- Home page description: `Best NDA coaching in Lucknow at Warriors Defence Academy — 50,000+ students, 5,000+ selections, India's largest GTO ground. Enroll now!`
+- Every page must have a **unique** meta description
+
+## 3. H1 HEADING (most critical on-page signal)
+
+- **ONE H1 per page** — never more
+- Must contain the primary keyword
+- Home page H1: `Best NDA Coaching in` + highlight `Lucknow, India`
+- Course pages: include exam name + "coaching" + Lucknow in H1/title when commercial
+- Blog posts: include target keyword in H1; prefer GSC-winning topics (OIR, exam dates, badges, Agniveer)
+
+## 4. HEADING HIERARCHY
+
+```
+H1: Primary keyword — one per page
+  H2: Main sections (what users expect to find)
+    H3: Sub-points, steps, FAQs, examples
+```
+
+- H2s answer the implied question of that section
+- Include LSI/semantic keywords in H2s (synonyms, related terms)
+- Never skip levels (H1 → H3 without H2)
+
+## 5. KEYWORD PLACEMENT — place primary keyword in ALL of:
+
+1. Title tag (first 3 words)
+2. H1 heading
+3. First 100 words of body content
+4. At least one H2 subheading
+5. URL slug
+6. Image alt text (where image relates to the topic)
+7. Meta description
+
+**Density:** 1–2% natural usage. Never stuff keywords.
+
+## 6. URL SLUGS
+
+- Short, lowercase, hyphenated: `/courses/nda-coaching` ✅
+- Keyword-rich, no stop words (a, the, of)
+- No dates in evergreen content URLs
+
+## 7. CONTENT QUALITY RULES
+
+- Answer the page's target question in the **first 100–150 words**
+- Include at least one of: stat, testimonial quote, or specific result
+- E-E-A-T signals required: credentials, selection numbers, faculty bios
+- Keep content updated — add "Last Updated" when refreshing
+- Every sentence must add value — no padding
+
+## 8. IMAGE OPTIMIZATION
+
+- File names: descriptive + keyword, hyphenated (`nda-coaching-gto-ground-lucknow.webp`)
+- Alt text: natural description + keyword (`alt="NDA coaching students at Warriors Defence Academy Lucknow"`)
+- Format: **WebP** always (JPEG fallback for photos)
+- Use `next/image` — never raw `<img>` tags
+- Add `priority` prop to above-the-fold images (hero carousel first slide)
+
+## 9. INTERNAL LINKING
+
+- **3–5 internal links** per new page or post
+- Anchor text must be descriptive keywords — never "click here"
+- Link from high-traffic pages to important course/contact pages
+- All important pages must be reachable within 3 clicks from homepage
+
+## 10. SCHEMA MARKUP — use correct type per page
+
+| Page | Schema Type |
+|---|---|
+| Homepage | Full `@graph` — see `lib/seo.ts buildHomeSchemaGraph()` |
+| Course pages | `Course` + `EducationalOrganization` |
+| Blog / articles | `Article` or `BlogPosting` |
+| FAQ sections | `FAQPage` |
+| Contact / location | `LocalBusiness` + `PostalAddress` |
+| Any page | `BreadcrumbList` |
+
+- Homepage schema is already built in `buildHomeSchemaGraph()` — do not simplify it
+- Add `FAQPage` schema whenever there is a visible FAQ section
+
+## 11. SITE-SPECIFIC DEFAULTS
+
+When writing any content for Warriors Defence Academy always include:
+
+- **Academy name:** Warriors Defence Academy (not "WDA" in body copy)
+- **Location:** Lucknow, Uttar Pradesh (not just "Lucknow" for pan-India content)
+- **Phone:** +91 94522 45729 (primary), +91 70810 11964 (secondary)
+- **Address:** 545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing, Lucknow - 226024
+- **Key stats to use:** 50,000+ students trained, 5,000+ selections, 200+ expert mentors, 15+ years, AIR #1 multiple years
+- **USP phrases:** "India's largest GTO ground", "retired military officers", "India's best NDA coaching"
+
+## 12. CORE WEB VITALS — never degrade these
+
+- Always use `next/image` (auto-optimised)
+- Add `priority` on LCP image (hero carousel slide 1)
+- No layout shift from dynamic content — use skeleton loaders
+- Avoid render-blocking scripts in `<head>`
+
+## 13. AI SEARCH / FEATURED SNIPPETS
+
+- Answer questions directly in the **first sentence** under each heading
+- Use numbered lists for processes, bullet lists for features
+- Include exact question phrases as H2/H3 headings
+- Add specific numbers and dates — AI engines prefer citable facts
+
+---
+
+## QUICK CHECKLIST — verify before every content change
+
+- [ ] Keyword map updated (`seo/keyword-map.csv` + `seo/KEYWORD-MAP.md`) if targets changed
+- [ ] Primary keyword in title tag (≤60 chars, keyword first)
+- [ ] Unique meta description (120–160 chars, CTA included)
+- [ ] Single H1 contains primary keyword
+- [ ] Keyword appears in first 100 words
+- [ ] 3–5 internal links with descriptive anchor text
+- [ ] All images: WebP, descriptive alt text, `next/image`
+- [ ] Schema type correct for the page
+- [ ] No keyword stuffing (natural, 1–2% density)
+- [ ] Content answers search intent immediately

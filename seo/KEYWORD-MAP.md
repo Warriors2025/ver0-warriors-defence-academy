@@ -16,7 +16,7 @@ See also: [`GSC-INSIGHTS-2026-09.md`](./GSC-INSIGHTS-2026-09.md) · [`gsc-querie
 |---|---|---|---|
 | best nda coaching in lucknow | **Primary** | Pos 3.4 · 1.9K impr · 24 clicks | Title, H1, meta, FAQ, schema |
 | nda coaching in lucknow | Secondary | Pos 4.8 · 2.0K impr | Tagline, courses H1, body |
-| best nda coaching in india | Secondary (chase) | Pos 13.2 · 1.1K impr · weak CTR | Body / FAQ — not primary until top-10 |
+| best nda coaching in india | **Owned by** `/best-nda-coaching-in-india` | Pos 13.2 · 1.1K impr · weak CTR | Dedicated India landing — not homepage primary |
 | defence academy lucknow | LSI | Pos 4.7 · 956 impr | About, schema |
 | warriors defence academy fees | Commercial support | Pos ~2 · strong brand CTR | Fee page + homepage CTA |
 
@@ -24,7 +24,8 @@ See also: [`GSC-INSIGHTS-2026-09.md`](./GSC-INSIGHTS-2026-09.md) · [`gsc-querie
 
 | Page | Path | Primary keyword | Secondary keywords | Status |
 |---|---|---|---|---|
-| Homepage | `/` | best nda coaching in lucknow | nda coaching in lucknow; best nda coaching in india; defence academy lucknow; warriors defence academy | optimized |
+| Homepage | `/` | best nda coaching in lucknow | nda coaching in lucknow; best nda coaching; defence academy lucknow; warriors defence academy | optimized |
+| Best NDA Coaching in India | `/best-nda-coaching-in-india` | best nda coaching in india | best nda coaching; top nda coaching; top nda coaching in india | optimized |
 | About | `/about` | warriors defence academy lucknow | defence academy lucknow; wda academy lucknow | optimized |
 | Courses | `/courses` | nda coaching in lucknow | cds coaching in lucknow; ssb coaching in lucknow; afcat coaching | optimized |
 | Contact | `/contact` | warriors defence academy lucknow address | warriors defence academy contact number; nda coaching lucknow address | optimized |
@@ -50,6 +51,5 @@ See also: [`GSC-INSIGHTS-2026-09.md`](./GSC-INSIGHTS-2026-09.md) · [`gsc-querie
 
 ## Rules
 
-- Do **not** cannibalize: homepage owns `best nda coaching in lucknow`; course listing can share `nda coaching in lucknow` as listing intent, individual NDA course deepens written+SSB offer.
-- National “best nda coaching in india” stays secondary until GSC position ≤ 8.
+- Do **not** cannibalize: homepage owns `best nda coaching in lucknow`; `/best-nda-coaching-in-india` owns `best nda coaching in india` (plus top nda coaching variants).
 - After every SEO content change, update this sheet + `keyword-map.csv`.

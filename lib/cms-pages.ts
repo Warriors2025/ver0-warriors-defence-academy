@@ -107,6 +107,14 @@ export const CMS_PAGES: CmsPage[] = [
     adminPath: "/admin/editor/register",
     sections: ["hero", "form"],
   },
+  {
+    slug: "best-nda-coaching-in-india",
+    title: "Best NDA Coaching in India",
+    path: "/best-nda-coaching-in-india",
+    description: "National landing page for best and top NDA coaching in India — proof, programmes, FAQs, and lead capture.",
+    editable: false,
+    sections: ["hero", "proof", "programmes", "faqs", "cta"],
+  },
 ]
 
 export function getCmsPage(slug: string) {

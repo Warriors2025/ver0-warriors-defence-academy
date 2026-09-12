@@ -40,6 +40,7 @@ export const DEFAULT_NAVIGATION: NavigationContent = {
   footerQuickLinks: [
     { title: "Home", href: "/" },
     { title: "About Us", href: "/about" },
+    { title: "Best NDA Coaching in India", href: "/best-nda-coaching-in-india" },
     { title: "Courses", href: "/courses" },
     { title: "Results", href: "/results" },
     { title: "Blog", href: "/blog" },
