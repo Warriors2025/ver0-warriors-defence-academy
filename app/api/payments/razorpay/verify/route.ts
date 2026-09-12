@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { createServerClient } from "@/lib/supabase"
 import { getRazorpayClient, makeReceiptNo, verifyPaymentSignature } from "@/lib/razorpay"
+import { notifyRegistrationPaid } from "@/lib/registration-notify"
 
 export const runtime = "nodejs"
 
@@ -37,7 +38,9 @@ export async function POST(request: Request) {
     const db = createServerClient()
     const { data: registration, error: fetchError } = await db
       .from("registrations")
-      .select("registration_id, razorpay_order_id, receipt_no, payment_status")
+      .select(
+        "registration_id, first_name, last_name, phone, email, razorpay_order_id, receipt_no, payment_status, amount"
+      )
       .eq("registration_id", registrationId)
       .single()
 
@@ -75,7 +78,9 @@ export async function POST(request: Request) {
     }
 
     const receiptNo = registration.receipt_no || makeReceiptNo(registrationId)
-    if (registration.payment_status !== "paid") {
+    const alreadyPaid = registration.payment_status === "paid"
+
+    if (!alreadyPaid) {
       // status must be one of: pending | contacted | enrolled | rejected
       const { error: updateError } = await db
         .from("registrations")
@@ -101,7 +106,33 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, receiptNo })
+    const amount =
+      typeof registration.amount === "number" && registration.amount > 0
+        ? registration.amount
+        : 1499
+    const name = `${registration.first_name} ${registration.last_name}`.trim()
+
+    // Best-effort WhatsApp / SMS — never block the success response
+    if (!alreadyPaid && registration.phone) {
+      void notifyRegistrationPaid({
+        phone: registration.phone,
+        name: name || "Cadet",
+        receiptNo,
+        registrationId,
+        amount,
+        paymentId,
+      })
+    }
+
+    return NextResponse.json({
+      success: true,
+      receiptNo,
+      paymentId,
+      registrationId,
+      amount,
+      name,
+      phone: registration.phone,
+    })
   } catch (error) {
     console.error("Razorpay verify error:", error)
     return NextResponse.json(

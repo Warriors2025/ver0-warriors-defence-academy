@@ -32,7 +32,14 @@ export function FloatingCtaButtons({
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const embed = params.get("embed")
-    setIsEmbed(embed === "1" || embed === "true")
+    const inIframe = (() => {
+      try {
+        return window.self !== window.top
+      } catch {
+        return true
+      }
+    })()
+    setIsEmbed(embed === "1" || embed === "true" || inIframe)
   }, [])
 
   // Hide on admin/payment pages and when iframed into WordPress (?embed=1)

@@ -9,7 +9,7 @@ function AdminBarOffsetInner({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const showBar = session && !pathname.startsWith("/admin") && searchParams.get("cmsEditor") !== "1"
+  const showBar = session && !pathname.startsWith("/admin") && searchParams.get("cmsEditor") !== "1" && searchParams.get("embed") !== "1" && searchParams.get("embed") !== "true"
   return <div className={showBar ? "pt-9" : undefined}>{children}</div>
 }
 

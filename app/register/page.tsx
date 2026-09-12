@@ -28,8 +28,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const hero = pages.register.hero
 
   if (isEmbed) {
-    // Compact layout for WordPress iframe: no min-h-screen (that created
-    // a huge empty gap), no site chrome, tight vertical padding.
+    // Form-only layout for WordPress iframe on /ssb-registration/
     return (
       <main
         className="bg-background"
@@ -38,17 +37,9 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
       >
         <PageJsonLd data={schema} />
         <IframeResizerContent />
-        <section className="pt-3 pb-2">
-          <div className="container mx-auto px-3 sm:px-4">
-            <div className="max-w-3xl mx-auto text-center mb-4">
-              <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-1">
-                {hero.title}
-              </h1>
-              <p className="text-muted-foreground text-sm">
-                {hero.subtitle}
-              </p>
-            </div>
-            <RegisterForm />
+        <section className="pt-2 pb-2">
+          <div className="w-full max-w-4xl mx-auto px-2 sm:px-3 md:px-4">
+            <RegisterForm embed />
           </div>
         </section>
       </main>

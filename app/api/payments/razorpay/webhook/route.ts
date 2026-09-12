@@ -55,6 +55,24 @@ export async function POST(request: Request) {
 
       if (updateError) {
         console.error("Webhook: failed to mark registration as paid:", updateError)
+      } else {
+        // Notify if client-side verify never ran (tab closed early)
+        const { data: full } = await db
+          .from("registrations")
+          .select("registration_id, first_name, last_name, phone, amount")
+          .eq("registration_id", registration.registration_id)
+          .single()
+        if (full?.phone) {
+          const { notifyRegistrationPaid } = await import("@/lib/registration-notify")
+          void notifyRegistrationPaid({
+            phone: full.phone,
+            name: `${full.first_name} ${full.last_name}`.trim() || "Cadet",
+            receiptNo,
+            registrationId: full.registration_id,
+            amount: typeof full.amount === "number" && full.amount > 0 ? full.amount : 1499,
+            paymentId,
+          })
+        }
       }
     }
   } else if (event.event === "payment.failed" && orderId) {

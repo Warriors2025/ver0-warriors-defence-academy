@@ -65,9 +65,7 @@ export async function POST(request: Request) {
       hostel_required:       data.hostelRequired        ?? false,
       highest_qualification: data.highestQualification  || null,
       board:                 data.board                 || null,
-      passing_year:          data.passingYear           || null,
       percentage:            data.percentage            || null,
-      school_name:           data.schoolName            || null,
       status:                "pending",
     })
 

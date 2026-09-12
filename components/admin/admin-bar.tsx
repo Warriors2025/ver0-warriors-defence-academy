@@ -16,7 +16,7 @@ function AdminBarInner() {
   const searchParams = useSearchParams()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  if (!session || pathname.startsWith("/admin") || searchParams.get("cmsEditor") === "1") return null
+  if (!session || pathname.startsWith("/admin") || searchParams.get("cmsEditor") === "1" || searchParams.get("embed") === "1" || searchParams.get("embed") === "true") return null
 
   const currentPage = CMS_PAGES.find((p) => p.path === pathname)
 

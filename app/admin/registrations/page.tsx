@@ -112,7 +112,12 @@ export default async function RegistrationsPage() {
                     {r.gender && <span>Gender: {r.gender}</span>}
                     {r.date_of_birth && <span>DOB: {r.date_of_birth}</span>}
                     {r.city && r.state && <span>City: {r.city}, {r.state}</span>}
-                    {r.highest_qualification && <span>Education: {r.highest_qualification} ({r.passing_year})</span>}
+                    {r.highest_qualification && (
+                      <span>
+                        Education: {r.highest_qualification}
+                        {r.passing_year ? ` (${r.passing_year})` : ""}
+                      </span>
+                    )}
                     {r.hostel_required && <span className="text-accent font-medium">Hostel required</span>}
                   </div>
                 </div>
