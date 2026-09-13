@@ -6,20 +6,25 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { getFacilities } from "@/lib/facilities-data"
 import { getSiteContent } from "@/lib/site-content.server"
+import { getPageSeo, buildPageMetadata, getPageSchemaJsonLd } from "@/lib/seo.server"
+import { PageJsonLd } from "@/components/seo/page-json-ld"
 import { ArrowRight, Building2, CheckCircle, ChevronRight } from "lucide-react"
 
-export const metadata: Metadata = {
-  title: "Campus Facilities | Warriors Defence Academy",
-  description:
-    "Explore world-class facilities at Warriors Defence Academy — GTO ground, library, mock tests, sports, English classes, doubt counter, and expert mentorship in Lucknow.",
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo("facilities")
+  return buildPageMetadata("facilities", seo)
 }
 
 export default async function FacilitiesPage() {
-  const content = await getSiteContent()
+  const [content, schema] = await Promise.all([
+    getSiteContent(),
+    getPageSchemaJsonLd("facilities"),
+  ])
   const facilities = getFacilities(content.sections.facilityItems)
 
   return (
     <main className="min-h-screen">
+      <PageJsonLd data={schema} />
       <Header />
 
       <section className="relative bg-primary text-primary-foreground overflow-hidden">

@@ -38,7 +38,7 @@ export function buildPageMetadata(slug: string, seo: PageSeo): Metadata {
 export function buildPathMetadata(
   seo: PageSeo,
   path: string,
-  isHome = false,
+  _isHome = false,
   ogType: "website" | "article" = "website"
 ): Metadata {
   const canonical = seo.canonicalUrl || `${SITE_URL}${path === "/" ? "" : path}`
@@ -49,7 +49,9 @@ export function buildPathMetadata(
     : undefined
 
   return {
-    title: isHome ? { default: title } : title,
+    // Absolute titles prevent layout `template: "%s | Warriors Defence Academy"`
+    // from doubling the brand on every page.
+    title: { absolute: title },
     description,
     keywords,
     alternates: { canonical },

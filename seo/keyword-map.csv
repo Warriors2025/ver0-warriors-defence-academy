@@ -1,25 +1,57 @@
 page,path,primary_keyword,secondary_keywords,intent,status,last_updated,notes
-Homepage,/,best nda coaching in lucknow,"nda coaching in lucknow; best nda coaching; defence academy lucknow; warriors defence academy",commercial,optimized,2026-09-12,"GSC local KW primary; India KW moved to dedicated page"
-Best NDA Coaching India,/best-nda-coaching-in-india,best nda coaching in india,"best nda coaching; top nda coaching; top nda coaching in india",commercial,optimized,2026-09-12,"National commercial landing — conversion + content depth"
-About,/about,warriors defence academy lucknow,"defence academy lucknow; wda academy lucknow",informational,optimized,2026-09-11,Brand navigational cluster
-Courses,/courses,nda coaching in lucknow,"cds coaching in lucknow; ssb coaching in lucknow; afcat coaching",commercial,optimized,2026-09-11,Listing intent for local coaching
-Contact,/contact,warriors defence academy lucknow address,"warriors defence academy contact number; nda coaching lucknow address",navigational,optimized,2026-09-11,GSC address queries CTR 8%+
-Results,/results,nda coaching results lucknow,"nda selections; ssb success rate; defence coaching results india",informational,mapped,2026-09-11,
-Admissions,/admissions,nda coaching admission lucknow 2026,"warriors defence academy fees; defence coaching lucknow admission",transactional,mapped,2026-09-11,
-Register,/register,register nda coaching lucknow,"nda coaching registration; apply nda coaching lucknow",transactional,mapped,2026-09-11,
-Fee payment,/fee-payment,warriors defence academy fees,"warriors defence academy lucknow fees structure; wda academy lucknow fees",transactional,optimized,2026-09-11,Brand+fees cluster high CTR
-Blog,/blog,nda exam date 2026,"ssb oir questions; lecturette topics for ssb; agniveer recruitment 2026",informational,optimized,2026-09-11,GSC top query 1543 clicks
-Gallery,/gallery,warriors defence academy photos,"warriors defence academy campus lucknow; gto ground photos",informational,optimized,2026-09-11,825 impr photos query
-Facilities,/facilities,warriors defence academy facilities lucknow,"gto ground lucknow; nda coaching infrastructure",informational,mapped,2026-09-11,
-Course NDA,/courses/nda,nda coaching in lucknow,"best nda coaching in lucknow",commercial,optimized,2026-09-11,
-Course Foundation,/courses/nda-foundation,nda foundation coaching after 10th in lucknow,"nda coaching after 10th",commercial,optimized,2026-09-11,
-Course SSB,/courses/ssb,ssb coaching in lucknow,"best ssb coaching in lucknow; oir test",commercial,optimized,2026-09-11,GSC pos 7 quick win
-Course CDS,/courses/cds,cds coaching in lucknow,"best cds coaching lucknow",commercial,optimized,2026-09-11,GSC pos 10
-Course Agniveer,/courses/navy-agniveer,agniveer recruitment 2026,"agniveer vacancy 2026",commercial,optimized,2026-09-11,203K impr page opportunity
-Blog OIR,/blog/ssb-oir-test-sample-questions-with-answers,ssb oir test sample questions with answers,"oir questions for ssb; oir in ssb",informational,seeded,2026-09-11,GSC #1 page 3510 clicks
-Blog NDA dates,/blog/nda-2026-exam-dates-eligibility-application-process,nda exam date 2026,"nda 2026 exam date",informational,seeded,2026-09-11,GSC 1834 clicks
-Blog Badges,/blog/significance-of-all-badges-of-indian-army-best-defence-coaching-in-lucknow,indian army badges,"badges of indian army",informational,seeded,2026-09-11,GSC 1700 clicks
-Blog Aircraft,/blog/list-of-indian-military-aircraft,indian air force aircraft list,"indian air force fighter planes list",informational,seeded,2026-09-11,GSC 1351 clicks
-Blog Agniveer guide,/blog/agniveer-recruitment-2026-complete-guide-to-army-navy-air-force-eligibility-exam-pattern-preparation,agniveer recruitment 2026,"agniveer vacancy 2026",informational,seeded,2026-09-11,203K impr CTR fix target
-Blog Lecturette,/blog/latest-lecturette-topics-for-ssb-2026-with-answers,lecturette topics for ssb with answers,"ssb lecturette topics with answers",informational,seeded,2026-09-11,
-Blog WAT,/blog/100-ssb-wat-negative-words-with-answers,ssb wat negative words with answers,"wat negative words",informational,seeded,2026-09-11,
+Homepage,/,best nda coaching in lucknow,"nda coaching in lucknow; best nda coaching; defence academy lucknow; warriors defence academy",commercial,optimized,2026-09-12,"Title/meta refreshed; absolute titles"
+Best NDA Coaching India,/best-nda-coaching-in-india,best nda coaching in india,"best nda coaching; top nda coaching; top nda coaching in india",commercial,optimized,2026-09-12,"National commercial landing"
+About,/about,warriors defence academy lucknow,"defence academy lucknow; wda academy lucknow",informational,optimized,2026-09-12,Brand navigational cluster
+Courses,/courses,nda coaching in lucknow,"cds coaching in lucknow; ssb coaching in lucknow; afcat coaching",commercial,optimized,2026-09-12,Listing intent for local coaching
+Contact,/contact,warriors defence academy lucknow address,"warriors defence academy contact number; nda coaching lucknow address",navigational,optimized,2026-09-12,GSC address queries
+Results,/results,nda coaching results lucknow,"nda selections; ssb success rate; defence coaching results india",informational,optimized,2026-09-12,
+Admissions,/admissions,nda coaching admission lucknow 2026,"warriors defence academy fees; defence coaching lucknow admission",transactional,optimized,2026-09-12,
+Register,/register,register nda coaching lucknow,"nda coaching registration; apply nda coaching lucknow",transactional,optimized,2026-09-12,
+Fee payment,/fee-payment,warriors defence academy fees,"warriors defence academy lucknow fees structure; wda academy lucknow fees",transactional,optimized,2026-09-12,Brand+fees cluster
+Blog,/blog,nda exam date 2026,"ssb oir questions; lecturette topics for ssb; agniveer recruitment 2026",informational,optimized,2026-09-12,Hub for GSC content
+Gallery,/gallery,warriors defence academy photos,"warriors defence academy campus lucknow; gto ground photos",informational,optimized,2026-09-12,
+Facilities,/facilities,warriors defence academy facilities lucknow,"gto ground lucknow; nda coaching infrastructure",informational,optimized,2026-09-12,Now uses getPageSeo + schema
+Course NDA,/courses/nda,nda coaching in lucknow,"best nda coaching in lucknow",commercial,optimized,2026-09-12,Shares listing KW — title differentiated
+Course Foundation,/courses/nda-foundation,nda foundation coaching after 10th in lucknow,"nda coaching after 10th",commercial,optimized,2026-09-12,
+Course SSB,/courses/ssb,ssb coaching in lucknow,"best ssb coaching in lucknow; oir test",commercial,optimized,2026-09-12,
+Course CDS,/courses/cds,cds coaching in lucknow,"best cds coaching lucknow",commercial,optimized,2026-09-12,
+Course Agniveer,/courses/navy-agniveer,agniveer recruitment 2026,"agniveer vacancy 2026",commercial,optimized,2026-09-12,
+Blog OIR,/blog/ssb-oir-test-sample-questions-with-answers,ssb oir test sample questions with answers,"oir questions for ssb; oir in ssb",informational,optimized,2026-09-12,GSC #1 page
+Blog NDA dates,/blog/nda-2026-exam-dates-eligibility-application-process,nda exam date 2026,"nda 2026 exam date",informational,optimized,2026-09-12,Shares blog hub KW — title differentiated
+Blog Badges,/blog/significance-of-all-badges-of-indian-army-best-defence-coaching-in-lucknow,indian army badges,"badges of indian army",informational,optimized,2026-09-12,
+Blog Aircraft,/blog/list-of-indian-military-aircraft,indian air force aircraft list,"indian air force fighter planes list",informational,optimized,2026-09-12,
+Blog Agniveer guide,/blog/agniveer-recruitment-2026-complete-guide-to-army-navy-air-force-eligibility-exam-pattern-preparation,agniveer recruitment 2026,"agniveer vacancy 2026",informational,optimized,2026-09-12,Shares course Agniveer KW — intent differs
+Blog Lecturette,/blog/latest-lecturette-topics-for-ssb-2026-with-answers,lecturette topics for ssb with answers,"ssb lecturette topics with answers",informational,optimized,2026-09-12,
+Blog WAT,/blog/100-ssb-wat-negative-words-with-answers,ssb wat negative words with answers,"wat negative words",informational,optimized,2026-09-12,
+Blog NDA 2027 tips,/blog/10-tips-to-start-nda-1-2027-preparation-early,nda 1 2027 preparation,"nda preparation tips",informational,optimized,2026-09-12,
+Blog NDA cadet day,/blog/a-day-in-the-life-of-an-nda-cadet-discipline-training-and-routine,day in the life of an nda cadet,"nda khadakwasla life",informational,optimized,2026-09-12,
+Blog AFCAT 2,/blog/afcat-2-2026-notification-exam-date-vacancies-and-eligibility-for-indian-air-for,afcat 2 2026 notification,"afcat exam date 2026",informational,optimized,2026-09-12,
+Blog Air Force XY,/blog/air-force-xy-group-entry-a-complete-guide-for-aspirants,air force x y group entry,"airmen entry",informational,optimized,2026-09-12,
+Blog NDA books,/blog/best-books-for-nda-2026-preparation-subject-wise-list,best books for nda 2026 preparation,"nda books list",informational,optimized,2026-09-12,
+Blog CDS 2,/blog/cds-2-2026-notification-exam-date-vacancies-and-how-to-apply,cds 2 2026 notification,"cds exam date 2026",informational,optimized,2026-09-12,
+Blog Current affairs,/blog/defence-current-affairs-round-up-what-nda-and-cds-aspirants-should-know,defence current affairs for nda,"nda current affairs",informational,optimized,2026-09-12,
+Blog Entry compare,/blog/difference-between-nda-cds-afcat-and-navy-agniveer-which-path-is-right-for-you,difference between nda cds afcat,"nda vs cds vs afcat",informational,optimized,2026-09-12,
+Blog Navy uniforms,/blog/different-types-of-indian-navy-uniforms,indian navy uniforms,"navy uniform types",informational,optimized,2026-09-12,
+Blog English GK,/blog/english-and-general-knowledge-preparation-strategy-for-defence-exams,english and gk for defence exams,"nda english preparation",informational,optimized,2026-09-12,
+Blog FAQs,/blog/frequently-asked-questions-about-joining-nda-cds-and-ssb,nda cds ssb faqs,"joining nda faqs",informational,optimized,2026-09-12,
+Blog GTO,/blog/gto-tasks-explained-a-complete-guide-to-group-testing-at-ssb,gto tasks explained,"ssb gto tasks",informational,optimized,2026-09-12,
+Blog GD,/blog/how-to-crack-group-discussion-in-ssb-practical-tips,how to crack group discussion in ssb,"ssb gd tips",informational,optimized,2026-09-12,
+Blog Boards,/blog/how-to-manage-ndacds-preparation-alongside-board-exams,nda preparation with board exams,"nda with class 12",informational,optimized,2026-09-12,
+Blog 3 months,/blog/how-to-prepare-for-nda-in-3-months-a-realistic-study-plan,how to prepare for nda in 3 months,"nda crash course plan",informational,optimized,2026-09-12,
+Blog OLQs,/blog/how-to-present-officer-like-qualities-olqs-at-ssb,officer like qualities at ssb,"olq in ssb",informational,optimized,2026-09-12,
+Blog Fitness,/blog/importance-of-physical-fitness-for-defence-aspirants-building-the-right-habits-e,physical fitness for defence aspirants,"defence pt standards",informational,optimized,2026-09-12,
+Blog Navy SSR,/blog/indian-navy-agniveer-ssr-entry-eligibility-exam-pattern-and-preparation,indian navy agniveer ssr,"navy ssr exam",informational,optimized,2026-09-12,
+Blog NDA life,/blog/life-at-nda-khadakwasla-training-discipline-and-growth,life at nda khadakwasla,"nda academy life",informational,optimized,2026-09-12,
+Blog Drones,/blog/list-of-drones-used-by-indian-armed-forces,drones used by indian armed forces,"indian armed forces uav",informational,optimized,2026-09-12,
+Blog Maths,/blog/mathematics-preparation-strategy-for-nda-topic-wise-weightage-and-tips,mathematics preparation strategy for nda,"nda maths tips",informational,optimized,2026-09-12,
+Blog NDA 2,/blog/nda-2-2026-notification-exam-date-eligibility-vacancies-and-complete-guide,nda 2 2026 notification,"nda 2 2026 exam date",informational,optimized,2026-09-12,
+Blog Eligibility,/blog/nda-eligibility-criteria-2026-age-qualification-and-physical-standards,nda eligibility criteria 2026,"nda age limit 2026",informational,optimized,2026-09-12,
+Blog NDA fitness,/blog/nda-physical-fitness-standards-what-you-need-to-know-before-applying,nda physical fitness standards,"nda physical requirements",informational,optimized,2026-09-12,
+Blog Salary,/blog/nda-salary-and-career-growth-what-to-expect-after-selection,nda salary and career growth,"nda officer salary",informational,optimized,2026-09-12,
+Blog NDA vs CDS,/blog/nda-vs-cds-which-defence-exam-should-you-choose-after-class-12,nda vs cds after class 12,"nda or cds",informational,optimized,2026-09-12,
+Blog Psych,/blog/psychological-tests-in-ssb-tat-wat-srt-and-self-description-explained,psychological tests in ssb,"ssb tat wat srt",informational,optimized,2026-09-12,
+Blog NCC,/blog/role-of-ncc-in-defence-exam-selection-benefits-explained,role of ncc in defence exam selection,"ncc certificate benefits",informational,optimized,2026-09-12,
+Blog SSB 5 stages,/blog/ssb-interview-the-5-stages-explained-for-first-time-candidates,ssb interview 5 stages,"ssb procedure",informational,optimized,2026-09-12,
+Blog SSB mistakes,/blog/top-7-mistakes-candidates-make-in-the-ssb-interview,ssb interview mistakes,"ssb common mistakes",informational,optimized,2026-09-12,
+Blog Why WDA,/blog/why-warriors-defence-academy-is-among-the-best-nda-coaching-institutes-in-luckno,best nda coaching institutes in lucknow,"why choose warriors defence academy",informational,optimized,2026-09-12,Avoid home primary KW in title
+Blog Women NDA,/blog/women-in-nda-complete-guide-to-the-women-special-entry-scheme,women in nda,"nda for girls",informational,optimized,2026-09-12,

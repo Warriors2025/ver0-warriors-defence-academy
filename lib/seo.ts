@@ -1,5 +1,6 @@
 import type { CmsPage } from "@/lib/cms-pages"
 import { CMS_PAGES } from "@/lib/cms-pages"
+import { getBlogSeoOverride } from "@/lib/blog-seo"
 
 export const SITE_URL = "https://warriorsdefenceacademy.com"
 export const SITE_NAME = "Warriors Defence Academy"
@@ -134,12 +135,12 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
     }
   }
 
-  // Per-page optimised defaults
+  // Per-page optimised defaults (title 53–60 absolute; description 120–160 + CTA)
   const pageSeoMap: Record<string, Partial<PageSeo>> = {
     about: {
       metaTitle: "Warriors Defence Academy Lucknow | Best Defence Academy",
       metaDescription:
-        "About Warriors Defence Academy Lucknow — best defence academy with 50,000+ students, 5,000+ selections & retired military faculty. Know our story.",
+        "Warriors Defence Academy Lucknow — 50,000+ students, 5,000+ selections, retired military faculty & India's largest GTO ground. Know our story!",
       metaKeywords:
         "warriors defence academy lucknow, defence academy lucknow, best defence academy lucknow, wda academy lucknow, nda coaching institute lucknow",
       ogTitle: "Warriors Defence Academy Lucknow | Best Defence Academy",
@@ -149,12 +150,12 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       schemaType: "EducationalOrganization",
     },
     courses: {
-      metaTitle: "NDA Coaching in Lucknow Courses | CDS SSB AFCAT",
+      metaTitle: "NDA Coaching Courses Lucknow | Warriors Defence Academy",
       metaDescription:
-        "NDA coaching in Lucknow plus CDS, AFCAT & SSB coaching at Warriors Defence Academy. 9+ courses, 5,000+ selections. Enroll today!",
+        "NDA coaching in Lucknow plus CDS, AFCAT & SSB courses at Warriors Defence Academy — 9+ programmes, 5,000+ selections. Enroll today!",
       metaKeywords:
         "nda coaching in lucknow, nda coaching courses lucknow, cds coaching in lucknow, ssb coaching in lucknow, afcat coaching, defence academy lucknow courses",
-      ogTitle: "NDA Coaching in Lucknow | CDS SSB AFCAT Courses",
+      ogTitle: "NDA Coaching Courses Lucknow | Warriors Defence Academy",
       ogDescription:
         "NDA, CDS, AFCAT & SSB coaching in Lucknow at Warriors Defence Academy — 9+ programmes, retired officers, 5,000+ selections. Apply now.",
       focusKeyword: "nda coaching in lucknow",
@@ -163,7 +164,7 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
     contact: {
       metaTitle: "Warriors Defence Academy Lucknow Address & Contact",
       metaDescription:
-        "Warriors Defence Academy Lucknow address: Kapoorthala Chauraha, 226024. Call +91 94522 45729 | +91 70810 11964. Visit Mon–Sat 9 AM–6 PM.",
+        "Warriors Defence Academy Lucknow address: Kapoorthala Chauraha, 226024. Call +91 94522 45729 or +91 70810 11964. Visit Mon–Sat 9 AM–6 PM!",
       metaKeywords:
         "warriors defence academy lucknow address, warriors defence academy contact number, nda coaching lucknow address, wda lucknow contact",
       ogTitle: "Warriors Defence Academy Lucknow Address & Contact",
@@ -173,79 +174,79 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       schemaType: "LocalBusiness",
     },
     results: {
-      metaTitle: "NDA Coaching Results & Selections | Warriors Defence Academy",
+      metaTitle: "NDA Coaching Results Lucknow | Warriors Defence Academy",
       metaDescription:
-        "5,000+ NDA, CDS & SSB selections from Warriors Defence Academy Lucknow. AIR #1 multiple years. 68% SSB recommendation rate. See our proud achievers.",
+        "NDA coaching results Lucknow — 5,000+ NDA, CDS & SSB selections, AIR #1 multiple years, 68% SSB rate. See our proud achievers!",
       metaKeywords:
-        "nda coaching results, warriors defence academy selections, best nda results lucknow, nda selections 2024, ssb success rate, defence coaching results india",
-      ogTitle: "NDA & SSB Results — Warriors Defence Academy Lucknow",
+        "nda coaching results lucknow, warriors defence academy selections, best nda results lucknow, nda selections 2024, ssb success rate, defence coaching results india",
+      ogTitle: "NDA Coaching Results Lucknow | Warriors Defence Academy",
       ogDescription:
         "5,000+ selections, AIR #1 multiple years, 68% SSB recommendation rate — Warriors Defence Academy is India's top-performing NDA coaching institute.",
       focusKeyword: "nda coaching results lucknow",
       schemaType: "EducationalOrganization",
     },
     admissions: {
-      metaTitle: "NDA Coaching Admissions 2026-27 | Warriors Defence Academy",
+      metaTitle: "NDA Admission Lucknow 2026 | Warriors Defence Academy",
       metaDescription:
-        "Admissions open for NDA, CDS & SSB coaching at Warriors Defence Academy, Lucknow. Limited seats. Scholarships available. Apply online or call +91 94522 45729.",
+        "NDA coaching admission Lucknow 2026 — CDS & SSB batches open, limited seats and scholarships available. Apply online or call now!",
       metaKeywords:
-        "nda coaching admission 2026, warriors defence academy admission, defence coaching lucknow admission, nda admission process, ssb coaching enrollment",
-      ogTitle: "NDA Coaching Admissions 2026-27 | Warriors Defence Academy Lucknow",
+        "nda coaching admission lucknow 2026, warriors defence academy admission, defence coaching lucknow admission, nda admission process, ssb coaching enrollment",
+      ogTitle: "NDA Admission Lucknow 2026 | Warriors Defence Academy",
       ogDescription:
         "Apply now for NDA, CDS & SSB coaching at Warriors Defence Academy Lucknow. 2026-27 batch open — limited seats. Scholarships available.",
       focusKeyword: "nda coaching admission lucknow 2026",
       schemaType: "EducationalOrganization",
     },
     register: {
-      metaTitle: "Register for NDA Coaching | Warriors Defence Academy Lucknow",
+      metaTitle: "Register NDA Coaching Lucknow | Warriors Defence Academy",
       metaDescription:
-        "Register for NDA or CDS coaching at Warriors Defence Academy, Lucknow. Counselors call you within 24 hours. Free counseling session included. Enroll now!",
+        "Register NDA coaching Lucknow at Warriors Defence Academy — CDS & SSB options too. Counsellors call within 24 hours. Enroll now!",
       metaKeywords:
-        "register warriors defence academy, nda coaching registration, defence academy lucknow enrollment, apply nda coaching lucknow",
-      ogTitle: "Register — Warriors Defence Academy | NDA Coaching Lucknow",
+        "register nda coaching lucknow, nda coaching registration, defence academy lucknow enrollment, apply nda coaching lucknow",
+      ogTitle: "Register NDA Coaching Lucknow | Warriors Defence Academy",
       ogDescription:
         "Take the first step towards your defence career. Register for NDA, CDS or SSB coaching at Warriors Defence Academy, Lucknow.",
       focusKeyword: "register nda coaching lucknow",
       schemaType: "EducationalOrganization",
     },
     blog: {
-      metaTitle: "NDA Exam Date, SSB OIR & Defence Guides | WDA Blog",
+      metaTitle: "NDA Exam Date 2026 Guides | Warriors Defence Academy",
       metaDescription:
-        "NDA 2026 exam dates, SSB OIR questions, lecturette topics, army badges & Agniveer guides from Warriors Defence Academy Lucknow. Read free tips.",
+        "NDA exam date 2026 guides plus SSB OIR, lecturette topics, army badges & Agniveer tips from Warriors Defence Academy. Read free!",
       metaKeywords:
         "nda exam date 2026, ssb oir questions, lecturette topics for ssb, indian army badges, agniveer recruitment 2026, nda syllabus, warriors defence academy blog",
-      ogTitle: "NDA Exam Date, SSB OIR & Defence Guides | WDA Blog",
+      ogTitle: "NDA Exam Date 2026 Guides | Warriors Defence Academy",
       ogDescription:
         "Free NDA exam date 2026 updates, SSB OIR practice, lecturette topics and defence career guides from Warriors Defence Academy Lucknow.",
       focusKeyword: "nda exam date 2026",
       schemaType: "Article",
     },
     gallery: {
-      metaTitle: "Warriors Defence Academy Photos | Campus Gallery Lucknow",
+      metaTitle: "Warriors Defence Academy Photos | Lucknow Campus Gallery",
       metaDescription:
-        "Warriors Defence Academy photos — GTO ground, training & campus life in Lucknow. See why students choose the best NDA coaching in Lucknow.",
+        "Warriors Defence Academy photos — GTO ground, training and campus life in Lucknow. See why aspirants choose our NDA coaching!",
       metaKeywords:
         "warriors defence academy photos, warriors defence academy gallery, nda coaching campus lucknow, gto ground photos lucknow",
-      ogTitle: "Warriors Defence Academy Photos | Campus Gallery Lucknow",
+      ogTitle: "Warriors Defence Academy Photos | Lucknow Campus Gallery",
       ogDescription:
         "Browse Warriors Defence Academy photos — India's largest GTO ground, hostel life and training at Lucknow campus.",
       focusKeyword: "warriors defence academy photos",
       schemaType: "WebPage",
     },
     facilities: {
-      metaTitle: "World-Class Facilities | Warriors Defence Academy Lucknow",
+      metaTitle: "Warriors Defence Academy Facilities | Lucknow Campus",
       metaDescription:
-        "Warriors Defence Academy Lucknow — India's largest GTO ground, library, mock test centre, sports facilities & SSB coaching infrastructure for NDA aspirants.",
+        "Warriors Defence Academy facilities Lucknow — India's largest GTO ground, library, mock tests and sports. Tour campus — call now!",
       metaKeywords:
-        "warriors defence academy facilities, gto ground lucknow, nda coaching infrastructure, defence academy sports facilities, ssb training ground india",
-      ogTitle: "Facilities at Warriors Defence Academy | India's Largest GTO Ground",
+        "warriors defence academy facilities lucknow, gto ground lucknow, nda coaching infrastructure, defence academy sports facilities, ssb training ground india",
+      ogTitle: "Warriors Defence Academy Facilities | Lucknow Campus",
       ogDescription:
-        "India's largest GTO ground, library, sports facilities, mock test centre & more at Warriors Defence Academy, Lucknow — India's best NDA coaching institute.",
+        "India's largest GTO ground, library, sports facilities, mock test centre & more at Warriors Defence Academy, Lucknow.",
       focusKeyword: "warriors defence academy facilities lucknow",
       schemaType: "EducationalOrganization",
     },
     "best-nda-coaching-in-india": {
-      metaTitle: "Best NDA Coaching in India",
+      metaTitle: "Best NDA Coaching in India | Warriors Defence Academy",
       metaDescription:
         "Best NDA coaching in India at Warriors Defence Academy — 50,000+ students, 5,000+ selections & India's largest GTO ground. Enroll now!",
       metaKeywords:
@@ -395,7 +396,7 @@ export function defaultEntitySeo(
     // GSC-aligned course titles (local commercial intent)
     const courseSeoOverrides: Record<string, Partial<PageSeo>> = {
       "/courses/nda": {
-        metaTitle: "NDA Coaching in Lucknow | Best NDA Course WDA",
+        metaTitle: "NDA Coaching in Lucknow | Warriors Defence Academy",
         metaDescription:
           "NDA coaching in Lucknow at Warriors Defence Academy — written exam + SSB, India's largest GTO ground, 5,000+ selections. Enroll now!",
         focusKeyword: "nda coaching in lucknow",
@@ -403,17 +404,17 @@ export function defaultEntitySeo(
           "nda coaching in lucknow, best nda coaching in lucknow, nda coaching lucknow, nda course lucknow, warriors defence academy",
       },
       "/courses/nda-foundation": {
-        metaTitle: "NDA Foundation Coaching After 10th in Lucknow",
+        metaTitle: "NDA Foundation After 10th | Warriors Defence Academy",
         metaDescription:
-          "NDA foundation coaching after 10th in Lucknow — school + NDA prep, hostel, PT & SSB grooming at Warriors Defence Academy. Apply today!",
+          "NDA foundation coaching after 10th in Lucknow — school + NDA prep, hostel, PT & SSB grooming. Apply today at Warriors Defence Academy!",
         focusKeyword: "nda foundation coaching after 10th in lucknow",
         metaKeywords:
           "nda foundation coaching after 10th, nda foundation course lucknow, nda coaching after 10th, best nda foundation lucknow",
       },
       "/courses/ssb": {
-        metaTitle: "SSB Coaching in Lucknow | Best SSB Training WDA",
+        metaTitle: "SSB Coaching in Lucknow | Warriors Defence Academy",
         metaDescription:
-          "Best SSB coaching in Lucknow on India's largest GTO ground — OIR, psychology, GTO & interview drills. 21-day intensive. Enroll now!",
+          "SSB coaching in Lucknow on India's largest GTO ground — OIR, psychology, GTO & interview drills. 21-day intensive. Enroll now!",
         focusKeyword: "ssb coaching in lucknow",
         metaKeywords:
           "ssb coaching in lucknow, best ssb coaching in lucknow, ssb training center lucknow, ssb interview coaching lucknow",
@@ -427,7 +428,7 @@ export function defaultEntitySeo(
           "cds coaching in lucknow, best cds coaching lucknow, cds exam coaching, warriors defence academy cds",
       },
       "/courses/navy-agniveer": {
-        metaTitle: "Agniveer Recruitment Coaching Lucknow | Navy SSR",
+        metaTitle: "Agniveer Recruitment 2026 | Warriors Defence Academy",
         metaDescription:
           "Agniveer recruitment 2026 coaching in Lucknow — Navy SSR/AA written, PT & swim training at Warriors Defence Academy. Enroll now!",
         focusKeyword: "agniveer recruitment 2026",
@@ -461,20 +462,26 @@ export function defaultEntitySeo(
       schemaType: "Course",
     }
   }
-  // Blog
-  const metaTitle = `${data.title} | Warriors Defence Academy`
+  // Blog — prefer curated SEO overrides (title 53–60, description 120–160)
+  const slug = data.path.replace(/^\/blog\//, "")
+  const blogOverride = getBlogSeoOverride(slug)
+  const metaTitle = blogOverride?.metaTitle ?? `${data.title} | ${SITE_NAME}`
+  const metaDescription =
+    blogOverride?.metaDescription ??
+    (data.description.length > 160 ? `${data.description.slice(0, 157)}...` : data.description)
   return {
     ...DEFAULT_PAGE_SEO,
     metaTitle,
-    metaDescription: data.description,
+    metaDescription,
     metaKeywords: "nda exam tips, cds preparation, ssb interview guide, warriors defence academy blog",
     canonicalUrl: `${SITE_URL}${data.path}`,
-    ogTitle: metaTitle,
-    ogDescription: data.description,
+    ogTitle: blogOverride?.ogTitle ?? metaTitle,
+    ogDescription: blogOverride?.ogDescription ?? metaDescription,
     ogImage,
-    twitterTitle: metaTitle,
-    twitterDescription: data.description,
+    twitterTitle: blogOverride?.twitterTitle ?? metaTitle,
+    twitterDescription: blogOverride?.twitterDescription ?? metaDescription,
     twitterImage: ogImage,
+    focusKeyword: blogOverride?.focusKeyword ?? "",
     schemaType: "BlogPosting",
   }
 }

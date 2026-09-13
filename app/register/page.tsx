@@ -28,7 +28,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
   const hero = pages.register.hero
 
   if (isEmbed) {
-    // Form-only layout for WordPress iframe on /ssb-registration/
+    // Title + form for WordPress iframe on /ssb-registration/
     return (
       <main
         className="bg-background"
@@ -37,8 +37,18 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
       >
         <PageJsonLd data={schema} />
         <IframeResizerContent />
-        <section className="pt-2 pb-2">
-          <div className="w-full max-w-4xl mx-auto px-2 sm:px-3 md:px-4">
+        <section className="pt-4 pb-2 sm:pt-6">
+          <div className="w-full max-w-4xl mx-auto px-3 sm:px-4 md:px-6">
+            <div className="text-center mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-tight tracking-tight">
+                {hero.title}
+              </h1>
+              {hero.subtitle ? (
+                <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  {hero.subtitle}
+                </p>
+              ) : null}
+            </div>
             <RegisterForm embed />
           </div>
         </section>

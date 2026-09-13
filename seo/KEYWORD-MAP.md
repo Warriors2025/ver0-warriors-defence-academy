@@ -29,27 +29,30 @@ See also: [`GSC-INSIGHTS-2026-09.md`](./GSC-INSIGHTS-2026-09.md) · [`gsc-querie
 | About | `/about` | warriors defence academy lucknow | defence academy lucknow; wda academy lucknow | optimized |
 | Courses | `/courses` | nda coaching in lucknow | cds coaching in lucknow; ssb coaching in lucknow; afcat coaching | optimized |
 | Contact | `/contact` | warriors defence academy lucknow address | warriors defence academy contact number; nda coaching lucknow address | optimized |
-| Results | `/results` | nda coaching results lucknow | nda selections; ssb success rate | mapped |
-| Admissions | `/admissions` | nda coaching admission lucknow 2026 | warriors defence academy fees; defence coaching lucknow admission | mapped |
-| Register | `/register` | register nda coaching lucknow | nda coaching registration | mapped |
+| Results | `/results` | nda coaching results lucknow | nda selections; ssb success rate | optimized |
+| Admissions | `/admissions` | nda coaching admission lucknow 2026 | warriors defence academy fees; defence coaching lucknow admission | optimized |
+| Register | `/register` | register nda coaching lucknow | nda coaching registration | optimized |
 | Fee payment | `/fee-payment` | warriors defence academy fees | warriors defence academy lucknow fees structure; wda academy lucknow fees | optimized |
 | Blog index | `/blog` | nda exam date 2026 | ssb oir questions; lecturette topics for ssb; agniveer recruitment 2026 | optimized |
 | Gallery | `/gallery` | warriors defence academy photos | warriors defence academy campus lucknow | optimized |
-| Facilities | `/facilities` | warriors defence academy facilities lucknow | gto ground lucknow | mapped |
+| Facilities | `/facilities` | warriors defence academy facilities lucknow | gto ground lucknow | optimized |
 | Course: NDA | `/courses/nda` | nda coaching in lucknow | best nda coaching in lucknow | optimized |
 | Course: Foundation | `/courses/nda-foundation` | nda foundation coaching after 10th in lucknow | nda coaching after 10th | optimized |
 | Course: SSB | `/courses/ssb` | ssb coaching in lucknow | best ssb coaching in lucknow; oir test | optimized |
 | Course: CDS | `/courses/cds` | cds coaching in lucknow | best cds coaching lucknow | optimized |
 | Course: Agniveer | `/courses/navy-agniveer` | agniveer recruitment 2026 | agniveer vacancy 2026 | optimized |
-| Blog: OIR | `/blog/ssb-oir-test-sample-questions-with-answers` | ssb oir test sample questions with answers | oir questions for ssb; oir in ssb | seeded |
-| Blog: NDA dates | `/blog/nda-2026-exam-dates-eligibility-application-process` | nda exam date 2026 | nda 2026 exam date; when is nda exam 2026 | seeded |
-| Blog: Badges | `/blog/significance-of-all-badges-of-indian-army-best-defence-coaching-in-lucknow` | indian army badges | badges of indian army; all badges of indian army | seeded |
-| Blog: Aircraft | `/blog/list-of-indian-military-aircraft` | indian air force aircraft list | indian air force fighter planes list | seeded |
-| Blog: Agniveer | `/blog/agniveer-recruitment-2026-complete-guide-to-army-navy-air-force-eligibility-exam-pattern-preparation` | agniveer recruitment 2026 | agniveer vacancy 2026 | seeded |
-| Blog: Lecturette | `/blog/latest-lecturette-topics-for-ssb-2026-with-answers` | lecturette topics for ssb with answers | ssb lecturette topics with answers | seeded |
-| Blog: WAT | `/blog/100-ssb-wat-negative-words-with-answers` | ssb wat negative words with answers | wat negative words | seeded |
+| Blog: OIR | `/blog/ssb-oir-test-sample-questions-with-answers` | ssb oir test sample questions with answers | oir questions for ssb; oir in ssb | optimized |
+| Blog: NDA dates | `/blog/nda-2026-exam-dates-eligibility-application-process` | nda exam date 2026 | nda 2026 exam date; when is nda exam 2026 | optimized |
+| Blog: Badges | `/blog/significance-of-all-badges-of-indian-army-best-defence-coaching-in-lucknow` | indian army badges | badges of indian army; all badges of indian army | optimized |
+| Blog: Aircraft | `/blog/list-of-indian-military-aircraft` | indian air force aircraft list | indian air force fighter planes list | optimized |
+| Blog: Agniveer | `/blog/agniveer-recruitment-2026-complete-guide-to-army-navy-air-force-eligibility-exam-pattern-preparation` | agniveer recruitment 2026 | agniveer vacancy 2026 | optimized |
+| Blog: Lecturette | `/blog/latest-lecturette-topics-for-ssb-2026-with-answers` | lecturette topics for ssb with answers | ssb lecturette topics with answers | optimized |
+| Blog: WAT | `/blog/100-ssb-wat-negative-words-with-answers` | ssb wat negative words with answers | wat negative words | optimized |
+
+> Full blog inventory (39 posts) with unique primary keywords: see [`keyword-map.csv`](./keyword-map.csv). Meta titles/descriptions live in `lib/seo.ts` + `lib/blog-seo.ts` (absolute titles, 50–60 / 120–160).
 
 ## Rules
 
 - Do **not** cannibalize: homepage owns `best nda coaching in lucknow`; `/best-nda-coaching-in-india` owns `best nda coaching in india` (plus top nda coaching variants).
 - After every SEO content change, update this sheet + `keyword-map.csv`.
+- Titles use `{ absolute }` in metadata so the root layout template does not double `| Warriors Defence Academy`.
