@@ -11,6 +11,7 @@ import {
   entityHeadingKey,
   defaultEntitySeo,
   buildPresetSchema,
+  type EntitySchemaExtra,
   buildHomeSchemaGraph,
   buildPageSchemaGraph,
   resolveHeading,
@@ -88,7 +89,7 @@ export function buildPathMetadata(
 export async function getEntitySeo(
   type: "blog" | "course",
   slug: string,
-  fallback: { title: string; description: string; path: string; image?: string; author?: string }
+  fallback: { title: string; description: string; path: string; image?: string; author?: string } & EntitySchemaExtra
 ): Promise<PageSeo> {
   const store = await getSeoStore()
   const key = entitySeoKey(type, slug)
@@ -98,7 +99,7 @@ export async function getEntitySeo(
 export async function getEntitySchemaJsonLd(
   type: "blog" | "course",
   slug: string,
-  fallback: { title: string; description: string; path: string; image?: string; author?: string }
+  fallback: { title: string; description: string; path: string; image?: string; author?: string } & EntitySchemaExtra
 ): Promise<object | null> {
   const seo = await getEntitySeo(type, slug, fallback)
   const path = fallback.path
@@ -112,10 +113,7 @@ export async function getEntitySchemaJsonLd(
       return null
     }
   }
-  return buildPresetSchema(seo.schemaType, seo, path, {
-    image: fallback.image,
-    author: fallback.author,
-  })
+  return buildPresetSchema(seo.schemaType, seo, path, fallback)
 }
 
 export async function getEntityHeadingLevel(

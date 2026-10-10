@@ -110,60 +110,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "Warriors Defence Academy",
-  "description": "India's No.1 NDA, CDS, AFCAT & SSB coaching institute in Lucknow with 5000+ selections.",
-  "url": "https://warriorsdefenceacademy.com",
-  "logo": "https://warriorsdefenceacademy.com/images/logo/Warriors%20Defence%20Logo.png",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "123 Defence Colony",
-    "addressLocality": "Lucknow",
-    "addressRegion": "Uttar Pradesh",
-    "postalCode": "226001",
-    "addressCountry": "IN"
-  },
-  "telephone": "+91-70810-11964",
-  "email": "info@warriorsdefence.com",
-  "sameAs": [
-    "https://www.facebook.com/warriorsdefenceacademy",
-    "https://www.instagram.com/warriorsdefenceacademy",
-    "https://www.youtube.com/@warriorsdefenceacademy"
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Defence Coaching Courses",
-    "itemListElement": [
-      {
-        "@type": "Course",
-        "name": "NDA Course",
-        "description": "Complete NDA exam preparation with SSB training",
-        "provider": { "@type": "Organization", "name": "Warriors Defence Academy" }
-      },
-      {
-        "@type": "Course",
-        "name": "CDS Course",
-        "description": "Combined Defence Services examination preparation",
-        "provider": { "@type": "Organization", "name": "Warriors Defence Academy" }
-      },
-      {
-        "@type": "Course",
-        "name": "SSB Interview Training",
-        "description": "Comprehensive SSB interview preparation program",
-        "provider": { "@type": "Organization", "name": "Warriors Defence Academy" }
-      }
-    ]
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "2500",
-    "bestRating": "5"
-  }
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -178,10 +124,6 @@ export default async function RootLayout({
         <link rel="icon" type="image/png" sizes="96x96" href="/icon.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <AppProviders>{children}</AppProviders>

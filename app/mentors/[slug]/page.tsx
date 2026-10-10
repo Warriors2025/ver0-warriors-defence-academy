@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { PageJsonLd } from "@/components/seo/page-json-ld"
 import { branchColors } from "@/components/sections/mentors"
 import { getMentorBySlug, getMentors, type Mentor } from "@/lib/mentors-data"
-import { SITE_NAME, SITE_URL } from "@/lib/seo"
+import { SITE_NAME, SITE_URL, buildOrganizationNode } from "@/lib/seo"
 import { SITE_PHONE_DISPLAY, SITE_PHONE_TEL, SITE_WHATSAPP_NUMBER } from "@/lib/cta"
 import {
   ArrowLeft,

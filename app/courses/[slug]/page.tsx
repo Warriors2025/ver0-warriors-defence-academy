@@ -49,6 +49,8 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
       description: course.description,
       path: `/courses/${slug}`,
       image: course.image,
+      duration: course.duration,
+      syllabus: course.syllabus?.map((s) => s.title),
     }),
     getEntityHeadingLevel("course", slug, "title", "h1"),
     getSiteContent(),

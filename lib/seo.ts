@@ -26,6 +26,18 @@ export const SCHEMA_TYPES = [
 
 export type SchemaType = (typeof SCHEMA_TYPES)[number]
 
+export const COURSE_LIST = [
+  { slug: "nda", name: "NDA Coaching" },
+  { slug: "nda-foundation", name: "NDA Foundation Course" },
+  { slug: "cds", name: "CDS Coaching" },
+  { slug: "ssb", name: "SSB Interview Training" },
+  { slug: "afcat", name: "AFCAT Coaching" },
+  { slug: "navy-agniveer", name: "Indian Navy Agniveer" },
+  { slug: "airforce-xy", name: "Airforce X / Y Group" },
+  { slug: "mns", name: "MNS Course" },
+  { slug: "territorial-army", name: "Territorial Army" },
+] as const
+
 export const HEADING_LEVELS = ["h1", "h2", "h3", "h4", "h5", "h6", "p"] as const
 export type HeadingLevel = (typeof HEADING_LEVELS)[number]
 
@@ -529,12 +541,15 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
     breadcrumbItems.push({
       "@type": "ListItem",
       position: i + 2,
-      name: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, " "),
+      name:
+        i === segments.length - 1 && CMS_PAGES.find((p) => p.slug === slug)?.title
+          ? CMS_PAGES.find((p) => p.slug === slug)!.title
+          : seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, " "),
       item: `${SITE_URL}${cumulativePath}`,
     })
   })
 
-  const webPage = {
+  const webPage: Record<string, unknown> = {
     "@type": "WebPage",
     "@id": pageId,
     url,
@@ -543,6 +558,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
     isPartOf: { "@id": siteId },
     about: { "@id": orgId },
     inLanguage: "en-IN",
+    primaryImageOfPage: { "@type": "ImageObject", url: absoluteSiteUrl(seo.ogImage) },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: breadcrumbItems,
@@ -553,101 +569,23 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
   const extraNodes: object[] = []
 
   if (slug === "contact") {
-    extraNodes.push({
-      "@type": ["LocalBusiness", "EducationalOrganization"],
-      "@id": orgId,
-      name: SITE_NAME,
-      url: SITE_URL,
-      telephone: ["+91-70810-11964"],
-      email: "info@warriorsdefenceacademy.com",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing",
-        addressLocality: "Lucknow",
-        addressRegion: "Uttar Pradesh",
-        postalCode: "226024",
-        addressCountry: "IN",
-      },
-      geo: { "@type": "GeoCoordinates", latitude: "26.8588", longitude: "80.9993" },
-      openingHoursSpecification: [{
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "09:00",
-        closes: "18:00",
-      }],
-    })
+    webPage["@type"] = ["ContactPage", "WebPage"]
+  } else if (slug === "about") {
+    webPage["@type"] = ["AboutPage", "WebPage"]
   } else if (slug === "courses") {
     extraNodes.push({
-      "@type": "EducationalOrganization",
-      "@id": orgId,
-      name: SITE_NAME,
-      url: SITE_URL,
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "Defence Exam Coaching Programmes",
-        itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Course", name: "NDA Coaching", description: "Best NDA coaching in India — written exam preparation and SSB interview training by retired military officers in Lucknow.", provider: { "@id": orgId } } },
-          { "@type": "Offer", itemOffered: { "@type": "Course", name: "CDS Coaching", description: "Complete CDS exam coaching in Lucknow for Army, Navy and Air Force officer roles.", provider: { "@id": orgId } } },
-          { "@type": "Offer", itemOffered: { "@type": "Course", name: "SSB Interview Coaching", description: "Intensive SSB interview preparation in Lucknow — GTO tasks, psychology tests and personal interviews.", provider: { "@id": orgId } } },
-          { "@type": "Offer", itemOffered: { "@type": "Course", name: "AFCAT Coaching", description: "Air Force Common Admission Test coaching at Warriors Defence Academy Lucknow.", provider: { "@id": orgId } } },
-        ],
-      },
-    })
-  } else if (slug === "results") {
-    extraNodes.push({
-      "@type": "EducationalOrganization",
-      "@id": orgId,
-      name: SITE_NAME,
-      url: SITE_URL,
-      description: "Warriors Defence Academy Lucknow has achieved 5,000+ selections in NDA, CDS, AFCAT & SSB. AIR #1 multiple years. India's best NDA coaching institute.",
-      numberOfStudents: 50000,
-      award: "Best NDA Coaching Institute — Lucknow 2024, Highest NDA Selection Rate North India",
-    })
-  } else if (slug === "about") {
-    extraNodes.push({
-      "@type": "EducationalOrganization",
-      "@id": orgId,
-      name: SITE_NAME,
-      url: SITE_URL,
-      foundingDate: "2010",
-      numberOfStudents: 50000,
-      sameAs: [
-        "https://www.facebook.com/WarriorsDefenceAcademyLko",
-        "https://www.instagram.com/warriorsdefenceacademy_/",
-        "https://www.youtube.com/@WarriorsDefenceAcademy",
-      ],
-    })
-  } else if (slug === "admissions" || slug === "register") {
-    extraNodes.push({
-      "@type": "EducationalOrganization",
-      "@id": orgId,
-      name: SITE_NAME,
-      url: SITE_URL,
-      description: "Admissions open for NDA, CDS & SSB coaching at Warriors Defence Academy Lucknow. 2026-27 batch — limited seats.",
-      telephone: ["+91-70810-11964"],
+      "@type": "ItemList",
+      "@id": `${url}#courses`,
+      name: "Defence Exam Coaching Programmes",
+      itemListElement: COURSE_LIST.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        url: `${SITE_URL}/courses/${c.slug}`,
+        name: c.name,
+      })),
     })
   } else if (slug === "best-nda-coaching-in-india") {
     extraNodes.push(
-      {
-        "@type": "EducationalOrganization",
-        "@id": orgId,
-        name: SITE_NAME,
-        url: SITE_URL,
-        description:
-          "Best NDA coaching in India at Warriors Defence Academy, Lucknow — 50,000+ students trained, 5,000+ selections, retired military faculty and India's largest GTO ground.",
-        foundingDate: "2010",
-        numberOfStudents: 50000,
-        telephone: ["+91-70810-11964"],
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing",
-          addressLocality: "Lucknow",
-          addressRegion: "Uttar Pradesh",
-          postalCode: "226024",
-          addressCountry: "IN",
-        },
-        areaServed: { "@type": "Country", name: "India" },
-      },
       {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
@@ -691,24 +629,137 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
 
   return {
     "@context": "https://schema.org",
-    "@graph": [webSite, webPage, ...extraNodes],
+    "@graph": [buildOrganizationNode(), webSite, webPage, ...extraNodes],
   }
 }
 
-/**
- * Comprehensive @graph schema for the homepage.
- * Combines EducationalOrganization + LocalBusiness + WebSite + WebPage + FAQPage
- * into a single JSON-LD block — the strongest possible on-page schema signal.
- */
-export function buildHomeSchemaGraph(): object {
+/** Single source of truth for the Organization/LocalBusiness node (@id #organization). */
+function absoluteSiteUrl(src: string) {
+  return src.startsWith("http") ? src : `${SITE_URL}${src}`
+}
+
+export type EntitySchemaExtra = {
+  image?: string
+  author?: string
+  datePublished?: string
+  category?: string
+  tags?: string[]
+  duration?: string
+  fee?: string
+  syllabus?: string[]
+}
+
+/** Parse strings like "March 10, 2025" into ISO yyyy-mm-dd; undefined if unparsable. */
+export function toIsoDate(value?: string): string | undefined {
+  if (!value) return undefined
+  const d = new Date(value)
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10)
+}
+
+/** Parse "6–12 Months" / "21 Days" / "2–3 Years" into an ISO 8601 duration (upper bound). */
+export function toIsoDuration(value?: string): string | undefined {
+  const m = value?.match(/(d+)D*?(?:(d+))?s*(day|week|month|year)/i)
+  if (!m) return undefined
+  const n = m[2] ?? m[1]
+  return `P${n}${{ day: "D", week: "W", month: "M", year: "Y" }[m[3].toLowerCase() as "day"]}`
+}
+
+/** @graph for blog posts and course pages: Organization + WebPage + BreadcrumbList + Article/Course. */
+export function buildEntitySchemaGraph(
+  type: "Article" | "BlogPosting" | "Course",
+  seo: PageSeo,
+  path: string,
+  extra: EntitySchemaExtra = {}
+): object {
+  const url = seo.canonicalUrl || `${SITE_URL}${path}`
   const orgId = `${SITE_URL}/#organization`
   const siteId = `${SITE_URL}/#website`
+  const image = absoluteSiteUrl(extra.image || seo.ogImage || "/images/og-image.webp")
+  const parentName = type === "Course" ? "Courses" : "Blog"
+  const parentPath = type === "Course" ? "/courses" : "/blog"
+  const name = seo.metaTitle.split("|")[0].trim()
+
+  const main =
+    type === "Course"
+      ? {
+          "@type": "Course",
+          "@id": `${url}#course`,
+          name,
+          description: seo.metaDescription,
+          url,
+          image,
+          inLanguage: "en-IN",
+          provider: { "@id": orgId },
+          educationalLevel: "Entrance exam preparation",
+          ...(extra.syllabus?.length ? { teaches: extra.syllabus } : {}),
+          hasCourseInstance: {
+            "@type": "CourseInstance",
+            courseMode: "onsite",
+            location: { "@type": "Place", name: SITE_NAME, address: (buildOrganizationNode().address as object) },
+            ...(toIsoDuration(extra.duration) ? { courseWorkload: toIsoDuration(extra.duration) } : {}),
+            instructor: { "@type": "Organization", name: "Retired military officers — " + SITE_NAME },
+          },
+        }
+      : {
+          "@type": type,
+          "@id": `${url}#article`,
+          headline: name.slice(0, 110),
+          description: seo.metaDescription,
+          image: [image],
+          url,
+          mainEntityOfPage: { "@id": `${url}#webpage` },
+          isPartOf: { "@id": siteId },
+          inLanguage: "en-IN",
+          author: { "@type": "Organization", name: extra.author || SITE_NAME, url: SITE_URL },
+          publisher: { "@id": orgId },
+          ...(toIsoDate(extra.datePublished)
+            ? { datePublished: toIsoDate(extra.datePublished), dateModified: toIsoDate(extra.datePublished) }
+            : {}),
+          ...(extra.category ? { articleSection: extra.category } : {}),
+          ...(extra.tags?.length ? { keywords: extra.tags.join(", ") } : {}),
+          about: { "@id": orgId },
+        }
 
   return {
     "@context": "https://schema.org",
     "@graph": [
-      /* ── 1. Organisation (EducationalOrganization + LocalBusiness) ── */
+      buildOrganizationNode(),
       {
+        "@type": "WebSite",
+        "@id": siteId,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: { "@id": orgId },
+        inLanguage: "en-IN",
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: seo.metaTitle,
+        description: seo.metaDescription,
+        isPartOf: { "@id": siteId },
+        primaryImageOfPage: { "@type": "ImageObject", url: image },
+        inLanguage: "en-IN",
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: parentName, item: `${SITE_URL}${parentPath}` },
+          { "@type": "ListItem", position: 3, name, item: url },
+        ],
+      },
+      main,
+    ],
+  }
+}
+
+export function buildOrganizationNode(): Record<string, unknown> {
+  const orgId = `${SITE_URL}/#organization`
+  return {
         "@type": ["EducationalOrganization", "LocalBusiness"],
         "@id": orgId,
         name: SITE_NAME,
@@ -749,6 +800,13 @@ export function buildHomeSchemaGraph(): object {
         },
         telephone: ["+91-70810-11964"],
         email: "info@warriorsdefenceacademy.com",
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: "+91-70810-11964",
+          contactType: "admissions",
+          areaServed: "IN",
+          availableLanguage: ["English", "Hindi"],
+        },
         openingHoursSpecification: [
           {
             "@type": "OpeningHoursSpecification",
@@ -824,7 +882,6 @@ export function buildHomeSchemaGraph(): object {
           ],
         },
         foundingDate: "2010",
-        numberOfStudents: 50000,
         award: "AIR #1 — National Defence Academy Selection, Multiple Years",
         areaServed: [
           { "@type": "Country", name: "India" },
@@ -848,8 +905,24 @@ export function buildHomeSchemaGraph(): object {
         ],
         keywords:
           "best nda coaching in lucknow, nda coaching in lucknow, best nda coaching in india, ssb coaching in lucknow, cds coaching in lucknow, defence academy lucknow, warriors defence academy fees, nda exam date 2026",
-      },
+      }
+}
 
+/**
+ * Comprehensive @graph schema for the homepage.
+ * Combines EducationalOrganization + LocalBusiness + WebSite + WebPage + FAQPage
+ * into a single JSON-LD block — the strongest possible on-page schema signal.
+ */
+export function buildHomeSchemaGraph(): object {
+  const orgId = `${SITE_URL}/#organization`
+  const siteId = `${SITE_URL}/#website`
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildOrganizationNode(),
+
+ 
       /* ── 2. WebSite ── */
       {
         "@type": "WebSite",
@@ -952,8 +1025,11 @@ export function buildPresetSchema(
   type: SchemaType,
   seo: PageSeo,
   path: string,
-  extra?: { image?: string; author?: string }
+  extra?: EntitySchemaExtra
 ) {
+  if (type === "Article" || type === "BlogPosting" || type === "Course") {
+    return buildEntitySchemaGraph(type, seo, path, extra)
+  }
   const url = seo.canonicalUrl || `${SITE_URL}${path === "/" ? "" : path}`
   const imageUrl = extra?.image
     ? (extra.image.startsWith("http") ? extra.image : `${SITE_URL}${extra.image}`)
@@ -978,23 +1054,6 @@ export function buildPresetSchema(
       }
     case "WebPage":
       return { ...base, "@type": "WebPage", headline: seo.metaTitle }
-    case "Article":
-    case "BlogPosting":
-      return {
-        ...base,
-        "@type": type,
-        headline: seo.metaTitle,
-        author: { "@type": "Organization", name: extra?.author || SITE_NAME },
-        ...(imageUrl ? { image: imageUrl } : {}),
-      }
-    case "Course":
-      return {
-        ...base,
-        "@type": "Course",
-        name: seo.metaTitle,
-        provider: { "@type": "Organization", name: SITE_NAME },
-        ...(imageUrl ? { image: imageUrl } : {}),
-      }
     case "FAQPage":
       return { ...base, "@type": "FAQPage" }
     case "BreadcrumbList":
