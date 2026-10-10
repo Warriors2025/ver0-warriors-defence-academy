@@ -4,6 +4,7 @@ import { SITE_URL } from "@/lib/seo"
 import { getBlogPosts } from "@/lib/blog"
 import { getCourses } from "@/lib/courses"
 import { getFacilities } from "@/lib/facilities-data"
+import { getMentors } from "@/lib/mentors-data"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
@@ -15,11 +16,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: page.slug === "home" ? 1 : 0.8,
   }))
 
-  const [posts, courses, facilities] = await Promise.all([
+  const [posts, courses, facilities, mentors] = await Promise.all([
     getBlogPosts(),
     getCourses(),
     Promise.resolve(getFacilities()),
+    getMentors(),
   ])
+
+  const mentorPages: MetadataRoute.Sitemap = mentors.map((mentor) => ({
+    url: `${SITE_URL}/mentors/${mentor.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }))
 
   const blogPages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/blog/${post.slug}`,
@@ -54,10 +63,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...facilities.map((facility) => ({
       url: `${SITE_URL}/facilities/${facility.slug}`,
       lastModified: now,
-      changeFrequency: "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.65,
     })),
   ]
 
-  return [...staticPages, ...coursePages, ...facilityPages, ...feePaymentPage, ...blogPages]
+  return [...staticPages, ...coursePages, ...facilityPages, ...mentorPages, ...feePaymentPage, ...blogPages]
 }

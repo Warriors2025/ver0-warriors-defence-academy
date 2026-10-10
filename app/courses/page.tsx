@@ -174,10 +174,10 @@ export default async function CoursesPage() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <a href="tel:+919452245729">
+              <a href="tel:+917081011964">
                 <Button size="lg" variant="outline" className="h-12 px-8 font-semibold gap-2 border-primary text-primary hover:bg-primary/5">
                   <Phone className="h-4 w-4" />
-                  Call +91 94522 45729
+                  Call +91 70810 11964
                 </Button>
               </a>
             </div>

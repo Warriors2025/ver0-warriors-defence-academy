@@ -164,9 +164,9 @@ const defaultSections: SiteSections = {
     highlight: "Defence Career?",
     subtitle: "Join thousands of officers who started their journey here. Your dream of serving the nation is one step away.",
     primaryLabel: "Call Now",
-    primaryHref: "tel:+919452245729",
+    primaryHref: "tel:+917081011964",
     secondaryLabel: "WhatsApp Us",
-    secondaryHref: "https://wa.me/919452245729?text=Hi%21%20I%20want%20to%20know%20more%20about%20defence%20coaching%20at%20Warriors%20Defence%20Academy.",
+    secondaryHref: "https://wa.me/917081011964?text=Hi%21%20I%20want%20to%20know%20more%20about%20defence%20coaching%20at%20Warriors%20Defence%20Academy.",
     hours: "Mon – Sat, 9 AM – 6 PM",
   },
   activities: {
@@ -194,7 +194,7 @@ const defaultSections: SiteSections = {
 const defaultContent: SiteContent = {
   announcement: {
     text: "Admissions Open for 2026–27 Batch",
-    phone: "+91 94522 45729",
+    phone: "+91 70810 11964",
   },
   hero: {
     badge: "Best NDA Coaching in Lucknow",
@@ -216,8 +216,8 @@ const defaultContent: SiteContent = {
     ],
   },
   contact: {
-    phone1: "+91 94522 45729",
-    phone2: "+91 70810 11964",
+    phone1: "+91 70810 11964",
+    phone2: "",
     email: "info@warriorsdefenceacademy.com",
     address: "545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing, Lucknow - 226024",
     facebook: "https://www.facebook.com/WarriorsDefenceAcademyLko",

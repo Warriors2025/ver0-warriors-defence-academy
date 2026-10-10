@@ -10,6 +10,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const body = await req.json()
     const item = await updateRow("mentors", id, body)
     revalidatePath("/")
+    revalidatePath("/mentors", "layout")
     return NextResponse.json({ item })
   } catch (err) {
     console.error(err)
@@ -23,6 +24,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   try {
     await deleteRow("mentors", id)
     revalidatePath("/")
+    revalidatePath("/mentors", "layout")
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)

@@ -420,14 +420,14 @@ export default async function ResultsPage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="tel:+919452245729">
+                <a href="tel:+917081011964">
                   <Button size="lg" className="h-13 px-8 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 text-base cursor-pointer">
                     <Phone className="h-4 w-4" />
                     Call Now
                   </Button>
                 </a>
                 <a
-                  href="https://wa.me/919452245729?text=Hi%21%20I%20saw%20your%20results%20and%20want%20counselling."
+                  href="https://wa.me/917081011964?text=Hi%21%20I%20saw%20your%20results%20and%20want%20counselling."
                   target="_blank"
                   rel="noopener noreferrer"
                 >

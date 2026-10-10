@@ -101,14 +101,14 @@ export default async function FacilityDetailPage({
               <h1 className="text-3xl md:text-4xl font-bold mt-4 leading-tight">{facility.title}</h1>
               <p className="text-primary-foreground/75 text-lg mt-4 leading-relaxed">{facility.tagline}</p>
               <div className="flex flex-col sm:flex-row gap-3 mt-8">
-                <a href="tel:+919452245729">
+                <a href="tel:+917081011964">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2 w-full sm:w-auto cursor-pointer">
                     <Phone className="h-4 w-4" />
                     Call Now
                   </Button>
                 </a>
                 <a
-                  href="https://wa.me/919452245729?text=Hi%21%20I%20want%20to%20know%20more%20about%20your%20facilities."
+                  href="https://wa.me/917081011964?text=Hi%21%20I%20want%20to%20know%20more%20about%20your%20facilities."
                   target="_blank"
                   rel="noopener noreferrer"
                 >

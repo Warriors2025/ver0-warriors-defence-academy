@@ -24,15 +24,24 @@ export function HeroSection({
   achievement = defaultContent.sections.heroAchievement,
   headlineLevel = "h1",
 }: HeroSectionProps) {
-  const [current, setCurrent] = useState(0)
+  const visibleSlides = slides
+    .map((slide, index) => ({ slide, index }))
+    .filter(({ slide }) => Boolean(slide.src))
+  const count = visibleSlides.length
 
-  const next = useCallback(() => setCurrent((p) => (p + 1) % slides.length), [slides.length])
-  const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), [slides.length])
+  const [current, setCurrent] = useState(0)
+  const [paused, setPaused] = useState(false)
+
+  const next = useCallback(() => setCurrent((p) => (count ? (p + 1) % count : 0)), [count])
+  const prev = useCallback(() => setCurrent((p) => (count ? (p - 1 + count) % count : 0)), [count])
 
   useEffect(() => {
+    if (paused || count < 2) return
     const t = setInterval(next, 5000)
     return () => clearInterval(t)
-  }, [next])
+  }, [next, paused, count])
+
+  const active = visibleSlides[current] ?? visibleSlides[0]
 
   return (
     <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background">
@@ -58,9 +67,9 @@ export function HeroSection({
               </span>
             </HeadingTag>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg">
+            <div className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-lg">
               <CmsField id="hero.tagline" label="Hero Tagline" section="hero" block>{hero.tagline}</CmsField>
-            </p>
+            </div>
 
             <div className="flex flex-wrap gap-2">
               {hero.features.map((f, i) => (
@@ -80,7 +89,7 @@ export function HeroSection({
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <a href="tel:+919452245729">
+              <a href="tel:+917081011964">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto h-12 px-7 gap-2 text-base font-semibold border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
                   Call Now
                   <Phone className="h-4 w-4" />
@@ -108,61 +117,104 @@ export function HeroSection({
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 w-full relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/60">
-              <div className="relative h-[300px] sm:h-[400px] lg:h-[520px]">
-                {slides.map((slide, i) => (
+          <div
+            className="order-1 lg:order-2 w-full"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocus={() => setPaused(true)}
+            onBlur={() => setPaused(false)}
+          >
+            <figure className="rounded-2xl overflow-hidden shadow-2xl shadow-primary/15 ring-1 ring-border/70 bg-[oklch(0.3_0.09_145)]">
+              <div className="relative aspect-[3/2] overflow-hidden bg-[oklch(0.2_0.04_145)]">
+                {visibleSlides.map(({ slide }, i) => (
                   <div
-                    key={i}
-                    className={`absolute inset-0 transition-opacity duration-700 ${i === current ? "opacity-100" : "opacity-0"}`}
+                    key={slide.src + i}
+                    aria-hidden={i !== current}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-out motion-reduce:transition-none ${i === current ? "opacity-100" : "opacity-0"}`}
                   >
-                    <Image src={slide.src} alt={slide.alt} fill className="object-cover" priority={i === 0} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+                    <Image
+                      src={slide.src}
+                      alt=""
+                      fill
+                      sizes="96px"
+                      quality={40}
+                      className="object-cover scale-125 blur-2xl opacity-70 saturate-125 bg-transparent!"
+                    />
+                    <div className="absolute inset-0 bg-[oklch(0.2_0.04_145)]/45" />
+                    <Image
+                      src={slide.src}
+                      alt={slide.alt}
+                      fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      className="object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.35)] bg-transparent!"
+                      priority={i === 0}
+                    />
                   </div>
                 ))}
+              </div>
 
-                <div className="absolute bottom-16 left-0 right-0 px-6">
-                  <div className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-sm border border-white/10 rounded-lg px-4 py-2">
-                    <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                    <CmsField id={`sections.heroSlides.${current}.caption`} label={`Slide ${current + 1} Caption`} section="hero">
-                      <span className="text-white text-sm font-medium">{slides[current]?.caption}</span>
-                    </CmsField>
+              <figcaption className="relative text-white">
+                {count > 1 && (
+                  <div className="absolute -top-px left-0 right-0 flex gap-1 px-4 sm:px-5">
+                    {visibleSlides.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrent(i)}
+                        aria-label={`Go to slide ${i + 1}`}
+                        aria-current={i === current ? "true" : undefined}
+                        className="group flex-1 h-4 -mt-1.5 flex items-center cursor-pointer"
+                      >
+                        <span
+                          className={`block h-[3px] w-full rounded-full transition-colors duration-300 ${i === current ? "bg-accent" : "bg-white/25 group-hover:bg-white/50"}`}
+                        />
+                      </button>
+                    ))}
                   </div>
-                </div>
+                )}
 
-                <button onClick={prev} aria-label="Previous slide" className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-colors">
-                  <ChevronLeft className="h-5 w-5 text-white" />
-                </button>
-                <button onClick={next} aria-label="Next slide" className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-colors">
-                  <ChevronRight className="h-5 w-5 text-white" />
-                </button>
-              </div>
+                <div className="flex items-center gap-3 px-4 sm:px-5 pt-4 pb-3.5">
+                  <span className="w-2 h-2 shrink-0 rounded-full bg-accent motion-safe:animate-pulse" />
+                  <div className="min-w-0 flex-1" aria-live="polite">
+                    {active && (
+                      <CmsField id={`sections.heroSlides.${active.index}.caption`} label={`Slide ${active.index + 1} Caption`} section="hero">
+                        <span className="block text-sm sm:text-base font-semibold leading-snug">{active.slide.caption}</span>
+                      </CmsField>
+                    )}
+                  </div>
 
-              <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrent(i)}
-                    aria-label={`Go to slide ${i + 1}`}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${i === current ? "w-6 bg-accent" : "w-1.5 bg-white/40 hover:bg-white/60"}`}
-                  />
-                ))}
-              </div>
-            </div>
+                  <div className="hidden sm:flex items-center gap-2.5 pl-3 pr-1 border-l border-white/15">
+                    <Trophy className="h-4 w-4 text-accent shrink-0" />
+                    <div className="leading-tight">
+                      <div className="text-sm font-bold text-accent">
+                        <CmsField id="sections.heroAchievement.value" label="Achievement Badge Value" section="hero">{achievement.value}</CmsField>
+                      </div>
+                      <div className="text-[11px] text-white/70">
+                        <CmsField id="sections.heroAchievement.label" label="Achievement Badge Label" section="hero">{achievement.label}</CmsField>
+                      </div>
+                    </div>
+                  </div>
 
-            <div className="absolute -bottom-4 -left-4 hidden lg:flex items-center gap-3 bg-card border border-border shadow-xl rounded-xl px-4 py-3">
-              <div className="w-10 h-10 rounded-full bg-accent/15 flex items-center justify-center">
-                <Trophy className="h-5 w-5 text-accent" />
-              </div>
-              <div>
-                <div className="text-sm font-bold text-foreground">
-                  <CmsField id="sections.heroAchievement.value" label="Achievement Badge Value" section="hero">{achievement.value}</CmsField>
+                  {count > 1 && (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={prev}
+                        aria-label="Previous slide"
+                        className="w-11 h-11 rounded-full border border-white/20 hover:bg-white/10 hover:border-white/40 flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={next}
+                        aria-label="Next slide"
+                        className="w-11 h-11 rounded-full border border-white/20 hover:bg-white/10 hover:border-white/40 flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <div className="text-xs text-muted-foreground">
-                  <CmsField id="sections.heroAchievement.label" label="Achievement Badge Label" section="hero">{achievement.label}</CmsField>
-                </div>
-              </div>
-            </div>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>

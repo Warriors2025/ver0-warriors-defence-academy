@@ -282,13 +282,13 @@ export default async function ContactPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="tel:+919452245729"
+                href="tel:+917081011964"
                 className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-3 rounded-xl transition-colors cursor-pointer"
               >
                 Call Now
               </a>
               <a
-                href="https://wa.me/919452245729?text=Hi%21%20I%20want%20to%20visit%20Warriors%20Defence%20Academy."
+                href="https://wa.me/917081011964?text=Hi%21%20I%20want%20to%20visit%20Warriors%20Defence%20Academy."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 border border-primary-foreground/30 hover:border-accent hover:text-accent text-primary-foreground font-semibold px-8 py-3 rounded-xl transition-colors cursor-pointer"

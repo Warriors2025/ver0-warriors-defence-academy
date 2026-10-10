@@ -78,6 +78,15 @@ export const CMS_PAGES: CmsPage[] = [
     sections: ["facilities"],
   },
   {
+    slug: "mentors",
+    title: "Mentors",
+    path: "/mentors",
+    description: "Mentor listing and individual mentor profile pages with full biographies.",
+    editable: true,
+    adminPath: "/admin/mentors",
+    sections: ["mentors"],
+  },
+  {
     slug: "results",
     title: "Results",
     path: "/results",

@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const item = await createRow("mentors", body)
     revalidatePath("/")
+    revalidatePath("/mentors", "layout")
     return NextResponse.json({ item })
   } catch (err) {
     console.error(err)

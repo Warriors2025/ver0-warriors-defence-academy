@@ -6,9 +6,9 @@
 -- ── Site Content (CMS) ───────────────────────────────────────
 CREATE TABLE IF NOT EXISTS site_content (
   id           INTEGER PRIMARY KEY DEFAULT 1,
-  announcement JSONB NOT NULL DEFAULT '{"text":"Admissions Open for 2026–27 Batch","phone":"+91 94522 45729"}',
+  announcement JSONB NOT NULL DEFAULT '{"text":"Admissions Open for 2026–27 Batch","phone":"+91 70810 11964"}',
   hero         JSONB NOT NULL DEFAULT '{"badge":"India''s Premier Defence Academy","headline":"Shape India''s Future","highlightText":"Defence Officer","tagline":"Join the ranks of India''s finest military officers. Expert coaching for NDA, CDS, AFCAT, SSB and more.","features":["NDA • CDS • AFCAT coaching","SSB interview training","Physical fitness programs","Expert retired officer faculty"],"stats":[{"value":"50,000+","label":"Students Trained"},{"value":"5,000+","label":"Selections"},{"value":"15+","label":"Years"},{"value":"200+","label":"Mentors"}]}',
-  contact      JSONB NOT NULL DEFAULT '{"phone1":"+91 94522 45729","phone2":"+91 70810 11964","email":"info@warriorsdefenceacademy.com","address":"545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing, Lucknow - 226024","facebook":"https://www.facebook.com/WarriorsDefenceAcademyLko","instagram":"https://www.instagram.com/warriorsdefenceacademy_/","youtube":"https://www.youtube.com/@WarriorsDefenceAcademy"}',
+  contact      JSONB NOT NULL DEFAULT '{"phone1":"+91 70810 11964","phone2":"","email":"info@warriorsdefenceacademy.com","address":"545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing, Lucknow - 226024","facebook":"https://www.facebook.com/WarriorsDefenceAcademyLko","instagram":"https://www.instagram.com/warriorsdefenceacademy_/","youtube":"https://www.youtube.com/@WarriorsDefenceAcademy"}',
   stats        JSONB NOT NULL DEFAULT '[{"value":"50,000+","label":"Students Trained","description":"From across India"},{"value":"5,000+","label":"Successful Selections","description":"In Armed Forces"},{"value":"200+","label":"Expert Mentors","description":"Retired officers"},{"value":"15+","label":"Years Experience","description":"Of excellence"}]',
   sections     JSONB NOT NULL DEFAULT '{}'::jsonb,
   updated_at   TIMESTAMPTZ DEFAULT NOW(),
@@ -126,10 +126,14 @@ CREATE TABLE IF NOT EXISTS mentors (
   branch TEXT,
   initials TEXT,
   image_url TEXT,
+  slug TEXT,
+  highlights TEXT,
+  bio TEXT,
   sort_order INTEGER DEFAULT 0,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+CREATE UNIQUE INDEX IF NOT EXISTS mentors_slug_key ON mentors (slug) WHERE slug IS NOT NULL AND slug <> '';
 
 -- ── FAQs ──────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS faqs (

@@ -164,12 +164,12 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
     contact: {
       metaTitle: "Warriors Defence Academy Lucknow Address & Contact",
       metaDescription:
-        "Warriors Defence Academy Lucknow address: Kapoorthala Chauraha, 226024. Call +91 94522 45729 or +91 70810 11964. Visit Mon–Sat 9 AM–6 PM!",
+        "Warriors Defence Academy Lucknow address: Kapoorthala Chauraha, 226024. Call +91 70810 11964. Visit Mon–Sat 9 AM–6 PM!",
       metaKeywords:
         "warriors defence academy lucknow address, warriors defence academy contact number, nda coaching lucknow address, wda lucknow contact",
       ogTitle: "Warriors Defence Academy Lucknow Address & Contact",
       ogDescription:
-        "Visit Warriors Defence Academy — Kapoorthala Chauraha, Lucknow 226024. Call +91 94522 45729 for NDA coaching admissions.",
+        "Visit Warriors Defence Academy — Kapoorthala Chauraha, Lucknow 226024. Call +91 70810 11964 for NDA coaching admissions.",
       focusKeyword: "warriors defence academy lucknow address",
       schemaType: "LocalBusiness",
     },
@@ -245,6 +245,18 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       focusKeyword: "warriors defence academy facilities lucknow",
       schemaType: "EducationalOrganization",
     },
+    mentors: {
+      metaTitle: "Warriors Defence Academy Mentors | Retired Military Officers",
+      metaDescription:
+        "Warriors Defence Academy mentors — retired generals, ex-SSB interviewing officers, GTOs & psychologists guiding NDA, CDS & SSB aspirants. Call now!",
+      metaKeywords:
+        "warriors defence academy mentors, nda coaching faculty lucknow, retired army officers ssb coaching, ssb interviewing officer mentor, defence academy lucknow faculty",
+      ogTitle: "Warriors Defence Academy Mentors | Retired Military Officers",
+      ogDescription:
+        "Meet the retired generals, SSB interviewing officers, GTOs and psychologists who mentor aspirants at Warriors Defence Academy, Lucknow.",
+      focusKeyword: "warriors defence academy mentors",
+      schemaType: "WebPage",
+    },
     "best-nda-coaching-in-india": {
       metaTitle: "Best NDA Coaching in India | Warriors Defence Academy",
       metaDescription:
@@ -256,7 +268,7 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
         "Top NDA coaching in India with 5,000+ selections, retired military faculty and India's largest GTO ground. Apply for counselling today.",
       twitterTitle: "Best NDA Coaching in India | Warriors Defence Academy",
       twitterDescription:
-        "Top NDA coaching in India — 50,000+ trained, 5,000+ selections, retired officers & India's largest GTO ground. Call +91 94522 45729.",
+        "Top NDA coaching in India — 50,000+ trained, 5,000+ selections, retired officers & India's largest GTO ground. Call +91 70810 11964.",
       focusKeyword: "best nda coaching in india",
       featuredSnippet:
         "Warriors Defence Academy is among the best NDA coaching institutes in India, with 50,000+ students trained, 5,000+ selections, and India's largest GTO ground in Lucknow, Uttar Pradesh.",
@@ -546,7 +558,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
       "@id": orgId,
       name: SITE_NAME,
       url: SITE_URL,
-      telephone: ["+91-94522-45729", "+91-70810-11964"],
+      telephone: ["+91-70810-11964"],
       email: "info@warriorsdefenceacademy.com",
       address: {
         "@type": "PostalAddress",
@@ -612,7 +624,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
       name: SITE_NAME,
       url: SITE_URL,
       description: "Admissions open for NDA, CDS & SSB coaching at Warriors Defence Academy Lucknow. 2026-27 batch — limited seats.",
-      telephone: ["+91-94522-45729", "+91-70810-11964"],
+      telephone: ["+91-70810-11964"],
     })
   } else if (slug === "best-nda-coaching-in-india") {
     extraNodes.push(
@@ -625,7 +637,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
           "Best NDA coaching in India at Warriors Defence Academy, Lucknow — 50,000+ students trained, 5,000+ selections, retired military faculty and India's largest GTO ground.",
         foundingDate: "2010",
         numberOfStudents: 50000,
-        telephone: ["+91-94522-45729", "+91-70810-11964"],
+        telephone: ["+91-70810-11964"],
         address: {
           "@type": "PostalAddress",
           streetAddress: "545-Ga/1 Chha, Near Kapoorthala Chauraha, Beside Raidas Railway Crossing",
@@ -669,7 +681,7 @@ export function buildPageSchemaGraph(slug: string, seo: PageSeo, path: string): 
             name: "How do I enrol for the best NDA coaching at Warriors Defence Academy?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Call +91 94522 45729 or +91 70810 11964, or message us on WhatsApp. Counsellors guide you on batch timing, fees, and the right NDA or foundation programme.",
+              text: "Call +91 70810 11964, or message us on WhatsApp. Counsellors guide you on batch timing, fees, and the right NDA or foundation programme.",
             },
           },
         ],
@@ -735,7 +747,7 @@ export function buildHomeSchemaGraph(): object {
           latitude: "26.8588",
           longitude: "80.9993",
         },
-        telephone: ["+91-94522-45729", "+91-70810-11964"],
+        telephone: ["+91-70810-11964"],
         email: "info@warriorsdefenceacademy.com",
         openingHoursSpecification: [
           {
@@ -892,7 +904,7 @@ export function buildHomeSchemaGraph(): object {
             name: "Which is the best NDA coaching in Lucknow?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Warriors Defence Academy is the top-ranked NDA coaching institute in Lucknow, Uttar Pradesh. It provides comprehensive NDA written exam preparation, SSB interview coaching, and physical training by experienced retired military officers. Address: 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Phone: +91 94522 45729.",
+              text: "Warriors Defence Academy is the top-ranked NDA coaching institute in Lucknow, Uttar Pradesh. It provides comprehensive NDA written exam preparation, SSB interview coaching, and physical training by experienced retired military officers. Address: 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Phone: +91 70810 11964.",
             },
           },
           {
@@ -900,7 +912,7 @@ export function buildHomeSchemaGraph(): object {
             name: "How do I join Warriors Defence Academy for NDA coaching?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Call +91 94522 45729 or +91 70810 11964, or message us on WhatsApp for counselling. Visit the campus at 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Admissions for the 2026-27 batch are currently open.",
+              text: "Call +91 70810 11964, or message us on WhatsApp for counselling. Visit the campus at 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow - 226024. Admissions for the 2026-27 batch are currently open.",
             },
           },
           {

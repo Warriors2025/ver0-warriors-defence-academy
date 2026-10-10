@@ -245,8 +245,8 @@ export const DEFAULT_FACILITY_PHOTOS: Record<string, FacilityPhoto[]> = {
   ],
   mentorship: [
     { src: "/images/features/mentorship.webp", alt: "Expert mentor session" },
-    { src: "/images/mentors/lt-gen-dushyant.webp", alt: "Lt. Gen. Dushyant Singh — Chief Mentor" },
-    { src: "/images/mentors/col-tiwari.webp", alt: "Col. R.K. Tiwari — GTO Expert" },
+    { src: "/images/mentors/maj-gen-vikram-kumar.webp", alt: "Maj. Gen. Vikram Kumar (Retd.) — Chief Mentor" },
+    { src: "/images/mentors/col-rk-tewari.webp", alt: "Col. R.K. Tewari — Ex-GTO & Psychologist" },
     { src: "/images/director.webp", alt: "Academy leadership guidance" },
   ],
 }

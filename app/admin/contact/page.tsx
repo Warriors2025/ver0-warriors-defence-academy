@@ -86,11 +86,11 @@ export default function ContactEditorPage() {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="phone1">Primary Phone</Label>
-              <Input id="phone1" value={data.phone1} onChange={(e) => set("phone1", e.target.value)} placeholder="+91 94522 45729" />
+              <Input id="phone1" value={data.phone1} onChange={(e) => set("phone1", e.target.value)} placeholder="+91 70810 11964" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone2">Secondary Phone</Label>
-              <Input id="phone2" value={data.phone2} onChange={(e) => set("phone2", e.target.value)} placeholder="+91 70810 11964" />
+              <Input id="phone2" value={data.phone2} onChange={(e) => set("phone2", e.target.value)} placeholder="Optional — leave empty to hide" />
             </div>
           </div>
 

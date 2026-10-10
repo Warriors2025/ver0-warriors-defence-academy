@@ -72,7 +72,7 @@ const TEMPLATES: { label: string; json: string }[] = [
       name: "Warriors Defence Academy",
       url: "https://warriorsdefenceacademy.com",
       logo: "https://warriorsdefenceacademy.com/images/logo/warriors-defence-logo.svg",
-      telephone: "+91-94522-45729",
+      telephone: "+91-70810-11964",
     }, null, 2),
   },
 ]

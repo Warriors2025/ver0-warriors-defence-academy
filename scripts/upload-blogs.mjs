@@ -233,7 +233,7 @@ function buildHtml(post, meta) {
     <li>India's largest GTO ground in Lucknow</li>
     <li>Integrated academics + SSB preparation</li>
   </ul>
-  <p><a href="/register">Apply for NDA Coaching</a> | <a href="/contact">Contact Us: +91 94522 45729</a></p>
+  <p><a href="/register">Apply for NDA Coaching</a> | <a href="/contact">Contact Us: +91 70810 11964</a></p>
 </div>
 `
 
@@ -429,7 +429,7 @@ function buildFaqItems(title, sections) {
   // Default FAQ for any other topics
   return [
     { q: "Which is the best NDA coaching institute in Lucknow?", a: "Warriors Defence Academy (WDA) is widely regarded as the best NDA coaching institute in Lucknow, with 5,000+ selections, retired military faculty, India's largest GTO ground, and a proven track record since 2010." },
-    { q: "How can I join Warriors Defence Academy for NDA coaching?", a: "You can register online at warriorsdefenceacademy.com/register or visit our campus at 545-Ga/1 Chha, Kapoorthala Chauraha, Lucknow - 226024. Call +91 94522 45729 for counseling." },
+    { q: "How can I join Warriors Defence Academy for NDA coaching?", a: "You can register online at warriorsdefenceacademy.com/register or visit our campus at 545-Ga/1 Chha, Kapoorthala Chauraha, Lucknow - 226024. Call +91 70810 11964 for counseling." },
     { q: "Does Warriors Defence Academy offer residential coaching for NDA?", a: "Yes. WDA offers both day-scholar and residential NDA coaching programmes with integrated academics, physical training, and SSB preparation under one roof." },
   ]
 }

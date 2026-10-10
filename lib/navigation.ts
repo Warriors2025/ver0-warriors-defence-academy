@@ -22,6 +22,7 @@ export type NavigationContent = {
 export const DEFAULT_NAVIGATION: NavigationContent = {
   navLinks: [
     { title: "About Us", href: "/about" },
+    { title: "Mentors", href: "/mentors" },
     { title: "Results", href: "/results" },
     { title: "Blog", href: "/blog" },
     { title: "Gallery", href: "/gallery" },
@@ -42,6 +43,7 @@ export const DEFAULT_NAVIGATION: NavigationContent = {
     { title: "About Us", href: "/about" },
     { title: "Best NDA Coaching in India", href: "/best-nda-coaching-in-india" },
     { title: "Courses", href: "/courses" },
+    { title: "Mentors", href: "/mentors" },
     { title: "Results", href: "/results" },
     { title: "Blog", href: "/blog" },
     { title: "Gallery", href: "/gallery" },

@@ -36,6 +36,8 @@ See also: [`GSC-INSIGHTS-2026-09.md`](./GSC-INSIGHTS-2026-09.md) · [`gsc-querie
 | Blog index | `/blog` | nda exam date 2026 | ssb oir questions; lecturette topics for ssb; agniveer recruitment 2026 | optimized |
 | Gallery | `/gallery` | warriors defence academy photos | warriors defence academy campus lucknow | optimized |
 | Facilities | `/facilities` | warriors defence academy facilities lucknow | gto ground lucknow | optimized |
+| Mentors | `/mentors` | warriors defence academy mentors | nda coaching faculty lucknow; retired army officers ssb coaching; ssb interviewing officer mentor | optimized |
+| Mentor profiles | `/mentors/[slug]` | {mentor name} (e.g. lt gen dushyant singh) | {mentor name} warriors defence academy; ssb expert mentor | optimized |
 | Course: NDA | `/courses/nda` | nda coaching in lucknow | best nda coaching in lucknow | optimized |
 | Course: Foundation | `/courses/nda-foundation` | nda foundation coaching after 10th in lucknow | nda coaching after 10th | optimized |
 | Course: SSB | `/courses/ssb` | ssb coaching in lucknow | best ssb coaching in lucknow; oir test | optimized |

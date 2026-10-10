@@ -677,8 +677,6 @@ export function FeePaymentForm() {
 
       <footer className="max-w-6xl mx-auto px-4 pb-10 text-sm text-[#5d6758]">
         <p>
-          <a className="font-semibold text-[#1f5b2d]" href="tel:+919452245729">94522 45729</a>
-          {" · "}
           <a className="font-semibold text-[#1f5b2d]" href="tel:+917081011964">70810 11964</a>
         </p>
         <p className="mt-1">
@@ -708,9 +706,9 @@ function TopBar() {
           <Shield className="h-4 w-4 text-[#c9a227]" />
           Warriors Defence Academy
         </Link>
-        <a href="tel:+919452245729" className="inline-flex items-center gap-1.5 text-sm text-[#c9a227] min-h-11">
+        <a href="tel:+917081011964" className="inline-flex items-center gap-1.5 text-sm text-[#c9a227] min-h-11">
           <Phone className="h-4 w-4" />
-          94522 45729
+          70810 11964
         </a>
       </div>
     </div>

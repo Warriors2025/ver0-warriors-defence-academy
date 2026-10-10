@@ -61,7 +61,7 @@ export const defaultPages: SitePages = {
     hero: {
       eyebrow: "Get in Touch — Lucknow",
       title: "Warriors Defence Academy Lucknow Address & Contact",
-      subtitle: "Visit 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow 226024. Call +91 94522 45729 or +91 70810 11964 — Mon to Sat, 9 AM to 6 PM.",
+      subtitle: "Visit 545-Ga/1 Chha, Near Kapoorthala Chauraha, Lucknow 226024. Call +91 70810 11964 — Mon to Sat, 9 AM to 6 PM.",
     },
     officeHours: "Mon – Sat, 9:00 AM – 6:00 PM",
     sundayHours: "Sunday: Closed",
@@ -201,9 +201,13 @@ export const defaultVideos: { header: { eyebrow: string; title: string; subtitle
     subtitle: "Real training videos, student success stories, and motivational sessions from our campus.",
   },
   items: [
-    { title: "Warriors Defence Academy Campus Tour", thumbnail: "/images/hero/carousel-3.webp", videoId: "dQw4w9WgXcQ" },
-    { title: "NDA Preparation Tips & Strategies", thumbnail: "/images/hero/carousel-2.webp", videoId: "dQw4w9WgXcQ" },
-    { title: "SSB Interview Success Stories", thumbnail: "/images/hero/carousel-1.webp", videoId: "dQw4w9WgXcQ" },
-    { title: "Physical Training at WDA", thumbnail: "/images/hero/carousel-4.webp", videoId: "dQw4w9WgXcQ" },
+    { title: "Tour of India's Largest Private Defence Campus", thumbnail: "https://i.ytimg.com/vi/alOYqVOgyhM/maxresdefault.jpg", videoId: "alOYqVOgyhM" },
+    { title: "NDA Mock Interview of a Recommended Warrior by India's No. 1 IO", thumbnail: "https://i.ytimg.com/vi/e_Azf9yOsOY/maxresdefault.jpg", videoId: "e_Azf9yOsOY" },
+    { title: "The Formula for 500+ Marks in NDA — Recommended Warrior Nitin Singh Tomar", thumbnail: "https://i.ytimg.com/vi/VpcvD2vJbvA/maxresdefault.jpg", videoId: "VpcvD2vJbvA" },
+    { title: "NDA Recommended Girl: Mock Interview with Feedback", thumbnail: "https://i.ytimg.com/vi/9vZ4auw5XgQ/maxresdefault.jpg", videoId: "9vZ4auw5XgQ" },
+    { title: "Class 12 Warrior Topped NDA Before Boards — A Farmer's Son's Story", thumbnail: "https://i.ytimg.com/vi/lKgqQ-wrEt0/maxresdefault.jpg", videoId: "lKgqQ-wrEt0" },
+    { title: "Four Friends Who Failed Together Cleared NDA Together", thumbnail: "https://i.ytimg.com/vi/CYksWgnfdNg/maxresdefault.jpg", videoId: "CYksWgnfdNg" },
+    { title: "NDA II 2026 GAT Paper Solutions", thumbnail: "https://i.ytimg.com/vi/FCISeBW6xO8/maxresdefault.jpg", videoId: "FCISeBW6xO8" },
+    { title: "Live from IMA Dehradun", thumbnail: "https://i.ytimg.com/vi/Z1hYLypP01c/maxresdefault.jpg", videoId: "Z1hYLypP01c" },
   ],
 }

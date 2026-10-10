@@ -41,9 +41,9 @@ export function FeaturesSection({
             <HeadingTag level={titleLevel} className="text-3xl md:text-4xl font-bold text-foreground mt-3 leading-tight">
               <CmsField id="sections.featuresHeader.title" label="Features Title" section="features">{title}</CmsField>
             </HeadingTag>
-            <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
+            <div className="mt-4 text-muted-foreground text-lg leading-relaxed">
               <CmsField id="sections.featuresHeader.subtitle" label="Features Subtitle" section="features" block>{subtitle}</CmsField>
-            </p>
+            </div>
           </div>
           <Link href="/facilities" className="shrink-0">
             <Button variant="outline" className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">

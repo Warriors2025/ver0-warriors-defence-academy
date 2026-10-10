@@ -54,7 +54,7 @@ export function LeadEnquiryForm({
       setIsSubmitted(true)
       setFormData({ name: "", phone: "", email: "", message: "" })
     } catch {
-      setError("Network error. Please call +91 94522 45729.")
+      setError("Network error. Please call +91 70810 11964.")
     } finally {
       setIsLoading(false)
     }
@@ -173,8 +173,8 @@ export function LeadEnquiryForm({
       </Button>
       <p className="text-center text-xs text-muted-foreground">
         Or call{" "}
-        <a href="tel:+919452245729" className="font-medium text-accent hover:underline">
-          +91 94522 45729
+        <a href="tel:+917081011964" className="font-medium text-accent hover:underline">
+          +91 70810 11964
         </a>
       </p>
     </form>

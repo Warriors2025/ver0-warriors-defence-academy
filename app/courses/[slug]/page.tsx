@@ -122,14 +122,14 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <a href="tel:+919452245729">
+              <a href="tel:+917081011964">
                 <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground h-12 px-7 font-semibold gap-2 cursor-pointer">
                   <Phone className="h-4 w-4" />
                   Call Now
                 </Button>
               </a>
               <a
-                href="https://wa.me/919452245729?text=Hi%21%20I%20want%20details%20about%20this%20course."
+                href="https://wa.me/917081011964?text=Hi%21%20I%20want%20details%20about%20this%20course."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -321,14 +321,14 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
 
                   {/* CTAs */}
                   <div className="px-6 pb-6 space-y-2.5">
-                    <a href="tel:+919452245729">
+                    <a href="tel:+917081011964">
                       <Button className="w-full h-11 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold gap-2 cursor-pointer">
                         <Phone className="h-4 w-4" />
                         Call Now
                       </Button>
                     </a>
                     <a
-                      href="https://wa.me/919452245729?text=Hi%21%20I%20want%20details%20about%20this%20course."
+                      href="https://wa.me/917081011964?text=Hi%21%20I%20want%20details%20about%20this%20course."
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -347,21 +347,12 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
                   </p>
 
                   <div className="space-y-2.5">
-                    <a href="tel:+919452245729" className="flex items-center gap-3 p-3 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group">
-                      <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                        <Phone className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">Call Us</p>
-                        <p className="text-sm font-semibold text-primary group-hover:underline">+91 94522 45729</p>
-                      </div>
-                    </a>
                     <a href="tel:+917081011964" className="flex items-center gap-3 p-3 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors group">
                       <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                         <Phone className="h-4 w-4 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">Alternate</p>
+                        <p className="text-xs text-muted-foreground">Call Us</p>
                         <p className="text-sm font-semibold text-primary group-hover:underline">+91 70810 11964</p>
                       </div>
                     </a>

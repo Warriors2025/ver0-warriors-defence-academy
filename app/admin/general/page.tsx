@@ -93,7 +93,7 @@ export default function GeneralSettingsPage() {
             id="ann-phone"
             value={data.phone}
             onChange={(e) => setData({ ...data, phone: e.target.value })}
-            placeholder="+91 94522 45729"
+            placeholder="+91 70810 11964"
           />
         </div>
 

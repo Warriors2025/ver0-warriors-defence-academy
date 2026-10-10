@@ -125,7 +125,7 @@ const jsonLd = {
     "postalCode": "226001",
     "addressCountry": "IN"
   },
-  "telephone": "+91-98765-43210",
+  "telephone": "+91-70810-11964",
   "email": "info@warriorsdefence.com",
   "sameAs": [
     "https://www.facebook.com/warriorsdefenceacademy",
@@ -175,6 +175,7 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/icon.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <script

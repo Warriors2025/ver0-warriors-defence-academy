@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: Props) {
     })
     .slice(0, 3)
 
-  const phone = content.contact?.phone1 || "+91 94522 45729"
+  const phone = content.contact?.phone1 || "+91 70810 11964"
 
   return (
     <main className="min-h-screen bg-background">
@@ -241,7 +241,7 @@ export default async function BlogPostPage({ params }: Props) {
                 </Button>
               </a>
               <a
-                href="https://wa.me/919452245729?text=Hi%21%20I%20read%20your%20blog%20and%20want%20counselling%20for%20NDA%20coaching."
+                href="https://wa.me/917081011964?text=Hi%21%20I%20read%20your%20blog%20and%20want%20counselling%20for%20NDA%20coaching."
                 target="_blank"
                 rel="noopener noreferrer"
               >

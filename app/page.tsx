@@ -96,6 +96,7 @@ export default async function HomePage({
         title={sections.videos.title}
         subtitle={sections.videos.subtitle}
         items={sections.videos.items}
+        channelUrl={contact.youtube ? `${contact.youtube.replace(/\/$/, "")}/videos` : undefined}
       />
       <BooksSection
         eyebrow={sections.books.eyebrow}

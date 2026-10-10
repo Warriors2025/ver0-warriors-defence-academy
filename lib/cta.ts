@@ -1,10 +1,8 @@
 /** Site-wide contact CTAs — prefer Call / WhatsApp over /register links. */
 
-export const SITE_PHONE_DISPLAY = "+91 94522 45729"
-export const SITE_PHONE_TEL = "tel:+919452245729"
-export const SITE_PHONE_SECONDARY_DISPLAY = "+91 70810 11964"
-export const SITE_PHONE_SECONDARY_TEL = "tel:+917081011964"
-export const SITE_WHATSAPP_NUMBER = "919452245729"
+export const SITE_PHONE_DISPLAY = "+91 70810 11964"
+export const SITE_PHONE_TEL = "tel:+917081011964"
+export const SITE_WHATSAPP_NUMBER = "917081011964"
 
 const DEFAULT_WA_MESSAGE =
   "Hi! I want to know more about defence coaching at Warriors Defence Academy."

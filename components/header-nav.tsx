@@ -291,7 +291,7 @@ export function HeaderNav({
                     </Button>
                   </a>
                   <a
-                    href={`https://wa.me/919452245729?text=${encodeURIComponent("Hi! I want to know more about defence coaching at Warriors Defence Academy.")}`}
+                    href={`https://wa.me/917081011964?text=${encodeURIComponent("Hi! I want to know more about defence coaching at Warriors Defence Academy.")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileOpen(false)}

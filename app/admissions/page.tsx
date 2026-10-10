@@ -66,14 +66,14 @@ export default async function AdmissionsPage() {
               </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary" asChild>
-                <a href="tel:+919452245729" className="cursor-pointer">
+                <a href="tel:+917081011964" className="cursor-pointer">
                   <Phone className="mr-2 h-5 w-5" />
                   Call Now
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" asChild>
                 <a
-                  href="https://wa.me/919452245729?text=Hi%21%20I%20want%20admission%20details%20for%20NDA%20coaching."
+                  href="https://wa.me/917081011964?text=Hi%21%20I%20want%20admission%20details%20for%20NDA%20coaching."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="cursor-pointer"
@@ -226,7 +226,7 @@ export default async function AdmissionsPage() {
                   </CardHeader>
                   <CardContent>
                     <Button className="w-full mt-2 cursor-pointer" asChild>
-                      <a href="tel:+919452245729">Call to Enroll</a>
+                      <a href="tel:+917081011964">Call to Enroll</a>
                     </Button>
                   </CardContent>
                 </Card>
@@ -256,7 +256,7 @@ export default async function AdmissionsPage() {
                     </div>
                     <div>
                       <p className="text-sm opacity-75">Call Us</p>
-                      <p className="font-semibold">+91 98765 43210</p>
+                      <p className="font-semibold">+91 70810 11964</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">

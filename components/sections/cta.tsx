@@ -69,9 +69,9 @@ export function CTASection({
             </span>
           </HeadingTag>
 
-          <p className="text-primary-foreground/75 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <div className="text-primary-foreground/75 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             <CmsField id="sections.cta.subtitle" label="CTA Subtitle" section="cta" block>{cta.subtitle}</CmsField>
-          </p>
+          </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={primaryHref}>
@@ -95,10 +95,14 @@ export function CTASection({
             <a href={`tel:${phone1.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-accent transition-colors">
               <Phone className="h-4 w-4 text-accent" />{phone1}
             </a>
-            <span className="hidden sm:block text-primary-foreground/25">|</span>
-            <a href={`tel:${phone2.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-accent transition-colors">
-              <Phone className="h-4 w-4 text-accent" />{phone2}
-            </a>
+            {phone2 && (
+              <>
+                <span className="hidden sm:block text-primary-foreground/25">|</span>
+                <a href={`tel:${phone2.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-accent transition-colors">
+                  <Phone className="h-4 w-4 text-accent" />{phone2}
+                </a>
+              </>
+            )}
             <span className="hidden sm:block text-primary-foreground/25">|</span>
             <span>{cta.hours}</span>
           </div>

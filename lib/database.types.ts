@@ -403,6 +403,9 @@ export type Database = {
           branch: string | null
           initials: string | null
           image_url: string | null
+          slug: string | null
+          highlights: string | null
+          bio: string | null
           sort_order: number | null
           is_active: boolean | null
           created_at: string | null
@@ -416,6 +419,9 @@ export type Database = {
           branch?: string | null
           initials?: string | null
           image_url?: string | null
+          slug?: string | null
+          highlights?: string | null
+          bio?: string | null
           sort_order?: number | null
           is_active?: boolean | null
           created_at?: string | null
@@ -429,6 +435,9 @@ export type Database = {
           branch?: string | null
           initials?: string | null
           image_url?: string | null
+          slug?: string | null
+          highlights?: string | null
+          bio?: string | null
           sort_order?: number | null
           is_active?: boolean | null
           created_at?: string | null

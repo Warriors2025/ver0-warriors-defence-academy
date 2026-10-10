@@ -70,7 +70,7 @@ const posts = [
 <h2>Free practice plan (7 days)</h2>
 <p>Day 1–2 verbal series &amp; analogies · Day 3–4 coding &amp; directions · Day 5–6 non-verbal figures · Day 7 full mixed mock. Pair OIR practice with PPDT story drills for complete Stage-1 readiness.</p>
 
-<p>Need guided mocks? Join <a href="/courses/ssb">SSB coaching in Lucknow</a> at Warriors Defence Academy — OIR batches run on campus with psychologist-led feedback. Call <a href="tel:+919452245729">+91 94522 45729</a>.</p>
+<p>Need guided mocks? Join <a href="/courses/ssb">SSB coaching in Lucknow</a> at Warriors Defence Academy — OIR batches run on campus with psychologist-led feedback. Call <a href="tel:+917081011964">+91 70810 11964</a>.</p>
 `.trim(),
   },
   {
@@ -117,7 +117,7 @@ const posts = [
 <h2>Preparation timeline before the exam</h2>
 <p>If your target is the next NDA paper, lock Mathematics + GAT daily targets now, add weekly full mocks, and keep SSB basics (OIR, communication) running in parallel. Residential aspirants often choose <a href="/courses/nda">NDA coaching in Lucknow</a> for disciplined schedules.</p>
 
-<p>For girls’ entry, hostel batches and foundation pathways, see <a href="/courses/nda-foundation">NDA foundation coaching after 10th</a> or call <a href="tel:+919452245729">+91 94522 45729</a>.</p>
+<p>For girls’ entry, hostel batches and foundation pathways, see <a href="/courses/nda-foundation">NDA foundation coaching after 10th</a> or call <a href="tel:+917081011964">+91 70810 11964</a>.</p>
 `.trim(),
   },
   {
@@ -156,7 +156,7 @@ const posts = [
 <h2>Study tip for NDA GAT &amp; SSB</h2>
 <p>Memorise the officer rank ladder first, then gallantry awards (PVC, MVC, VrC, SC, KC). Use flashcards of <strong>indian army badges list</strong> photos — visual recall beats rote lists in the exam hall.</p>
 
-<p>Training at <a href="/">best NDA coaching in Lucknow</a> includes defence GK modules covering uniforms, ranks and awards. Visit Warriors Defence Academy or call <a href="tel:+919452245729">+91 94522 45729</a>.</p>
+<p>Training at <a href="/">best NDA coaching in Lucknow</a> includes defence GK modules covering uniforms, ranks and awards. Visit Warriors Defence Academy or call <a href="tel:+917081011964">+91 70810 11964</a>.</p>
 `.trim(),
   },
   {

@@ -163,7 +163,7 @@ const FAQS = [
   },
   {
     q: "Can I join if I live outside Lucknow?",
-    a: "Absolutely. Aspirants from across India enrol for day and residential programmes. Call +91 94522 45729 for hostel availability and batch start dates.",
+    a: "Absolutely. Aspirants from across India enrol for day and residential programmes. Call +91 70810 11964 for hostel availability and batch start dates.",
   },
   {
     q: "What is the difference between best NDA coaching and ordinary tuition?",
@@ -171,7 +171,7 @@ const FAQS = [
   },
   {
     q: "How soon can I start?",
-    a: "New batches open regularly for NDA written, foundation and SSB. Call +91 94522 45729 or WhatsApp us — a counsellor will confirm the next available seat.",
+    a: "New batches open regularly for NDA written, foundation and SSB. Call +91 70810 11964 or WhatsApp us — a counsellor will confirm the next available seat.",
   },
   {
     q: "Where can I see results and campus facilities?",
@@ -249,7 +249,7 @@ export default async function BestNdaCoachingInIndiaPage() {
                 asChild
               >
                 <a
-                  href="https://wa.me/919452245729?text=Hi%21%20I%20want%20counselling%20for%20best%20NDA%20coaching%20in%20India."
+                  href="https://wa.me/917081011964?text=Hi%21%20I%20want%20counselling%20for%20best%20NDA%20coaching%20in%20India."
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -644,7 +644,7 @@ export default async function BestNdaCoachingInIndiaPage() {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-accent" />
-                Call {contact.phone1} or {contact.phone2}
+                Call {contact.phone1}{contact.phone2 ? ` or ${contact.phone2}` : ""}
               </li>
             </ul>
             <div className="mt-8">

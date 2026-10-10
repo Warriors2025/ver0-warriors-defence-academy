@@ -11,6 +11,8 @@ Fee payment,/fee-payment,warriors defence academy fees,"warriors defence academy
 Blog,/blog,nda exam date 2026,"ssb oir questions; lecturette topics for ssb; agniveer recruitment 2026",informational,optimized,2026-09-12,Hub for GSC content
 Gallery,/gallery,warriors defence academy photos,"warriors defence academy campus lucknow; gto ground photos",informational,optimized,2026-09-12,
 Facilities,/facilities,warriors defence academy facilities lucknow,"gto ground lucknow; nda coaching infrastructure",informational,optimized,2026-09-12,Now uses getPageSeo + schema
+Mentors,/mentors,warriors defence academy mentors,"nda coaching faculty lucknow; retired army officers ssb coaching; ssb interviewing officer mentor",informational,optimized,2026-10-06,"Listing of mentor profiles; ItemList + WebPage schema"
+Mentor profiles,/mentors/[slug],{mentor name},"{mentor name} warriors defence academy; ssb expert mentor",navigational,optimized,2026-10-06,"One page per mentor (6); Person + ProfilePage + BreadcrumbList schema; bios from mentors.bio"
 Course NDA,/courses/nda,nda coaching in lucknow,"best nda coaching in lucknow",commercial,optimized,2026-09-12,Shares listing KW — title differentiated
 Course Foundation,/courses/nda-foundation,nda foundation coaching after 10th in lucknow,"nda coaching after 10th",commercial,optimized,2026-09-12,
 Course SSB,/courses/ssb,ssb coaching in lucknow,"best ssb coaching in lucknow; oir test",commercial,optimized,2026-09-12,
