@@ -137,7 +137,6 @@ export function HeroSection({
                       alt=""
                       fill
                       sizes="96px"
-                      quality={40}
                       className="object-cover scale-125 blur-2xl opacity-70 saturate-125 bg-transparent!"
                     />
                     <div className="absolute inset-0 bg-[oklch(0.2_0.04_145)]/45" />
