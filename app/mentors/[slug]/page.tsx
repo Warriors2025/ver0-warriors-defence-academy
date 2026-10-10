@@ -95,6 +95,8 @@ export default async function MentorProfilePage({ params }: { params: Promise<{ 
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
+      buildOrganizationNode(),
+      { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: SITE_NAME, publisher: { "@id": `${SITE_URL}/#organization` }, inLanguage: "en-IN" },
       {
         "@type": "ProfilePage",
         "@id": `${url}#webpage`,
