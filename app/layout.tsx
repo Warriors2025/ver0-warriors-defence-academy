@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 }
 
 const baseMetadata: Metadata = {
-  metadataBase: new URL("https://warriorsdefenceacademy.com"),
+  metadataBase: new URL("https://www.warriorsdefencecollege.com"),
   title: {
     default: "Best NDA Coaching in Lucknow | Warriors Defence Academy",
     template: "%s | Warriors Defence Academy",
@@ -52,7 +52,7 @@ const baseMetadata: Metadata = {
     "agniveer recruitment 2026",
     "Warriors Defence Academy",
   ],
-  authors: [{ name: "Warriors Defence Academy", url: "https://warriorsdefenceacademy.com" }],
+  authors: [{ name: "Warriors Defence Academy", url: "https://www.warriorsdefencecollege.com" }],
   creator: "Warriors Defence Academy",
   publisher: "Warriors Defence Academy",
   formatDetection: {
@@ -61,12 +61,12 @@ const baseMetadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: "https://warriorsdefenceacademy.com",
+    canonical: "https://www.warriorsdefencecollege.com",
   },
   openGraph: {
     title: "Warriors Defence Academy | Best NDA Coaching in India",
     description: "Transform your dream of serving the nation into reality. 5000+ selections, expert faculty, India's largest GTO ground. Join India's most trusted defence coaching institute.",
-    url: "https://warriorsdefenceacademy.com",
+    url: "https://www.warriorsdefencecollege.com",
     siteName: "Warriors Defence Academy",
     locale: "en_IN",
     type: "website",

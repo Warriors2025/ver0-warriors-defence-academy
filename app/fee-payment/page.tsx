@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     "nda coaching fees lucknow",
   ],
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://warriorsdefenceacademy.com/fee-payment" },
+  alternates: { canonical: "https://www.warriorsdefencecollege.com/fee-payment" },
   openGraph: {
     title: "Warriors Defence Academy Fees | Lucknow NDA Coaching",
     description:
       "Check Warriors Defence Academy fees and pay online securely. NDA, CDS & SSB coaching fee payment for Lucknow campus.",
-    url: "https://warriorsdefenceacademy.com/fee-payment",
+    url: "https://www.warriorsdefencecollege.com/fee-payment",
   },
 }
 

@@ -37,7 +37,7 @@ export function AddCustomSchemaButton() {
                 metaDescription: "",
                 schemaType: "WebPage",
                 schemaCustomJson: "",
-                canonicalUrl: `https://warriorsdefenceacademy.com${normalized}`,
+                canonicalUrl: `https://www.warriorsdefencecollege.com${normalized}`,
               },
             },
           },

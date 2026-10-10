@@ -2,7 +2,7 @@ import type { CmsPage } from "@/lib/cms-pages"
 import { CMS_PAGES } from "@/lib/cms-pages"
 import { getBlogSeoOverride } from "@/lib/blog-seo"
 
-export const SITE_URL = "https://warriorsdefenceacademy.com"
+export const SITE_URL = "https://www.warriorsdefencecollege.com"
 export const SITE_NAME = "Warriors Defence Academy"
 
 export const SCHEMA_TYPES = [
