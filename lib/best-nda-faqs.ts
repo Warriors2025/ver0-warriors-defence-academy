@@ -40,4 +40,12 @@ export const BEST_NDA_FAQS: { q: string; a: string }[] = [
     q: "How long does NDA preparation take?",
     a: "Class 12 aspirants typically prepare for 6 to 12 months for the written exam plus SSB. Students who start after Class 10 in a foundation programme get two to three years, which improves both academic strength and physical readiness.",
   },
+  {
+    q: "Who are the latest NDA and CDS selections from Warriors Defence Academy?",
+    a: "Our latest published results are the NDA-II 2024 qualifiers Dhanraj Jat (Ajmer, Rajasthan), Nitin Singh Tomar (Gwalior, Madhya Pradesh) and Palak Singh (11th Foundation programme), and CDS-II 2024 qualifier Akanksha Pandey. Their UPSC admit cards and roll numbers are shown on this page, and more achievers are listed on our results page.",
+  },
+  {
+    q: "Do girls join Warriors Defence Academy for NDA coaching?",
+    a: "Yes. Women candidates have been eligible for the NDA since 2022, and our NDA-II 2024 qualifiers include Palak Singh, who prepared through the 11th Foundation programme. Call +91 70810 11964 to check current batches and hostel availability.",
+  },
 ]
