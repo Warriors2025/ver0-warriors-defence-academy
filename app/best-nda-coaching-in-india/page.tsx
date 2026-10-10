@@ -58,29 +58,29 @@ const PROOF_POINTS = [
   { icon: Building2, value: "Largest", label: "GTO ground in India" },
 ]
 
-/** Real selection posters published by the academy (NDA-II 2024 / CDS-II 2024 qualifiers). */
+/** Real selection posters published by the academy (NDA-II / CDS-II qualifiers). */
 const SELECTIONS = [
   {
     name: "Dhanraj Jat",
-    exam: "NDA-II 2024",
+    exam: "NDA-II",
     origin: "Ajmer, Rajasthan",
     image: "/images/selections/selection-1.webp",
   },
   {
     name: "Nitin Singh Tomar",
-    exam: "NDA-II 2024",
+    exam: "NDA-II",
     origin: "Gwalior, Madhya Pradesh",
     image: "/images/selections/selection-3.webp",
   },
   {
     name: "Palak Singh",
-    exam: "NDA-II 2024",
+    exam: "NDA-II",
     origin: "11th Foundation programme",
     image: "/images/selections/selection-2.webp",
   },
   {
     name: "Akanksha Pandey",
-    exam: "CDS-II 2024",
+    exam: "CDS-II",
     origin: "Lucknow · OTA preference",
     image: "/images/selections/selection-4.webp",
   },
@@ -108,7 +108,7 @@ const COMPARE_ROWS = [
   },
   {
     check: "Results you can verify",
-    ask: "Are results named and year-wise, not just “100% success”?",
+    ask: "Are results named, not just “100% success”?",
     wda: "Named qualifiers with UPSC admit cards, 5,000+ selections since 2010.",
     href: "/results",
     hrefLabel: "See NDA results",
@@ -377,7 +377,7 @@ export default async function BestNdaCoachingInIndiaPage() {
                 Latest NDA &amp; CDS selections from Warriors Defence Academy
               </h2>
               <p className="mt-3 leading-relaxed text-muted-foreground">
-                Proof beats promises. These aspirants qualified NDA-II 2024 and CDS-II 2024 — from
+                Proof beats promises. These aspirants qualified NDA-II and CDS-II — from
                 Rajasthan, Madhya Pradesh and our own Foundation programme. Each poster shows the UPSC
                 admit card and roll number.
               </p>
@@ -442,7 +442,7 @@ export default async function BestNdaCoachingInIndiaPage() {
             {[
               ["Faculty with service experience", "Who teaches, and have they served or assessed?"],
               ["A real outdoor GTO ground", "SSB is 900 of 1,800 marks — it can't be learned from slides."],
-              ["Named, year-wise results", "Admit cards and roll numbers, not “100% success”."],
+              ["Named, verifiable results", "Admit cards and roll numbers, not “100% success”."],
               ["Written + SSB in one programme", "No switching institutes between the two halves."],
               ["Fees with inclusions in writing", "Hostel, material, mocks and SSB module stated up front."],
             ].map(([title, text]) => (
@@ -688,7 +688,7 @@ export default async function BestNdaCoachingInIndiaPage() {
           <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-muted-foreground">
             Outside Lucknow? Hostel accommodation is available for outstation students. Online classes suit
             Maths and GAT theory, but SSB group and command tasks need practice in person on a ground.
-            Girls join too — Palak Singh qualified NDA-II 2024 from our 11th Foundation programme. Call{" "}
+            Girls join too — Palak Singh qualified NDA-II from our 11th Foundation programme. Call{" "}
             <a href={telHref} className="font-medium text-accent hover:underline">{contact.phone1}</a>{" "}
             to check current batches.
           </p>

@@ -191,7 +191,7 @@ export function defaultSeoForPage(page: CmsPage): PageSeo {
       metaDescription:
         "NDA coaching results Lucknow — 5,000+ NDA, CDS & SSB selections, AIR #1 multiple years, 68% SSB rate. See our proud achievers!",
       metaKeywords:
-        "nda coaching results lucknow, warriors defence academy selections, best nda results lucknow, nda selections 2024, ssb success rate, defence coaching results india",
+        "nda coaching results lucknow, warriors defence academy selections, best nda results lucknow, nda selections, ssb success rate, defence coaching results india",
       ogTitle: "NDA Coaching Results Lucknow | Warriors Defence Academy",
       ogDescription:
         "5,000+ selections, AIR #1 multiple years, 68% SSB recommendation rate — Warriors Defence Academy is India's top-performing NDA coaching institute.",

@@ -2,7 +2,7 @@
 export const BEST_NDA_FAQS: { q: string; a: string }[] = [
   {
     q: "Which is the best NDA coaching in India?",
-    a: "There is no single official ranking, so judge institutes on evidence: faculty with real service experience, a physical GTO ground for SSB practice, named year-wise results, and written fee terms. Warriors Defence Academy in Lucknow meets all four — retired military mentors, India's largest GTO ground, 50,000+ students trained since 2010 and 5,000+ defence selections.",
+    a: "There is no single official ranking, so judge institutes on evidence: faculty with real service experience, a physical GTO ground for SSB practice, named, verifiable results, and written fee terms. Warriors Defence Academy in Lucknow meets all four — retired military mentors, India's largest GTO ground, 50,000+ students trained since 2010 and 5,000+ defence selections.",
   },
   {
     q: "How do I choose the best NDA coaching institute?",
@@ -42,10 +42,10 @@ export const BEST_NDA_FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Who are the latest NDA and CDS selections from Warriors Defence Academy?",
-    a: "Our latest published results are the NDA-II 2024 qualifiers Dhanraj Jat (Ajmer, Rajasthan), Nitin Singh Tomar (Gwalior, Madhya Pradesh) and Palak Singh (11th Foundation programme), and CDS-II 2024 qualifier Akanksha Pandey. Their UPSC admit cards and roll numbers are shown on this page, and more achievers are listed on our results page.",
+    a: "Our latest published results are the NDA-II qualifiers Dhanraj Jat (Ajmer, Rajasthan), Nitin Singh Tomar (Gwalior, Madhya Pradesh) and Palak Singh (11th Foundation programme), and CDS-II qualifier Akanksha Pandey. Their UPSC admit cards and roll numbers are shown on this page, and more achievers are listed on our results page.",
   },
   {
     q: "Do girls join Warriors Defence Academy for NDA coaching?",
-    a: "Yes. Women candidates have been eligible for the NDA since 2022, and our NDA-II 2024 qualifiers include Palak Singh, who prepared through the 11th Foundation programme. Call +91 70810 11964 to check current batches and hostel availability.",
+    a: "Yes. Women candidates have been eligible for the NDA since 2022, and our NDA-II qualifiers include Palak Singh, who prepared through the 11th Foundation programme. Call +91 70810 11964 to check current batches and hostel availability.",
   },
 ]
