@@ -24,6 +24,13 @@ const nextConfig = {
   // Preserve GSC equity from WordPress URLs → Next.js blog routes
   async redirects() {
     return [
+      // apex → www so only one host is indexable
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "warriorsdefencecollege.com" }],
+        destination: "https://www.warriorsdefencecollege.com/:path*",
+        permanent: true,
+      },
       {
         source: "/ssb-oir-test-sample-questions-with-answers",
         destination: "/blog/ssb-oir-test-sample-questions-with-answers",
